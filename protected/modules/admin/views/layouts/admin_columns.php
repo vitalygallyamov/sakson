@@ -1,4 +1,4 @@
-<?php $this->beginContent('/layouts/main'); ?>
+<?php $this->beginContent('//../modules/admin/views/layouts/main'); ?>
 
 <div class="span1">
 <?php $this->widget('bootstrap.widgets.TbNav', array(

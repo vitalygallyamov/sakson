@@ -15,15 +15,25 @@ class AdminModule extends EWebModule
             'appext.EPhpThumb.EPhpThumb',
         ));
 
-        $this->setComponents(array(
+        Yii::app()->setComponents(array(
             'errorHandler' => array(
                 'errorAction' => 'admin/user/error'),
             'user' => array(
-                'class' => 'CWebUser',
-                'loginUrl' => Yii::app()->createUrl('admin/user/login'),
-                'returnUrl' => Yii::app()->createUrl('admin/apartments'),
+                'class' => 'WebUser',
+                'stateKeyPrefix' => '_admin',
+                'loginUrl' => Yii::app()->createUrl($this->id . '/user/login'),
+                'adminReturnUrl' => Yii::app()->createUrl('admin/apartments'),
+            ),
+            'authManager'=>array(
+                'class'=>'CDbAuthManager',
+                'connectionID'=>'db',
+                'itemTable'=>'{{AuthItem}}', // Tabla que contiene los elementos de autorizacion
+                'itemChildTable'=>'{{AuthItemChild}}', // Tabla que contiene los elementos padre-hijo
+                'assignmentTable'=>'{{AuthAssignment}}', // Tabla que contiene la signacion usuario-autorizacion
             ),
         ));
+
+        // Yii::app()->user->setStateKeyPrefix('_admin');
 	}
 
 	public function beforeControllerAction($controller, $action)
@@ -32,6 +42,12 @@ class AdminModule extends EWebModule
 		{
             $this->registerBootstrap();
             $this->registerCoreScripts();
+
+            // if(Yii::app()->getModule('admin')->user->isGuest){
+            //     Yii::app()->request->redirect(Yii::app()->getModule('admin')->user->loginUrl);
+            // }
+
+
             return true;
         }
         return false;

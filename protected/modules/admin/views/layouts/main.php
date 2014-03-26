@@ -10,7 +10,7 @@
 		<?php
 			$menuItems = array(
                 array('label'=>'Главная', 'url'=>'/admin/start/index'),
-				array('label'=>'Настройки', 'url'=>'/admin/settings'),
+				// array('label'=>'Настройки', 'url'=>'/admin/settings'),
 				array('label'=>'Объекты', 'url'=>'#', 'items' => array(
 					array('label'=>'Квартиры', 'url'=>'#', 'items' => array(
 						array('label'=>'Создать', 'url'=>"/admin/apartments/create"),
@@ -34,6 +34,7 @@
 					'class'=>'bootstrap.widgets.TbNav',
 					'htmlOptions'=>array('class'=>'pull-right'),
 					'items'=>array(
+						array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
 						array('label'=>'Выйти', 'url'=>'/admin/user/logout'),
 					),
 				),

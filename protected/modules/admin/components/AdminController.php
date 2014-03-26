@@ -10,7 +10,20 @@ class AdminController extends Controller
     public function filters()
     {
         return array(
-            array('auth.filters.AuthFilter'),
+            'accessControl'
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow authenticated users to access all actions
+                // 'actions' => array('list', 'create', 'update', ''),
+                'users'=>array('@'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
         );
     }
 	

@@ -28,7 +28,6 @@ return array(
         'appext'=>'application.extensions',
     ),
     'modules'=>$modules,
-
     // application components
     'components'=>array(
         'cart' => array(
@@ -41,7 +40,7 @@ return array(
                 ),
             ),
         ),
-        'authManager' => array(
+        /*'authManager' => array(
             'class' => 'CDbAuthManager',// 'auth.components.CachedDbAuthManager',
             //'cachingDuration' => 0,
             'itemTable' => '{{authitem}}',
@@ -52,9 +51,13 @@ return array(
                     'class' => 'auth.components.AuthBehavior',
                 ),
             ),
-        ),
+        ),*/
+        /*'authManager' => array(
+            'class'=>'auth.components.CachedDbAuthManager',
+            'cachingDuration'=>3600,
+        ),*/
         'user'=>array(
-            'class' => 'user.components.WebUser',
+            // 'class' => 'user.components.WebUser',
         ),
         'bootstrap'=>array(
             'class'=>'appext.yiistrap.components.TbApi',
