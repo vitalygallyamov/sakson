@@ -17,6 +17,7 @@
 						array('label'=>'Список', 'url'=>"/admin/apartments/list"),
 					)),
 				)),
+				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
 			);
 		?>
 		<?php $this->widget('bootstrap.widgets.TbNavbar', array(
@@ -34,7 +35,7 @@
 					'class'=>'bootstrap.widgets.TbNav',
 					'htmlOptions'=>array('class'=>'pull-right'),
 					'items'=>array(
-						array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
+						array('label' => 'Пользователь ('.Yii::app()->user->name.')', 'url' => Yii::app()->createUrl('admin/adminUser/update', array('id' => Yii::app()->user->id))),
 						array('label'=>'Выйти', 'url'=>'/admin/user/logout'),
 					),
 				),

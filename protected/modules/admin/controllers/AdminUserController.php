@@ -2,18 +2,18 @@
 
 class AdminUserController extends AdminController
 {
-    /*public function init(){
-        parent::init();
-
-        // $this->modelName = 'AdminUser';
-    }*/
+    public $layout = '/layouts/custom';
 
     public function accessRules()
     {
         return array(
-            array('allow', // allow authenticated users to access all actions
-                // 'actions' => array('list', 'create', 'update', ''),
+            array('allow',
+                'actions'=>array('create', 'update', 'list'),
                 'roles'=>array('admin'),
+            ),
+            array('allow',
+                'actions'=>array('update'),
+                'roles'=>array('agent'),
             ),
             array('deny',
                 'users'=>array('*'),
@@ -31,8 +31,11 @@ class AdminUserController extends AdminController
                 $model->role = $_POST['role'];
             }
 
-            if($model->save())
+            if($model->validate()){
+                Yii::app()->swiftmail->sendEmail("test@test.com", $model->email, 'Доступы в систему управления объектами недвижимости', $this->renderPartial('_email', array('model' => $model), true));
+                $model->save(false);
                 $this->redirect($this->createUrl('list'));
+            }
         }
 
         $model->pass = '';
@@ -44,6 +47,10 @@ class AdminUserController extends AdminController
 
     public function actionUpdate($id){
         $model = AdminUser::model()->findByPk($id);
+
+        if(!Yii::app()->user->checkAccess('admin') && Yii::app()->user->id != $model->id){
+             throw new CHttpException(403, 'Ошибка доступа');
+        }
 
         if(isset($_POST['AdminUser'])){
             $model->attributes = $_POST['AdminUser'];

@@ -32,7 +32,7 @@ class AdminUser extends EActiveRecord
         return array(
             array('login, pass, email', 'required'),
             array('login, email', 'unique'),
-            array('login, pass', 'length', 'min' => 8, 'max' => 25),
+            array('login, pass', 'length', 'min' => 5, 'max' => 25),
             array('login', 'match', 'pattern' => '/^[a-z0-9_]+$/i', 'message' => 'Логин должен содержать только латинские буквы, цифры и знак подчеркивания.'),
             array('email', 'email'),
             array('status', 'numerical', 'integerOnly'=>true),

@@ -40,6 +40,9 @@ return array(
                 ),
             ),
         ),
+        'swiftmail'=> array(
+            'class' => 'SwiftmailerComponent'
+        ),
         /*'authManager' => array(
             'class' => 'CDbAuthManager',// 'auth.components.CachedDbAuthManager',
             //'cachingDuration' => 0,
@@ -56,9 +59,9 @@ return array(
             'class'=>'auth.components.CachedDbAuthManager',
             'cachingDuration'=>3600,
         ),*/
-        'user'=>array(
-            // 'class' => 'user.components.WebUser',
-        ),
+        // 'user'=>array(
+        //     // 'class' => 'user.components.WebUser',
+        // ),
         'bootstrap'=>array(
             'class'=>'appext.yiistrap.components.TbApi',
         ),

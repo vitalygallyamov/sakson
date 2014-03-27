@@ -65,17 +65,19 @@ class UserController extends AdminController
  
 		// $auth->createOperation('createPost','создание записи');
 		// $auth->createOperation('readPost','просмотр записи');
-		// $auth->createOperation('updatePost','редактирование записи');
+		$auth->createOperation('updateUser','редактирование записи');
 		// $auth->createOperation('deletePost','удаление записи');
 		 
-		// $bizRule='return Yii::app()->user->id==$params["post"]->authID;';
-		// $task=$auth->createTask('updateOwnPost','редактирование своей записи',$bizRule);
-		// $task->addChild('updatePost');
+		$bizRule='return Yii::app()->user->id==$params["user"]->id;';
+		$task=$auth->createTask('updateOwnInfo','редактирование своей учетной записи',$bizRule);
+		$task->addChild('updateUser');
 		 
 		// $role=$auth->createRole('reader');
 		// $role->addChild('readPost');
 		 
 		$role=$auth->createRole('agent');
+		$role->addChild('updateUser');
+		$role->addChild('updateOwnPost');
 		/*$role->addChild('reader');
 		$role->addChild('createPost');
 		$role->addChild('updateOwnPost');*/
@@ -89,7 +91,7 @@ class UserController extends AdminController
 		/*$role->addChild('author');
 		$role->addChild('deletePost');*/
 		 
-		$auth->assign('agent','agentA');
-		$auth->assign('admin','adminB');
+		// $auth->assign('agent','agentA');
+		$auth->assign('admin', 1);
 	}
 }

@@ -6,6 +6,12 @@ $this->menu=array(
 
 <h1>Управление <?php echo $model->translition(); ?></h1>
 
+<div class="search-form">
+<?php $this->renderPartial('_search',array(
+    'model' => $model,
+)); ?>
+</div><!-- search-form -->
+
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'apartments-grid',
 	'dataProvider'=>$model->search(),
@@ -15,6 +21,7 @@ $this->menu=array(
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
         "class"=>"status_".(isset($data->status) ? $data->status : ""),
+        "data-id" => $data->id
     )',
 	'columns'=>array(
 		/*array(
@@ -50,6 +57,7 @@ $this->menu=array(
 		'floor',
 		'house_floors',
 		'square',
+		'price',
 /*		'kitchen_area',
 		'walls_type_id',
 		'series_id',
@@ -78,8 +86,52 @@ $this->menu=array(
 		// ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+			// 'template' => '{update} {delete}',
+			'buttons' => array(
+				'delete' => array(
+					'click' => 'js:function(){
+						var id = jQuery(this).closest("tr").data("id");
+
+						jQuery.ajax({
+							url: "/admin/apartments/getDeleteForm",
+							data: {id: id},
+							success: function(data){
+								jQuery("#modal").html(data);
+								jQuery("#confirmDelete").modal("show");
+							}
+						});
+						return false;
+					}'
+				)
+			)
 		),
 	),
 )); ?>
+
+<div id="modal"></div>
+
+<script>
+	jQuery('#modal').on('click', '.save-delete-form', function(){
+		var $this = jQuery(this),
+			$form = $this.closest('#modal').find('form');
+
+		$this.button("loading");
+		jQuery.ajax({
+			url: "/admin/apartments/getDeleteForm/id/" + $this.data('id'),
+			type: 'POST',
+			data: $form.serialize(),
+			success: function(data){
+				if(data == 'ok'){
+					jQuery('#apartments-grid').yiiGridView('update');
+					jQuery("#confirmDelete").modal("hide");
+				}else{
+					jQuery("#confirmDelete").modal("hide");
+					jQuery("#modal").html(data);
+					jQuery("#confirmDelete").modal("show");
+				}
+			}
+		});
+	});
+</script>
 
 <?php if($model->hasAttribute('sort')) Yii::app()->clientScript->registerScript('sortGrid', 'sortGrid("apartments");', CClientScript::POS_END) ;?>

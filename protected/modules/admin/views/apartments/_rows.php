@@ -48,7 +48,7 @@
 
 	<?php echo $form->textFieldControlGroup($model,'house_floors'); ?>
 	
-	<?php echo $form->textFieldControlGroup($model, 'square', array('append' => 'кв.м.', 'maxlength'=>8)); ?>
+	<?php echo $form->textFieldControlGroup($model, 'square', array('append' => 'кв.м.', 'maxlength'=>8, 'class' => 'square')); ?>
 
 	<?php echo $form->textFieldControlGroup($model, 'kitchen_area', array('append' => 'кв.м.', 'maxlength'=>8)); ?>
 	
@@ -68,11 +68,11 @@
 		</div>
 	</div>
 
-	<?php echo $form->textFieldControlGroup($model,'price_1m',array('append' => '.00 руб.','maxlength'=>10)); ?>
+	<?php echo $form->textFieldControlGroup($model,'price',array('append' => '.00 руб.','maxlength'=>10, 'class' => 'calc-price')); ?>
+
+	<?php echo $form->textFieldControlGroup($model,'price_1m',array('append' => '.00 руб.','maxlength'=>10, 'class' => 'price-1m')); ?>
 
 	<?php echo $form->textFieldControlGroup($model,'price_agency',array('append' => '.00 руб.','maxlength'=>10)); ?>
-
-	<?php echo $form->textFieldControlGroup($model,'price',array('append' => '.00 руб.','maxlength'=>10)); ?>
 
 	<?php echo $form->textAreaControlGroup($model,'desc',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
@@ -88,6 +88,17 @@
 		} ?>
 	</div>
 
-	<?php echo $form->textFieldControlGroup($model,'agent_id',array('class'=>'span8')); ?>
+	<?php echo $form->hiddenField($model,'agent_id',array('class'=>'span8', 'value' => Yii::app()->user->id)); ?>
 
 	<?php echo $form->dropDownListControlGroup($model, 'status', Apartments::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
+
+<script>
+	jQuery('.calc-price').on('blur', function(){
+		var square = jQuery('.square').val(),
+			price = jQuery(this).val();
+
+		if(square){
+			jQuery('.price-1m').val(Math.round(price / square));
+		}
+	});
+</script>

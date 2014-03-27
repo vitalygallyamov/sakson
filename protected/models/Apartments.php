@@ -30,6 +30,9 @@
 */
 class Apartments extends EActiveRecord
 {
+    public $priceBegin;
+    public $priceEnd;
+
     public function tableName()
     {
         return '{{apartments}}';
@@ -60,6 +63,7 @@ class Apartments extends EActiveRecord
             'wall' => array(self::BELONGS_TO, 'WallTypes', 'walls_type_id'),
             'series' => array(self::BELONGS_TO, 'Series', 'series'),
             'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
+            'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id')
         );
     }
 
@@ -97,7 +101,7 @@ class Apartments extends EActiveRecord
     public function behaviors()
     {
         return CMap::mergeArray(parent::behaviors(), array(
-        			'galleryBehaviorPhotos' => array(
+        	'galleryBehaviorPhotos' => array(
 				'class' => 'appext.imagesgallery.GalleryBehavior',
 				'idAttribute' => 'gllr_photos',
 				'versions' => array(
@@ -147,6 +151,11 @@ class Apartments extends EActiveRecord
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
+
+        if($this->priceBegin && $this->priceEnd){
+            $criteria->addBetweenCondition('price', $this->priceBegin, $this->priceEnd);
+        }
+
         $criteria->order = 'sort';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
@@ -163,5 +172,11 @@ class Apartments extends EActiveRecord
         return 'Квартиры';
     }
 
+    public function afterFind(){
+        parent::afterFind();
 
+        $this->price = number_format($this->price, 0, '', '');
+        $this->price_agency = number_format($this->price_agency, 0, '', '');
+        $this->price_1m = number_format($this->price_1m, 0, '', '');
+    }
 }
