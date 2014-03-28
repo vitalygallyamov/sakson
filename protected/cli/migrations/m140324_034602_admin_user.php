@@ -30,9 +30,9 @@ class m140324_034602_admin_user extends CDbMigration
 
         $this->insert('{{admin_users}}', array(
             'fio' => 'Администратор',
-            'login' => "admin'",
-            'pass' => "$2a$13$.pUgp8MS/Op6oaghf.OGsuF2/T3SaJUlC8PHBlFoCRd4oYB6pvbAS",
-            'email' => "vitgvr@gmail.com'",
+            'login' => 'admin',
+            'pass' => '$2a$13$.pUgp8MS/Op6oaghf.OGsuF2/T3SaJUlC8PHBlFoCRd4oYB6pvbAS',
+            'email' => 'vitgvr@gmail.com',
             'status' => 1,
             'create_time' => date('Y-m-d H:i:s')
         ));
