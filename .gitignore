@@ -5,6 +5,7 @@ Capfile
 
 framework
 /protected/config/db.php
+/protected/config/mail.php
 /uploads
 /gallery
 *~

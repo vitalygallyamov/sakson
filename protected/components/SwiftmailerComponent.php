@@ -1,6 +1,15 @@
 <?php
 class SwiftmailerComponent extends CApplicationComponent
 {
+
+	public $host = 'smtp.gmail.com';
+	public $port = 465;
+
+	public $user = 'test';
+	public $pass = 'test';
+
+	public $protocol = 'ssl';
+
 	public function sendEmail($from, $to, $subject, $body, $attachments = array(), $host='smtp.gmail.com', $port = 465){
 		
 		$path = Yii::getPathOfAlias('ext.swiftmailer.lib');
@@ -12,7 +21,7 @@ class SwiftmailerComponent extends CApplicationComponent
 
 		$message = Swift_Message::newInstance()
 			->setSubject($subject)
-			->setFrom($from)
+			->setFrom($this->user)
 			->setTo($to)
 			->setBody($body, 'text/html');
 
@@ -22,9 +31,9 @@ class SwiftmailerComponent extends CApplicationComponent
 			}
 		}
 
-		$transport = Swift_SmtpTransport::newInstance($host, $port, 'ssl')
-			->setUsername('vitgvr@gmail.com')
-			->setPassword('VetalGal89');
+		$transport = Swift_SmtpTransport::newInstance($this->host, $this->port, $this->protocol)
+			->setUsername($this->user)
+			->setPassword($this->pass);
 
 		$mailer = Swift_Mailer::newInstance($transport);
     	$result = $mailer->send($message);

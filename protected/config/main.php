@@ -9,6 +9,7 @@
 //add modules and db file config
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules.php');  // $modules
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'db.php');       // $db_config
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mail.php');     // $mail config
 
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
@@ -40,9 +41,9 @@ return array(
                 ),
             ),
         ),
-        'swiftmail'=> array(
-            'class' => 'SwiftmailerComponent'
-        ),
+        'swiftmail'=> array_merge(array(
+            'class' => 'SwiftmailerComponent',
+        ), $mail_config),
         /*'authManager' => array(
             'class' => 'CDbAuthManager',// 'auth.components.CachedDbAuthManager',
             //'cachingDuration' => 0,
