@@ -1,46 +1,53 @@
 <?php
 /**
- * Миграция m140324_034602_admin_user
+ * Миграция m140327_165012_dbauth
  *
  * @property string $prefix
  */
  
-class m140324_034602_admin_user extends CDbMigration
+class m140327_165012_dbauth extends CDbMigration
 {
     // таблицы к удалению, можно использовать '{{table}}'
-	private $dropped = array('{{admin_users}}');
+	private $dropped = array('{{AuthItem}}', '{{AuthItemChild}}', '{{AuthAssignment}}');
  
     public function safeUp()
     {
         $this->_checkTables();
  
-        $this->createTable('{{admin_users}}', array(
-            'id' => 'pk', // auto increment
-
-            'fio' => "string COMMENT 'ФИО'",
-            'login' => "string NOT NULL COMMENT 'Логин'",
-            'pass' => "string NOT NULL COMMENT 'Пароль'",
-            'email' => "string NOT NULL COMMENT 'E-mail'",
-			
-			'status' => "tinyint COMMENT 'Статус'",
-            'create_time' => "datetime COMMENT 'Дата создания'",
-            'update_time' => "datetime COMMENT 'Дата последнего редактирования'",
-        ),
-        'ENGINE=MyISAM DEFAULT CHARACTER SET = utf8 COLLATE = utf8_general_ci');
-
-        $this->insert('{{admin_users}}', array(
-            'fio' => 'Администратор',
-            'login' => "admin'",
-            'pass' => "$2a$13$.pUgp8MS/Op6oaghf.OGsuF2/T3SaJUlC8PHBlFoCRd4oYB6pvbAS",
-            'email' => "vitgvr@gmail.com'",
-            'status' => 1,
-            'create_time' => date('Y-m-d H:i:s')
+        $this->createTable('{{AuthItem}}', array(
+			'name' => "varchar(64) not null",
+			'type' => "integer not null",
+			'description' => "text",
+            'bizrule' => "text",
+            'data' => "text",
+            'primary key (`name`)'
         ));
+
+        $this->createTable('{{AuthItemChild}}', array(
+            'parent' => "varchar(64) not null",
+            'child' => "varchar(64) not null",
+            'primary key (`parent`,`child`)'
+        ));
+
+        $this->addForeignKey('fk1_aich', '{{AuthItemChild}}', 'parent', '{{AuthItem}}', 'name', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk2_aich', '{{AuthItemChild}}', 'child', '{{AuthItem}}', 'name', 'CASCADE', 'CASCADE');
+
+        $this->createTable('{{AuthAssignment}}', array(
+            'itemname' => "varchar(64) not null",
+            'userid' => "varchar(64) not null",
+            'bizrule' => "text",
+            'data' => "text",
+            'primary key (`itemname`,`userid`)'
+        ));
+
+        $this->addForeignKey('fk_aa', '{{AuthAssignment}}', 'itemname', '{{AuthItem}}', 'name', 'CASCADE', 'CASCADE');
     }
  
     public function safeDown()
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0;');
         $this->_checkTables();
+        $this->execute('SET FOREIGN_KEY_CHECKS=1;');
     }
  
     /**

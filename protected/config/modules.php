@@ -16,7 +16,7 @@ $modules = array(
 	),
 	'admin'=>array(),
 	'email'=>array(),
-	'auth'=>array(
+	/*'auth'=>array(
 		// 'defaultLayout' => 'admin.views.layouts.main'
 		// 'viewDir' => '/home/vetal/web_projects/sakson/protected/modules/admin/views'
 	),
@@ -31,5 +31,5 @@ $modules = array(
 		'loginUrl' => array('/user/login'),
 		'returnUrl' => array('/user/profile'),
 		'returnLogoutUrl' => array('/user/login'),
-	),
+	),*/
 );

@@ -77,7 +77,7 @@ class UserController extends AdminController
 		 
 		$role=$auth->createRole('agent');
 		$role->addChild('updateUser');
-		$role->addChild('updateOwnPost');
+		// $role->addChild('updateOwnPost');
 		/*$role->addChild('reader');
 		$role->addChild('createPost');
 		$role->addChild('updateOwnPost');*/
