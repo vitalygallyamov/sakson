@@ -16,6 +16,8 @@ class m140329_103745_create_pages extends CDbMigration
  
         $this->createTable('tbl_pages', array(
             'id' => 'pk', // auto increment
+			'name' => "VARCHAR(255) NOT NUll COMMENT 'Название страницы'",
+			'url' => "VARCHAR(255) NOT NUll COMMENT 'URL страницы'",
 			'menu_name' => "VARCHAR(255) COMMENT 'Название в меню'",
 			'menu_public' => "TINYINT NOT NULL DEFAULT '0' COMMENT 'Показывать в меню'",
 			'wswg_content' => "TEXT COMMENT 'Контент'",
