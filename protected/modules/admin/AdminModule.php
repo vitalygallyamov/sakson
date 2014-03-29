@@ -8,6 +8,7 @@ class AdminModule extends EWebModule
 
 	public function init()
 	{
+        set_time_limit(100);
         $this->setImport(array(
             'admin.models.*',
             'admin.components.*',

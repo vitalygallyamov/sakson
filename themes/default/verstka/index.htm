@@ -212,29 +212,11 @@
                                 
                                 id = $(this).attr("id");
 
-                                //$(".partners img").attr("src","images/partners/"+id+".png");
                                 $("#"+id).attr("src","images/partners/"+id+"_color.png");
                                 $("#"+$("#old_id").val()).attr("src","images/partners/"+$("#old_id").val()+".png");
                                 $(".partner_container").hide(100);
                                 $("#container_"+id).show(200);
                                 $("#old_id").val(id);
-
-        /*
-                                $(".incl_cont div").removeClass("act");
-                                $(".incl_cont #"+id).addClass("act");
-                                $(".incl_cont").css("background","url(/images/incl/"+id+".gif)");
-
-                                $(".carousel-title-incl div").css("display","none");
-                                $(".carousel-title-incl #desc-"+id).css("display","block");
-
-                                $(".photos_incl div").css("display","none");
-                                $(".photos_incl #f-"+id).css("display","block");
-                                */
-                                //$(this).css({"opacity":"1"});
-                                //id = $(this).attr("id");
-                                //alert(id );
-                                //$(".con_text div").css("display","none");
-                                //$(".con_text #div_"+id).css("display","block");
                             });
 
                         });
