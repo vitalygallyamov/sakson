@@ -4,7 +4,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Управление <?php echo $model->translition(); ?></h1>
+<h1>Управление страницами</h1>
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'page-grid',

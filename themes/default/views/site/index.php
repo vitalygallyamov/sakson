@@ -1,3 +1,1 @@
-
-
-<h1>Приветствую тебя, MEGA-DEVELOPER!</h1>
+<?=$model->wswg_content?>

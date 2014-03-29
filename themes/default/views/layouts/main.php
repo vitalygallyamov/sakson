@@ -20,34 +20,13 @@
     <meta name="language" content="en"/>
     <meta charset="utf-8">
 
-    <title>Титл</title>
+    <title><?=$this->seo->meta_title?></title>
+    <meta name="description" content="<?=$this->seo->meta_desc?>" />
+    <meta name="keywords" content="<?=$this->seo->meta_keys?>" />
 </head>
 <body>
 <DIV class="main">
-<div class="line top_menu">
-    <div class="line995px">
-        <div class="line_content">
-            <ul class="left">
-                <li>
-                    <a href="#" class="active">Главная</a>
-                </li>
-                <li>
-                    <a href="#">Каталог</a>
-                </li>
-                <li>
-                    <a href="#">Новости</a>
-                </li>
-                <li>
-                    <a href="#">О компании</a>
-                </li>
-            </ul>
-
-            <ul class="right">
-                <li><a href="#">Вход</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<? $this->widget("ext.mainMenu.mainMenuWidget"); ?>
 
 <div class="line slider">
     <div class="line995px">
@@ -96,49 +75,7 @@
 <div class="line index_content">
     <div class="line995px">
         <div class="line_content">
-            <div class="block half">
-                <h3>Саксон</h3>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium qu
-                is, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus
-
-            </div>
-
-            <div class="block half">
-                <h3>Кратко</h3>
-                Открытость, честность, профессионализм - это девиз АН "САКСОН". Мы работаем для того, чтобы предложить покупателям широкий выбор объектов недвижимости в Тюмени и Тюменской области. В нашей базе размещены сотни предложений от  застройщиков и частных владельцев.
-            </div>
-
-            <div class="clear"></div>
-
-            <!-- Наши преимущества -->
-            <div class="block">
-                <h3>Наши преимущества</h3>
-                <div class="dost">
-                    <img src="/media/images/dost_1.png">
-                    <div class="clear"></div>
-                    Новостройки и вторичка без
-                    коммисии для покупателей
-                </div>
-
-                <div class="dost">
-                    <img src="/media/images/dost_2.png">
-                    <div class="clear"></div>
-                    Фиксированная коммисия
-                    для продавцов
-                </div>
-
-                <div class="dost">
-                    <img src="/media/images/dost_3.png">
-                    <div class="clear"></div>
-                    Лицензированный оценщик
-                </div>
-
-                <div class="dost">
-                    <img src="/media/images/dost_4.png">
-                    <div class="clear"></div>
-                    VIP сопровождение сделки
-                </div>
-            </div>
+            <?=$content?>
 
             <div class="clear"></div>
 
@@ -217,8 +154,8 @@
 
                             id = $(this).attr("id");
 
-                            $("#"+id).attr("src","images/partners/"+id+"_color.png");
-                            $("#"+$("#old_id").val()).attr("src","images/partners/"+$("#old_id").val()+".png");
+                            $("#"+id).attr("src","/media/images/partners/"+id+"_color.png");
+                            $("#"+$("#old_id").val()).attr("src","/media/images/partners/"+$("#old_id").val()+".png");
                             $(".partner_container").hide(100);
                             $("#container_"+id).show(200);
                             $("#old_id").val(id);
@@ -272,27 +209,25 @@
             <div class="line_content">
                 <div class="block half">
                     <div class="adr">
-                        Тюмень, Республики, 83а<br>
-                        Офис 204.
+                        <?=$this->settings["address"]?>
                     </div>
                     <div class="phones">
-                        +7 919 953 13 05<br>
-                        +7 919 953 17 01
+                        <?=$this->settings["phone"]?>
                     </div>
                 </div>
                 <div class="block half">
                     <ul class="social">
                         <li>
-                            <a href="#"><img src="/media/images/social/1.png"></a>
+                            <a href="<?=$this->settings["fb_link"]?>"><img src="/media/images/social/1.png"></a>
                         </li>
                         <li>
-                            <a href="#"><img src="/media/images/social/2.png"></a>
+                            <a href="<?=$this->settings["tw_link"]?>"><img src="/media/images/social/2.png"></a>
                         </li>
                         <li>
-                            <a href="#"><img src="/media/images/social/3.png"></a>
+                            <a href="<?=$this->settings["vk_link"]?>"><img src="/media/images/social/3.png"></a>
                         </li>
                         <li>
-                            <a href="#"><img src="/media/images/social/4.png"></a>
+                            <a href="<?=$this->settings["sk_link"]?>"><img src="/media/images/social/4.png"></a>
                         </li>
                     </ul>
                 </div>

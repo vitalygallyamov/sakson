@@ -97,4 +97,9 @@ class Settings extends EActiveRecord
 
         return '';
     }
+
+    public function afterSave(){
+        Settings::model()->cache()->delete();
+        return true;
+    }
 }

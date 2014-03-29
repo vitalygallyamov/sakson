@@ -21,6 +21,20 @@ class Page extends EActiveRecord
     const NOT_MENU_PUBLIC = 0;
     const MENU_PUBLIC = 1;
 
+    public function __get($name){
+        if($name == "active"){
+            if(isset($_GET["url"]) && $_GET["url"] == $this->url)
+                return "active";
+            return null;
+        }
+        if($name == "show_name"){
+            if($this->menu_public && !empty($this->menu_name))
+                return $this->menu_name;
+            return $this->name;
+        }
+        return parent::__get($name);
+    }
+
     public function tableName()
     {
         return '{{pages}}';
@@ -98,7 +112,7 @@ class Page extends EActiveRecord
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
-        $criteria->order = 'sort';
+        $criteria->order = 'sort DESC';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));

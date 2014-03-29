@@ -3,6 +3,8 @@
 //TODO: Желательно переписать нормально
 class SettingsController extends AdminController
 {
+    public $layout = '/layouts/custom';
+
 	public function actionTypeForm($type){
 		$model = null;
 

@@ -2,44 +2,24 @@
 
 class PageController extends FrontController
 {
-	public $layout='//layouts/simple';
+	public $layout='//layouts/page';
 
-	
-	public function filters()
+	public function actionIndex($url)
 	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
+		$data["model"] = $this->loadModel($url);
+        $this->seo = $data["model"]->seo;
+		$this->render('index', $data);
 	}
 
-	
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
+    public function loadModel($url=null){
+        if($url == null)
+            $model = Page::model()->findByAttributes(array("url"=>"/", "status"=>Page::STATUS_PUBLISH));
+        else
+            $model = Page::model()->findByAttributes(array("url"=>$url, "status"=>Page::STATUS_PUBLISH));
 
-	
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel('Page', $id),
-		));
-	}
+        if($model)
+            return $model;
 
-	
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Page');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+        throw new CHttpException(404, "Страница не найдена!");
+    }
 }

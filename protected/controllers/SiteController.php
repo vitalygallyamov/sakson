@@ -29,7 +29,9 @@ class SiteController extends FrontController
 	 */
 	public function actionIndex()
 	{
-		$this->render('index');
+        $data["model"] = Page::model()->findByAttributes(array("url"=>"/"));
+        $this->seo = $data["model"]->seo;
+		$this->render('index', $data);
 	}
 
 	/**
@@ -37,6 +39,7 @@ class SiteController extends FrontController
 	 */
 	public function actionError()
 	{
+        $this->layout = "//layouts/page";
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)
