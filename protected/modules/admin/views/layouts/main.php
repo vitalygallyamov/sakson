@@ -22,7 +22,10 @@
 					)),
 				)),
 				array('label'=>'Контент', 'url'=>'#', 'items'=>array(
+                        array('label'=>'Слайдер', 'url'=>'/admin/slider/list'),
                         array('label'=>'Страницы', 'url'=>'/admin/page/list'),
+                        array('label'=>'Новости', 'url'=>'/admin/news/list'),
+                        array('label'=>'Партнеры', 'url'=>'/admin/partner/list'),
                     )
                 ),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
