@@ -17,11 +17,11 @@ class m140329_103745_create_pages extends CDbMigration
         $this->createTable('tbl_pages', array(
             'id' => 'pk', // auto increment
 			'menu_name' => "VARCHAR(255) COMMENT 'Название в меню'",
-			'menu_public' => "TINYINT COMMENT 'Показывать в меню'",
+			'menu_public' => "TINYINT NOT NULL DEFAULT '0' COMMENT 'Показывать в меню'",
 			'wswg_content' => "TEXT COMMENT 'Контент'",
 			'seo_id' => "INTEGER COMMENT 'SEO данные'",
-			'status' => "tinyint COMMENT 'Статус'",
-			'sort' => "integer COMMENT 'Вес для сортировки'",
+			'status' => "tinyint NOT NULL DEFAULT '0' COMMENT 'Статус'",
+			'sort' => "integer NOT NULL DEFAULT '0' COMMENT 'Вес для сортировки'",
             'create_time' => "datetime COMMENT 'Дата создания'",
             'update_time' => "datetime COMMENT 'Дата последнего редактирования'",
         ),
