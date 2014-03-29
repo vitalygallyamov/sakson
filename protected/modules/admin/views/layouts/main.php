@@ -16,6 +16,10 @@
 						array('label'=>'Создать', 'url'=>"/admin/apartments/create"),
 						array('label'=>'Список', 'url'=>"/admin/apartments/list"),
 					)),
+					array('label'=>'Загородная недвижимость', 'url'=>'#', 'items' => array(
+						array('label'=>'Создать', 'url'=>"/admin/lands/create"),
+						array('label'=>'Список', 'url'=>"/admin/lands/list"),
+					)),
 				)),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
 			);
@@ -35,7 +39,7 @@
 					'class'=>'bootstrap.widgets.TbNav',
 					'htmlOptions'=>array('class'=>'pull-right'),
 					'items'=>array(
-						array('label' => 'Пользователь ('.Yii::app()->user->name.')', 'url' => Yii::app()->createUrl('admin/adminUser/update', array('id' => Yii::app()->user->id))),
+						array('label' => 'Пользователь ('.Yii::app()->user->name.')', 'url' => Yii::app()->createUrl('admin/user/profile', array('id' => Yii::app()->user->id))),
 						array('label'=>'Выйти', 'url'=>'/admin/user/logout'),
 					),
 				),

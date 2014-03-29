@@ -119,10 +119,17 @@ class AdminUser extends EActiveRecord
         );
     }
 
-    public function getRole(){
-        // $roles = self::getRoles();
+    public static function getStatusAliases($status = -1)
+    {
+        $aliases = array(
+            parent::STATUS_CLOSED => 'Закрыт доступ',
+            parent::STATUS_PUBLISH => 'Открыт доступ',
+        );
 
-        // return $roles[$this->]
+        if ($status > -1)
+            return $aliases[$status];
+
+        return $aliases;
     }
 
     public function beforeSave(){
@@ -137,16 +144,19 @@ class AdminUser extends EActiveRecord
     public function afterSave(){
         $authMahager = Yii::app()->authManager;
 
-        $assignments = $authMahager->getAuthAssignments($this->id);
+        if(!$this->role){
+            $assignments = $authMahager->getAuthAssignments($this->id);
 
-        // print_r($assignments); die();
-        if(!empty($assignments)){
-            foreach ($assignments as $key => $value) {
-                $authMahager->revoke($key, $this->id);
+            // print_r($assignments); die();
+            if(!empty($assignments)){
+                foreach ($assignments as $key => $value) {
+                    $this->role = $key;
+                    //$authMahager->revoke($key, $this->id);
+                }
+                // $this->role = $authAssignment->itemName;
             }
-            // $this->role = $authAssignment->itemName;
         }
-
+        
         if(!$authMahager->isAssigned($this->role, $this->id)){
             $authMahager->assign($this->role, $this->id);
         }else{

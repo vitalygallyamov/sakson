@@ -8,12 +8,8 @@ class AdminUserController extends AdminController
     {
         return array(
             array('allow',
-                'actions'=>array('create', 'update', 'list'),
+                'actions'=>array('create', 'update', 'list', 'delete'),
                 'roles'=>array('admin'),
-            ),
-            array('allow',
-                'actions'=>array('update'),
-                'roles'=>array('agent'),
             ),
             array('deny',
                 'users'=>array('*'),
@@ -32,7 +28,7 @@ class AdminUserController extends AdminController
             }
 
             if($model->validate()){
-                Yii::app()->swiftmail->sendEmail("test@test.com", $model->email, 'Доступы в систему управления объектами недвижимости', $this->renderPartial('_email', array('model' => $model), true));
+                //Yii::app()->swiftmail->sendEmail("test@test.com", $model->email, 'Доступы в систему управления объектами недвижимости', $this->renderPartial('_email', array('model' => $model), true));
                 $model->save(false);
                 $this->redirect($this->createUrl('list'));
             }

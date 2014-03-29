@@ -7,6 +7,10 @@ class UserController extends AdminController
 	public function accessRules()
     {
         return array(
+        	array('allow', // allow authenticated users to access all actions
+            	'actions' => array('profile'),
+                'users'=>array('@'),
+            ),
             array('allow', // allow authenticated users to access all actions
             	'actions' => array('login', 'logout', 'set', 'error'),
                 'users'=>array('*'),
@@ -30,6 +34,28 @@ class UserController extends AdminController
 			else
 				$this->render('error', $error);
 		}
+	}
+
+	public function actionProfile($id){
+		$this->layout = '/layouts/custom';
+
+		if(Yii::app()->user->id != $id)
+			throw new HttpException(403, 'Доступ запрещен');
+
+		$user = AdminUser::model()->findByPk($id);
+		$user->pass = '';
+
+		if(isset($_POST['AdminUser'])){
+			$user->attributes = $_POST['AdminUser'];
+
+			if($user->save())
+				$this->redirect($this->createUrl('profile', array('id' => $user->id)));
+		}
+
+		if(!$user)
+			throw new HttpException(404, 'Пользователь не найден');
+
+		$this->render('profile', array('model' => $user));
 	}
 
 	public function actionLogin(){
