@@ -17,6 +17,10 @@
 						array('label'=>'Список', 'url'=>"/admin/apartments/list"),
 					)),
 				)),
+                array('label'=>'Контент', 'url'=>'#', 'items'=>array(
+                        array('label'=>'Страницы', 'url'=>'/admin/page/list'),
+                    )
+                ),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
 			);
 		?>
