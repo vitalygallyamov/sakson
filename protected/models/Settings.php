@@ -99,7 +99,7 @@ class Settings extends EActiveRecord
     }
 
     public function afterSave(){
-        Settings::model()->cache(1000)->delete();
+        Settings::model()->cache(29000000)->delete();
         return true;
     }
 }
