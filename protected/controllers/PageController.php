@@ -6,12 +6,12 @@ class PageController extends FrontController
 
 	public function actionIndex($url)
 	{
-		$data["model"] = $this->loadModel($url);
+		$data["model"] = $this->getModel($url);
         $this->seo = $data["model"]->seo;
 		$this->render('index', $data);
 	}
 
-    public function loadModel($url=null){
+    public function getModel($url=null){
         if($url == null)
             $model = Page::model()->findByAttributes(array("url"=>"/", "status"=>Page::STATUS_PUBLISH));
         else

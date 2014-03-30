@@ -279,14 +279,30 @@ a {
 	width: 640px;
 	font-size: 14px;
 }
-.catalog .center_col .sortblock a{
-	text-decoration: none;
+.catalog .list-view-loading{
+	background-position: top right;
 }
-.catalog .center_col .sortblock {
+.catalog .center_col .sorter a{
+	text-decoration: none;
+	font-size: 14px;
+	padding-right: 20px;
+}
+
+.catalog .center_col .sorter a.desc{
+	text-decoration: none;
+	background: url("../images/arrow_down.png") no-repeat scroll 100% 50% transparent;
+}
+
+.catalog .center_col .sorter a.asc{
+	text-decoration: none;
+	background: url("../images/arrow_up.png") no-repeat scroll 100% 50% transparent;
+}
+
+.catalog .center_col .sorter {
 	margin:0;
 	padding:0;
 }
-.catalog .center_col .sortblock li{
+.catalog .center_col .sorter li{
 	list-style: none;
 	float:left;
 	margin-right: 100px;
@@ -409,20 +425,8 @@ a {
 }
 
 .partners img {
-    display: inline-block;
-    zoom: 1;
-    *display: inline;
-    vertical-align: top;
 	margin-right: 50px;
-    margin-bottom: 40px;
 	padding-left:30px;
-}
-.partners img.gray {
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
 }
 .partner_container {
 	display:none;
@@ -508,3 +512,44 @@ img.left {
 .pixel {
 	background-color: #c69d20;
 }
+
+
+/* Checkbox */
+
+
+.catalog_filter  input[type="checkbox"]{
+    display:none; 
+
+}
+.catalog_filter input[type="checkbox"] + label {
+  cursor: pointer;
+  float:left;
+}
+.catalog_filter input[type="checkbox"] + label::before,
+.catalog_filter input[type="radio"] + label::before {
+    content: "";
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    margin: 0 5px 0 0;
+
+    background-image: url(../images/sprite3.png);
+    background-repeat: no-repeat;
+
+}
+.catalog_filter input[type="checkbox"] + label::before {
+    background-position: -38px -260px;    
+}
+
+.catalog_filter input[type="checkbox"]:checked + label::before {
+    background-position: -114px -260px;
+}
+
+.catalog_filter input[type="checkbox"]:disabled + label::before {
+    background-position: -152px -260px;
+}
+.catalog_filter input[type="checkbox"]:checked:disabled + label::before {
+    background-position: -171px -260px;
+}
+
+

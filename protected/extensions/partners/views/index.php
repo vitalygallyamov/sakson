@@ -25,16 +25,20 @@
 
                         $(".partner").bind("click", function(e){
 
-                            id = $(this).attr("id");
-                            src = $(this).attr('src');
+                            var id = $(this).attr("id"),
+                                src = $(this).attr('src'),
+                                $this = $(this);
 
-                            $(".partners img").addClass('gray');
-                            $(this).removeClass("gray");
-
-//                            $("#"+id).attr("src","/media/images/partners/"+id+"_color.png");
-//                            $("#"+$("#old_id").val()).attr("src","/media/images/partners/"+$("#old_id").val()+".png");
-                            $(".partner_container").hide(100);
-                            $("#container_"+id).show(200);
+                            if(!$this.hasClass('gray')){
+                                $this.addClass('gray');
+                                $(".partner_container").hide(100);
+                            }else{
+                                $(".partners img").addClass('gray');
+                                $this.removeClass("gray");
+                                $(".partner_container").hide(100);
+                                $("#container_"+id).show(200);
+                            }
+                            
                             $("#old_id").val(id);
                         });
 
