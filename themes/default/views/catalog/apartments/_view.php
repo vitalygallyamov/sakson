@@ -6,15 +6,21 @@
 
         $square = $square[1] == '00' ? $square[0] : $data->square;
     }
+
+    $added = explode(',', $data->added);
+    $inCookie = $data->inCookies('apartment');
 ?>
 
 <div class="media">
     <a class="pull-left" href="#">
         <img src="<?=$data->gallery->main ? $data->gallery->main->getUrl('small') : "http://placehold.it/140x180"?>">
-        <div class="wtm new">new</div>
-        <div class="wtm hot">hot</div>
-        <div class="wtm vip">vip</div>
-        <div class="wtm izb"><img src="images/romb_izb.png"></div>
+        <?if($data->isNew()):?><div class="wtm new">new</div><?endif;?>
+        <?if(in_array(Apartments::APART_HOT, $added)):?><div class="wtm hot">hot</div><?endif;?>
+        <?if(in_array(Apartments::APART_VIP, $added)):?><div class="wtm vip">vip</div><?endif;?>
+        <div class="wtm izb" data-id="<?=$data->id?>" data-type="apartment" title="<?=!$inCookie ? "Добавить в избранное" : "Удалить из избранного"?>">
+            <input id="cfirst<?=$data->id?>" type="checkbox" name="izb<?=$data->id?>" <?=$inCookie ? 'checked' : ''?> hidden />
+            <label for="cfirst<?=$data->id?>"></label>
+        </div>
     </a>
     <div class="media-body">
         <span class="price"><?=CHtml::encode(number_format($data->price, 0, '', ' '))?> руб.</span>

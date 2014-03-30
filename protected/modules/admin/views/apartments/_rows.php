@@ -1,3 +1,9 @@
+<?
+	if(is_string($model->added)){
+		$model->added = explode(',', $model->added);
+	}
+?>
+
 	<?php echo $form->dropDownListControlGroup($model,'apartment_type_id', CHtml::listData(ApartmentTypes::all(), 'id', 'name')); ?>
 
 	<div class="control-group">

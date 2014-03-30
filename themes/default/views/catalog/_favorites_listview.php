@@ -2,7 +2,7 @@
 $this->widget('zii.widgets.CListView', array(
     'id' => 'catalog-list',
     'dataProvider'=>$dataProvider,
-    'template' => '{sorter}<div class="clear"></div>{items}<div class="clear"></div><br>{pager}<div class="info">{summary}</div>',
+    'template' => '{sorter}<div class="clear"></div>{items}<div class="clear"></div><br><a href="#" class="but to_mail">Отправить на почту</a>{pager}<div class="info">{summary}</div>',
     'itemView'=>'apartments/_view',   // refers to the partial view named '_post'
     'summaryText' => "<div class=\"left\">НАЙДЕНО : {count}</div><div class=\"right\">НА СТРАНИЦЕ : {start}-{end}</div>",
     'summaryCssClass' => '',
