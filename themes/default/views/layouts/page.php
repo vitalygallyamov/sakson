@@ -39,8 +39,15 @@
     </div>
 
     <? $this->widget("ext.subMenu.subMenuWidget", array('subMenuItems'=>$this->subMenu)); ?>
-
-    <?=$content?>
+    
+    <div class="line second_content">
+        <div class="line995px">
+            <div class="line_content">
+                <?=$content?>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="line splitter_footer">
 
@@ -52,25 +59,25 @@
                 <div class="line_content">
                     <div class="block half">
                         <div class="adr">
-                            <?=$this->settings["address"]?>
+                            <?=isset($this->settings["address"]) ? $this->settings["address"] : ''?>
                         </div>
                         <div class="phones">
-                            <?=$this->settings["phone"]?>
+                             <?=isset($this->settings["phone"]) ? $this->settings["phone"] : ''?>
                         </div>
                     </div>
                     <div class="block half">
                         <ul class="social">
                             <li>
-                                <a href="<?=$this->settings["fb_link"]?>"><img src="/media/images/social/1.png"></a>
+                                <a href="<?=isset($this->settings["fb_link"]) ? $this->settings["fb_link"] : ''?>"><img src="/media/images/social/1.png"></a>
                             </li>
                             <li>
-                                <a href="<?=$this->settings["tw_link"]?>"><img src="/media/images/social/2.png"></a>
+                                <a href="<?=isset($this->settings["tw_link"]) ? $this->settings["tw_link"] : ''?>"><img src="/media/images/social/2.png"></a>
                             </li>
                             <li>
-                                <a href="<?=$this->settings["vk_link"]?>"><img src="/media/images/social/3.png"></a>
+                                <a href="<?=isset($this->settings["vk_link"]) ? $this->settings["vk_link"] : ''?>"><img src="/media/images/social/3.png"></a>
                             </li>
                             <li>
-                                <a href="<?=$this->settings["sk_link"]?>"><img src="/media/images/social/4.png"></a>
+                                <a href="<?=isset($this->settings["sk_link"]) ? $this->settings["sk_link"] : ''?>"><img src="/media/images/social/4.png"></a>
                             </li>
                         </ul>
                     </div>

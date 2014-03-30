@@ -106,11 +106,14 @@ class Apartments extends EActiveRecord
 				'idAttribute' => 'gllr_photos',
 				'versions' => array(
 					'small' => array(
-						'adaptiveResize' => array(90, 90),
+						'adaptiveResize' => array(140, 180),
 					),
 					'medium' => array(
 						'resize' => array(600, 500),
-					)
+					),
+                    'big' => array(
+                        'resize' => array(1000, 1000),
+                    )
 				),
 				'name' => true,
 				'description' => true,

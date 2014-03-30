@@ -11,6 +11,7 @@ class FrontController extends Controller
     public $seo;
     public $subMenu = array();
     public $settings = array();
+    public $defaultAction = 'index';
 
     public function init() {
         parent::init();
@@ -34,7 +35,7 @@ class FrontController extends Controller
 
     public function beforeRender($view)
     {
-        $this->renderPartial('//layouts/clips/_main_menu');
+        //$this->renderPartial('//layouts/clips/_main_menu');
         return parent::beforeRender($view);
     }
 }
