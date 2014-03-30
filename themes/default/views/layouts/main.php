@@ -80,44 +80,7 @@
             <div class="clear"></div>
 
             <!-- Новости -->
-            <div class="block">
-                <h3>Последние новости</h3>
-                <div class="block half last_news">
-
-                    <div class="media_news">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://placehold.it/200x150">
-                        </a>
-                        <div class="media-body">
-                            <div class="media_news_date">12</div>
-                            <div class="media_news_month">Март</div>
-
-                            <h4>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </h4>
-
-                            Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus...
-                        </div>
-                    </div>
-
-                </div>
-                <div class="block half last_news">
-
-                    <div class="media_news">
-                        <a class="pull-left" href="#">
-                            <img class="media-object" src="http://placehold.it/200x150">
-                        </a>
-                        <div class="media-body">
-                            <div class="media_news_date">12</div>
-                            <div class="media_news_month">Март</div>
-
-                            <h4>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </h4>
-
-                            Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus...
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
+            <? $this->widget("ext.news.newsWidget"); ?>
             <div class="clear"></div>
 
         </div>

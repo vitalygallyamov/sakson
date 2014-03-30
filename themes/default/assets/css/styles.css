@@ -221,6 +221,9 @@ a {
 	float:right;
 	width:220px;
 }
+.news .right_col .new {
+    margin-bottom: 10px;
+}
 .news .photos .thumbs img{
 	margin:10px 11px 0 0;
 	cursor:pointer;
