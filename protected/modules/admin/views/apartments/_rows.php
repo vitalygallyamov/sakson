@@ -92,6 +92,8 @@
 
 	<?php echo $form->dropDownListControlGroup($model, 'status', Apartments::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
 
+	<?php echo $form->checkBoxListControlGroup($model, 'added', Apartments::addedList()); ?>
+
 <script>
 	jQuery('.calc-price').on('blur', function(){
 		var square = jQuery('.square').val(),

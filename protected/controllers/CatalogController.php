@@ -47,15 +47,22 @@ class CatalogController extends FrontController
 	
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Lands');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		// $dataProvider=new CActiveDataProvider('Lands');
+		// $this->render('index',array(
+		// 	'dataProvider'=>$dataProvider,
+		// ));
 	}
 
 	public function actionApartments(){
 		$this->seo = Seo::model()->find();
-		$this->render('apartments', array());
+
+		$dataProvider=new CActiveDataProvider('Apartments', array(
+			'criteria'=>array(
+				'condition'=>'status=1',
+			),
+		));
+
+		$this->render('apartments/main', array('dataProvider'=>$dataProvider));
 	}
 
 	public function actionLands(){

@@ -33,11 +33,14 @@ class Apartments extends EActiveRecord
     public $priceBegin;
     public $priceEnd;
 
+    const APART_HOT = 1;
+    const APART_VIP = 2;
+    const APART_IPOTEKA = 3;
+
     public function tableName()
     {
         return '{{apartments}}';
     }
-
 
     public function rules()
     {
@@ -45,6 +48,7 @@ class Apartments extends EActiveRecord
             array('price', 'required'),
             array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, gllr_photos, agent_id, seo_id, status, sort', 'numerical', 'integerOnly'=>true),
             array('house', 'length', 'max'=>20),
+            array('added', 'length', 'max'=>40),
             array('square, kitchen_area', 'length', 'max'=>8),
             array('price_1m, price_agency, price', 'length', 'max'=>10),
             array('desc, create_time, update_time', 'safe'),
@@ -63,7 +67,8 @@ class Apartments extends EActiveRecord
             'wall' => array(self::BELONGS_TO, 'WallTypes', 'walls_type_id'),
             'series' => array(self::BELONGS_TO, 'Series', 'series'),
             'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
-            'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id')
+            'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id'),
+            'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_photos'),
         );
     }
 
@@ -87,6 +92,7 @@ class Apartments extends EActiveRecord
             'price_agency' => 'Стоимость услуг агенства',
             'price' => 'Стоимость',
             'desc' => 'Описание',
+            'added' => 'Дополнительно',
             'gllr_photos' => 'Изображения',
             'agent_id' => 'Агент',
             'seo_id' => 'SEO раздел',
@@ -159,10 +165,18 @@ class Apartments extends EActiveRecord
             $criteria->addBetweenCondition('price', $this->priceBegin, $this->priceEnd);
         }
 
-        $criteria->order = 'sort';
+        $criteria->order = 'create_time DESC, sort';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public static function addedList(){
+        return array(
+            self::APART_HOT => 'Срочно',
+            self::APART_VIP => 'VIP',
+            self::APART_IPOTEKA => 'Ипотека'
+        );
     }
 
     public static function model($className=__CLASS__)

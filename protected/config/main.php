@@ -82,6 +82,7 @@ return array(
                 'admin'=>'admin/start/index',
                 // '<id>'=>'page/index/url/<id>',
                 //'<controller:\w+>'=>'<controller>/index',
+                'page/<url:[a-zA-Z0-9_]+>'=>'page/index',
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
