@@ -8,6 +8,6 @@
 		<?php echo $form->error($model, 'img_photo'); ?>
 	</div>
 
-	<?php echo $form->textFieldControlGroup($model,'content',array('class'=>'span8','maxlength'=>255)); ?>
+	<?php echo $form->textAreaControlGroup($model,'content',array('class'=>'span8','maxlength'=>255)); ?>
 
 	<?php echo $form->dropDownListControlGroup($model, 'status', Slider::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
