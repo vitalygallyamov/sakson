@@ -20,7 +20,7 @@ $this->menu=array(
 		array(
 			'header'=>'Фото',
 			'type'=>'raw',
-			'value'=>'TbHtml::imageCircle($data->imgBehaviorLogo->getImageUrl("icon"))'
+			'value'=>'TbHtml::imageCircle($data->imgBehaviorLogo->getImageUrl("normal"))'
 		),
 		'name',
 		array(
@@ -29,19 +29,14 @@ $this->menu=array(
 			'value'=>'Partner::getStatusAliases($data->status)',
 			'filter'=>Partner::getStatusAliases()
 		),
-		'sort',
 		array(
 			'name'=>'create_time',
 			'type'=>'raw',
 			'value'=>'$data->create_time ? SiteHelper::russianDate($data->create_time).\' в \'.date(\'H:i\', strtotime($data->create_time)) : ""'
 		),
 		array(
-			'name'=>'update_time',
-			'type'=>'raw',
-			'value'=>'$data->update_time ? SiteHelper::russianDate($data->update_time).\' в \'.date(\'H:i\', strtotime($data->update_time)) : ""'
-		),
-		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+            'template'=>'{update} {delete}',
 		),
 	),
 )); ?>

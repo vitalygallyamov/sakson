@@ -15,11 +15,18 @@
 */
 class Partner extends EActiveRecord
 {
+    public $imgLogo;
+
     public function tableName()
     {
         return '{{partners}}';
     }
 
+    public function defaultScope(){
+        return array(
+            'order'=>'sort ASC',
+        );
+    }
 
     public function rules()
     {
@@ -63,12 +70,9 @@ class Partner extends EActiveRecord
 				'class' => 'application.behaviors.UploadableImageBehavior',
 				'attributeName' => 'img_logo',
 				'versions' => array(
-					'color' => array(
+					'normal' => array(
 						'resize' => array(200, 60),
 					),
-                    'bw' => array(
-                        'resize' => array(200, 60),
-                    ),
 				),
 			),
 			'CTimestampBehavior' => array(
@@ -89,7 +93,7 @@ class Partner extends EActiveRecord
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
-        $criteria->order = 'sort';
+        $criteria->order = 'sort ASC';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
@@ -105,5 +109,13 @@ class Partner extends EActiveRecord
         return 'Партнеры';
     }
 
+    public function beforeValidate(){
+        $this->imgLogo = $this->img_logo;
+        return true;
+    }
 
+    public function afterValidate(){
+        $this->img_logo = $this->imgLogo;
+        return true;
+    }
 }
