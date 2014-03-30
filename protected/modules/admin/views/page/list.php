@@ -31,7 +31,6 @@ $this->menu=array(
 			'value'=>'Page::getStatusAliases($data->status)',
 			'filter'=>Page::getStatusAliases()
 		),
-		'sort',
 		array(
 			'name'=>'create_time',
 			'type'=>'raw',

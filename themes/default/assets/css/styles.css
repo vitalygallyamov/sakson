@@ -406,8 +406,20 @@ a {
 }
 
 .partners img {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: top;
 	margin-right: 50px;
+    margin-bottom: 40px;
 	padding-left:30px;
+}
+.partners img.gray {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
 }
 .partner_container {
 	display:none;
