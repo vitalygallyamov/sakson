@@ -42,7 +42,7 @@ class Page extends EActiveRecord
 
     public function defaultScope(){
         return array(
-            'order'=>'sort DESC',
+            'order'=>'sort ASC',
         );
     }
 
@@ -112,7 +112,7 @@ class Page extends EActiveRecord
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
-        $criteria->order = 'sort DESC';
+        $criteria->order = 'sort ASC';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));

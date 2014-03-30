@@ -13,6 +13,4 @@
 		<?php echo $form->error($model, 'wswg_content'); ?>
 	</div>
 
-    <?php echo $form->textFieldControlGroup($model,'sort'); ?>
-
 	<?php echo $form->dropDownListControlGroup($model, 'status', Page::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
