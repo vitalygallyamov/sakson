@@ -3,20 +3,24 @@
         <? if($photos): ?>
         <div class="photos">
             <div class="big">
-                <img src="<?=$photos[0]->getUrl("normal")?>" class="border">
+                <a class="fancybox" title="<?=$photos[0]->name?>" rel="news" href="<?=$photos[0]->getUrl("big")?>"><img src="<?=$photos[0]->getUrl("normal")?>" class="border"></a>
             </div>
             <div class="thumbs">
-                <? foreach($photos as $p): ?>
-                    <img src="<?=$p->getUrl("small")?>" rel="<?=$p->getUrl("normal")?>">
+                <? foreach($photos as $k => $p):
+                    if($k == "0")
+                        continue;
+                    ?>
+                    <a class="fancybox" title="<?=$p->name?>" rel="news" href="<?=$p->getUrl("big")?>"><img src="<?=$p->getUrl("small")?>" rel="<?=$p->getUrl("normal")?>"></a>
                 <? endforeach; ?>
             </div>
 
             <script type="text/javascript">
                 $(document).ready(function(){
-                    $(".thumbs img").bind("click", function(e){
-                        scr = $(this).attr("rel");
-                        $(".big img").attr("src",scr);
-                    });
+                    $(".fancybox").fancybox();
+//                    $(".thumbs img").bind("click", function(e){
+//                        scr = $(this).attr("rel");
+//                        $(".big img").attr("src",scr);
+//                    });
                 });
             </script>
         </div>
@@ -34,7 +38,22 @@
     </div>
 
     <div class="right_col">
-        <? $this->widget("ext.news.newsWidget", array("right"=>true)); ?>
+        <?
+        $this->widget("zii.widgets.CListView", array(
+            'id'=>'news-list',
+            'dataProvider'=>$dataProvider,
+            'template'=>'{items}{pager}',
+            'itemView'=>'_view',
+            'summaryCssClass' => '',
+            'pagerCssClass' => 'pager news-pager',
+            'pager' => array(
+                'nextPageLabel' => CHtml::image($this->getAssetsUrl().'/images/pager_to_right.png'),
+                'prevPageLabel' => CHtml::image($this->getAssetsUrl().'/images/pager_to_left.png'),
+                'header' => '',
+                'cssFile'=>false,
+            ),
+        ));
+        ?>
     </div>
 </div>
 <!--div class="left_col">

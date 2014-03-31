@@ -4,7 +4,7 @@
     <? foreach($news as $n): ?>
     <div class="block half last_news">
         <div class="media_news">
-            <a class="pull-left" href="#">
+            <a class="pull-left" href="/news/<?=$n->year?>/<?=$n->url?>">
                 <img class="media-object" src="<?=$n->getImageUrl("normal")?>">
             </a>
             <div class="media-body">

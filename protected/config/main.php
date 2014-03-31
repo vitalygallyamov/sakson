@@ -80,6 +80,8 @@ return array(
             'rules'=>array(
                 'gii'=>'gii',
                 'admin'=>'admin/start/index',
+                'news/<year:[0-9]+>'=>'news/index/year/<year>',
+                'news/<year:[0-9]+>/<url:[a-zA-Z0-9_]+>'=>'news/view/year/<year>/url/<url>',
                 // '<id>'=>'page/index/url/<id>',
                 //'<controller:\w+>'=>'<controller>/index',
                 'page/<url:[a-zA-Z0-9_]+>'=>'page/index',

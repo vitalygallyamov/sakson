@@ -26,9 +26,11 @@ class News extends EActiveRecord
         return array(
             array('gllr_photos, status', 'numerical', 'integerOnly'=>true),
             array('name, author', 'length', 'max'=>255),
+            array('name', 'unique'),
+            array('name, author, dt_date', 'required'),
             array('dt_date, wswg_content, create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, name, gllr_photos, dt_date, wswg_content, author, status, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, name, url, gllr_photos, dt_date, wswg_content, author, status, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -114,6 +116,8 @@ class News extends EActiveRecord
             return date("d", strtotime($this->dt_date));
         if($name == "month")
             return SiteHelper::russianMonth(date("m", strtotime($this->dt_date)));
+        if($name == "year")
+            return date("Y", strtotime($this->dt_date));
         if($name == "preview_content")
             return $this->getPreviewContent();
         return parent::__get($name);
@@ -121,6 +125,7 @@ class News extends EActiveRecord
 
 	public function beforeSave()
 	{
+        $this->url = SiteHelper::url($this->name);
 		if (!empty($this->dt_date))
 			$this->dt_date = Yii::app()->date->toMysql($this->dt_date);
 		return parent::beforeSave();

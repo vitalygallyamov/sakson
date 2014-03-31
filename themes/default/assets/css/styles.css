@@ -640,6 +640,11 @@ input[type="checkbox"]:checked:disabled + label::before {
 	text-align: center;
 	width: 330px;
 }
+.pager.news-pager {
+    width: 220px;
+    margin-top: 20px;
+    text-align: center;
+}
 .pager ul{
 	margin:0;
 	padding:0; 
