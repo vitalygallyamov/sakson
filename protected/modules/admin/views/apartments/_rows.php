@@ -34,7 +34,10 @@
 		</div>
 	</div>
 
+	<?if($model->checkAccess()):?>
 	<?php echo $form->textFieldControlGroup($model,'house',array('maxlength'=>20)); ?>
+	<?php echo $form->textFieldControlGroup($model,'room_num'); ?>
+	<?endif;?>
 
 	<div class="control-group">
 		<label class="control-label" for="Parts_category_id"><?=$model->getAttributeLabel('category_id')?></label>
@@ -76,7 +79,8 @@
 
 	<?php echo $form->textFieldControlGroup($model,'price',array('append' => '.00 руб.','maxlength'=>10, 'class' => 'calc-price')); ?>
 
-	<?php echo $form->textFieldControlGroup($model,'price_1m',array('append' => '.00 руб.','maxlength'=>10, 'class' => 'price-1m')); ?>
+	<?php echo $form->textFieldControlGroup($model,'price_1m',array('append' => '.00 руб.','maxlength'=>10, 'class' => 'price-1m', 'disabled' => 'disabled')); ?>
+	<?php echo $form->hiddenField($model,'price_1m',array('class' => 'price-1m-true')); ?>
 
 	<?php echo $form->textFieldControlGroup($model,'price_agency',array('append' => '.00 руб.','maxlength'=>10)); ?>
 
@@ -101,12 +105,12 @@
 	<?php echo $form->checkBoxListControlGroup($model, 'added', Apartments::addedList()); ?>
 
 <script>
-	jQuery('.calc-price').on('blur', function(){
+	jQuery('.calc-price').on('keyup', function(){
 		var square = jQuery('.square').val(),
 			price = jQuery(this).val();
 
 		if(square){
-			jQuery('.price-1m').val(Math.round(price / square));
+			jQuery('.price-1m, .price-1m-true').val(Math.round(price / square));
 		}
 	});
 </script>

@@ -111,7 +111,7 @@
                 <b>Этаж:</b> <?=CHtml::encode($data->floor)?> <br>
             <? endif; ?>
             <? if($data->house_floors): ?>  
-                <b>Этаж:</b> <?=CHtml::encode($data->house_floors)?> <br>
+                <b>Этажность:</b> <?=CHtml::encode($data->house_floors)?> <br>
             <? endif; ?>
             
         </div>

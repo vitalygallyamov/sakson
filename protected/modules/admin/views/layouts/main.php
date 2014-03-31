@@ -9,7 +9,7 @@
 	  
 		<?php
 			$menuItems = array(
-                array('label'=>'Главная', 'url'=>'/admin/start/index'),
+                //array('label'=>'Главная', 'url'=>'/admin/start/index'),
 				// array('label'=>'Настройки', 'url'=>'/admin/settings'),
 				array('label'=>'Объекты', 'url'=>'#', 'items' => array(
 					array('label'=>'Квартиры', 'url'=>'#', 'items' => array(
@@ -21,7 +21,7 @@
 						array('label'=>'Список', 'url'=>"/admin/lands/list"),
 					)),
 				)),
-				array('label'=>'Контент', 'url'=>'#', 'items'=>array(
+				array('label'=>'Контент', 'url'=>'#', 'visible' => Yii::app()->user->checkAccess('admin'), 'items'=>array(
                         array('label'=>'Слайдер', 'url'=>'/admin/slider/list'),
                         array('label'=>'Страницы', 'url'=>'/admin/page/list'),
                         array('label'=>'Новости', 'url'=>'/admin/news/list'),
@@ -29,7 +29,7 @@
                     )
                 ),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
-				array('label'=>'Настройки', 'url'=>'/admin/settings/'),
+				array('label'=>'Настройки', 'visible' => Yii::app()->user->checkAccess('admin'), 'url'=>'/admin/settings/'),
 			);
 		?>
 		<?php $this->widget('bootstrap.widgets.TbNavbar', array(

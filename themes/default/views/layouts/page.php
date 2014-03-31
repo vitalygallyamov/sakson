@@ -31,7 +31,7 @@
     <div class="line header">
         <div class="line995px">
             <div class="line_content">
-                <a href="/"><img src="/media/images/logo60.png" class="logo_second" title="Саксон"></a>
+                <a href="/"><img src="/media/images/logo.png" class="logo_second" title="Саксон"></a>
 
                 <a href="#" class="but right">Мы заботимся о наших клиентах</a>
             </div>

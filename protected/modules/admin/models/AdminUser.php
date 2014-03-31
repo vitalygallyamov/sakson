@@ -166,4 +166,20 @@ class AdminUser extends EActiveRecord
 
         parent::afterSave();
     }
+
+    public static function getAgents(){
+        $agents = Yii::app()->db->createCommand()
+            ->select('au.id, au.fio')
+            ->from('{{admin_users}} as au')
+            ->join('{{AuthAssignment}} as aa', 'au.id=aa.userid')
+            ->where('aa.itemname="agent"')
+            ->queryAll();
+
+        $result = array();
+        foreach ($agents as $agent) {
+            $result[$agent['id']] = $agent['fio'];
+        }
+
+        return $result;
+    }
 }

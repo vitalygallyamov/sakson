@@ -37,6 +37,57 @@ class Apartments extends EActiveRecord
     const APART_VIP = 2;
     const APART_IPOTEKA = 3;
 
+    public static function deleteReasons($reason = -1)
+    {
+        $aliases = array(
+            1 => 'Продана самостоятельно,',
+            2 => 'Продана другим агентством',
+            3 => 'Продана АН «САКСОН»',
+            4 => 'Снята с продажи.'
+            //parent::STATUS_REMOVED => 'Удалено',
+        );
+
+        if ($reason > -1)
+            return $aliases[$reason];
+
+        return $aliases;
+    }
+
+    public static function getStatusAliasesCart($status = -1)
+    {
+        $aliases = array(
+            parent::STATUS_CLOSED => 'Не опубликовано',
+            parent::STATUS_PUBLISH => 'Опубликовано',
+            parent::STATUS_REMOVED => 'Удалено',
+        );
+
+        if ($status > -1)
+            return $aliases[$status];
+
+        return $aliases;
+    }
+
+    public static function getStatusAliases($status = -1)
+    {
+        $aliases = array(
+            parent::STATUS_CLOSED => 'Не опубликовано',
+            parent::STATUS_PUBLISH => 'Опубликовано',
+            //parent::STATUS_REMOVED => 'Удалено',
+        );
+
+        if ($status > -1)
+            return $aliases[$status];
+
+        return $aliases;
+    }
+
+    /*public function defaultScope()
+    {
+        return array(
+            'condition'=>"status!=".parent::STATUS_REMOVED,
+        );
+    }*/
+
     public function tableName()
     {
         return '{{apartments}}';
@@ -46,7 +97,7 @@ class Apartments extends EActiveRecord
     {
         return array(
             array('price', 'required'),
-            array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, gllr_photos, agent_id, seo_id, status, sort', 'numerical', 'integerOnly'=>true),
+            array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, gllr_photos, agent_id, seo_id, status, sort, delete_reason, room_num', 'numerical', 'integerOnly'=>true),
             array('house', 'length', 'max'=>20),
             array('added', 'length', 'max'=>40),
             array('square, kitchen_area', 'length', 'max'=>8),
@@ -56,7 +107,6 @@ class Apartments extends EActiveRecord
             array('id, apartment_type_id, area_id, street_id, house, category_id, floor, house_floors, square, kitchen_area, walls_type_id, series_id, price_1m, price_agency, price, desc, gllr_photos, agent_id, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
-
 
     public function relations()
     {
@@ -69,9 +119,9 @@ class Apartments extends EActiveRecord
             'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
             'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id'),
             'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_photos'),
+            'user' => array(self::BELONGS_TO, 'AdminUser', 'agent_id'),
         );
     }
-
 
     public function attributeLabels()
     {
@@ -97,6 +147,8 @@ class Apartments extends EActiveRecord
             'agent_id' => 'Агент',
             'seo_id' => 'SEO раздел',
             'status' => 'Статус',
+            'delete_reason' => 'Причина удаления',
+            'room_num' => 'Номер квартиры',
             'sort' => 'Вес для сортировки',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
@@ -154,12 +206,17 @@ class Apartments extends EActiveRecord
 		$criteria->compare('price',$this->price,true);
 		$criteria->compare('desc',$this->desc,true);
 		$criteria->compare('gllr_photos',$this->gllr_photos);
-		$criteria->compare('agent_id',$this->agent_id);
+        $criteria->compare('agent_id',$this->agent_id);
+        $criteria->compare('delete_reason',$this->delete_reason);
+		$criteria->compare('room_num',$this->room_num);
 		$criteria->compare('seo_id',$this->seo_id);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
+
+        $criteria->addCondition('status!=:s');
+        $criteria->params[':s'] = parent::STATUS_REMOVED;
 
         if($this->priceBegin && $this->priceEnd){
             $criteria->addBetweenCondition('price', $this->priceBegin, $this->priceEnd);
@@ -217,5 +274,18 @@ class Apartments extends EActiveRecord
             $this->added = '';
 
         return parent::beforeValidate();
+    }
+
+    public function checkAccess(){
+        if($this->isNewRecord)
+            return true;
+
+        if(Yii::app()->user->checkAccess('admin')) 
+            return true;
+
+        if(Yii::app()->user->checkAccess('agent') && Yii::app()->user->id == $this->agent_id)
+            return true;
+
+        return false;
     }
 }

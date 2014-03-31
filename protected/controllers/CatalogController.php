@@ -69,9 +69,19 @@ class CatalogController extends FrontController
 			$criteria->compare('series_id',$model->series_id);
 
 			if($model->added && is_array($model->added)){
-				foreach ($model->added as $value) {
-					$criteria->compare('added', $value, true);
+
+				$added_criteria = new CDbCriteria;
+				foreach ($model->added as $k => $value) {
+					//$added_criteria->addCondition('added=:r'.$k, 'OR');
+					$added_criteria->compare('added', $value, true, 'OR');
+
+					//$added_criteria->params[':r'.$k] = $value;
 				}
+				$criteria->mergeWith($added_criteria);
+
+				/*foreach ($model->added as $value) {
+					$criteria->compare('added', $value, true);
+				}*/
 			}
 
 			if($model->apartment_type_id && is_array($model->apartment_type_id)){
@@ -100,7 +110,7 @@ class CatalogController extends FrontController
 
 		$dataProvider=new CActiveDataProvider('Apartments', array(
 			'pagination'=>array(
-				'pageSize'=>10,
+				'pageSize'=>12
 			),
 			'criteria'=>$criteria,
 		));

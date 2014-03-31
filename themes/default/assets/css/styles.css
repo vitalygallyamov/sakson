@@ -320,6 +320,7 @@ a {
 	width: 300px;
 	float: left;
 	cursor: pointer;
+	min-height: 190px;
 }
 .catalog .center_col .media a{
 	text-decoration: none; 
@@ -357,8 +358,8 @@ a {
 	left: 0px;
 }
 .catalog .center_col .izb  {
-	top: 10px;
-	right: 0px;
+	top: 0px;
+	right: -5px;
 	cursor: pointer;
 }
 .catalog .center_col .izb label{

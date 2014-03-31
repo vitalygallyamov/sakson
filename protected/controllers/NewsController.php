@@ -28,7 +28,7 @@ class NewsController extends FrontController
                 'pageVar'=>'pager',
             ),
         ));
-
+        $this->seo = Seo::model()->find();
         $this->seo->meta_title = $data["model"]->name." / Агенство недвижимости Саксон";
 
         $data["photos"]= $data["model"]->gallery->galleryPhotos;

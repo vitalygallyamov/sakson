@@ -1,6 +1,7 @@
 <?php
 $this->menu=array(
 	array('label'=>'Добавить','url'=>array('create')),
+	array('label'=>'Корзина','url'=>array('cart')),
 );
 ?>
 
@@ -47,7 +48,16 @@ $this->menu=array(
 			'value' => '$data->street->name',
 			'filter' => CHtml::activeDropDownList($model,'street_id', array('' => 'Нет') + CHtml::listData(Streets::all(), 'id', 'name'))
 		),
-		'house',
+		array(
+			'name' => 'house',
+			'type' => 'raw',
+			'value' => '$data->checkAccess() ? $data->house : ""'
+		),
+		array(
+			'name' => 'room_num',
+			'type' => 'raw',
+			'value' => '$data->checkAccess() ? $data->room_num : ""'
+		),
 		array(
 			'name' => 'category_id',
 			'type' => 'raw',
@@ -68,6 +78,13 @@ $this->menu=array(
 		'agent_id',
 		'seo_id',*/
 		array(
+			'name'=>'agent_id',
+			'type'=>'raw',
+			'value'=>'$data->user->fio',
+			'filter'=>AdminUser::getAgents(),
+			'visible' => Yii::app()->user->checkAccess('admin')
+		),
+		array(
 			'name'=>'status',
 			'type'=>'raw',
 			'value'=>'Apartments::getStatusAliases($data->status)',
@@ -86,7 +103,7 @@ $this->menu=array(
 		// ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-			// 'template' => '{update} {delete}',
+			'template' => '{update} {delete}',
 			'buttons' => array(
 				'delete' => array(
 					'click' => 'js:function(){
