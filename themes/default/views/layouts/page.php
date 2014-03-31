@@ -9,7 +9,7 @@
 	$cs->registerScriptFile($this->getAssetsUrl().'/js/jquery.jcarousel.min.js', CClientScript::POS_END);
 	
 	$cs->registerScriptFile($this->getAssetsUrl().'/js/jcarousel.basic.js', CClientScript::POS_END);
-	$cs->registerScriptFile($this->getAssetsUrl().'/js/lib/jquery.ui.timepicker.ru.js', CClientScript::POS_END);
+	// $cs->registerScriptFile($this->getAssetsUrl().'/js/lib/jquery.ui.timepicker.ru.js', CClientScript::POS_END);
 	$cs->registerScriptFile($this->getAssetsUrl().'/js/common.js', CClientScript::POS_END);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -50,7 +50,7 @@
     </div>
 
     <div class="line splitter_footer">
-
+        <div class="hack"></div>
     </div>
 
     <div class="line footer secont_footer">

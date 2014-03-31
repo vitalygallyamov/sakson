@@ -3,9 +3,13 @@
         <div class="line_content">
             <? if($pages): ?>
             <ul class="left">
-                <? foreach($pages as $p): ?>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/page/about">О компании</a></li>
+                <li><a href="/news">Новости</a></li>
+                <li><a href="/catalog">Каталог</a></li>
+                <? /*foreach($pages as $p): ?>
                     <li><a href="<?=$p->url?>" class="<?=$p->active?>"><?=$p->show_name?></a></li>
-                <? endforeach; ?>
+                <? endforeach; */?>
             </ul>
             <? endif; ?>
 

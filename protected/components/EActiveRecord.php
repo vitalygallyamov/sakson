@@ -220,4 +220,20 @@ class EActiveRecord extends CActiveRecord
         if ( !empty($this->update_time) )
             return SiteHelper::russianDate($this->update_time).' в '.date('H:i', $this->update_time);
     }
+
+    public function inCookies($type){
+        $is_cookie = isset(Yii::app()->request->cookies['favorites']);
+
+        $values = array();
+        if($is_cookie){
+            $values = unserialize(Yii::app()->request->cookies['favorites']->value);
+        }else
+            return false;
+
+        foreach ($values as $key => $value) {
+            if($value['id'] == $this->id && $value['type'] == $type) return true;
+        }
+
+        return false;
+    }
 }

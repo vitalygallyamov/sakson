@@ -29,6 +29,7 @@
                     )
                 ),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
+				array('label'=>'Настройки', 'url'=>'/admin/settings/'),
 			);
 		?>
 		<?php $this->widget('bootstrap.widgets.TbNavbar', array(

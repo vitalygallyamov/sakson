@@ -200,6 +200,9 @@ a {
 	overflow: hidden;
 	padding-left:20px; 
 }
+.media-body b{
+	font-size: 12px;
+}
 .media_news_date {
 	font-size:24px; 
 	margin-top: 0px;
@@ -316,6 +319,7 @@ a {
 	margin-top:20px;
 	width: 300px;
 	float: left;
+	cursor: pointer;
 }
 .catalog .center_col .media a{
 	text-decoration: none; 
@@ -353,11 +357,13 @@ a {
 	left: 0px;
 }
 .catalog .center_col .izb  {
-	
-	top: 0px;
+	top: 10px;
 	right: 0px;
+	cursor: pointer;
 }
-
+.catalog .center_col .izb label{
+	cursor: pointer;
+}
 .catalog .center_col .info {
 	background-color: #000000;
 	margin: 0;
@@ -376,6 +382,14 @@ a {
 	font-size: 14px;
 }
 
+.catalog_filter select, .catalog_filter  input[type='text']{
+	background: none;
+	border: 2px solid #777;
+}
+
+:focus{
+	outline: none;
+}
 
 .catalog_filter select{
 	width:143px;
@@ -397,13 +411,24 @@ a {
 .catalog_filter input[type=checkbox] {
 	margin-left:20px;
 }
+.catalog_filter .actions{
+	text-align: center;
+}
+.catalog_filter .actions a{
+	display: inline-block;
+	background-color: #000;
+	color: #fff;
+	text-decoration: none;
+	padding: 10px 20px; 
+	margin-top: 20px;
+}
 .catalog_filter input[type=submit] {
 	background-color: #c69d20;
-	display: block;
-	margin-left: 100px;	
+	display: inline-block;
 	border:none;
 	padding: 10px 20px; 
 	margin-top: 20px;
+	cursor: pointer;
 }
 
 .index_content_light {
@@ -534,39 +559,221 @@ img.left {
 /* Checkbox */
 
 
-.catalog_filter  input[type="checkbox"]{
+input[type="checkbox"]{
     display:none; 
 
 }
 .catalog_filter input[type="checkbox"] + label {
   cursor: pointer;
   float:left;
+  font-weight: bold;
+  vertical-align: top;
 }
-.catalog_filter input[type="checkbox"] + label::before,
-.catalog_filter input[type="radio"] + label::before {
+input[type="checkbox"] + label::before{
     content: "";
     display: inline-block;
-    height: 18px;
-    width: 18px;
-    margin: 0 5px 0 0;
+    height: 24px;
+    width: 24px;
+    margin: -5px 5px 0 0;
 
-    background-image: url(../images/sprite3.png);
+    background-image: url(../images/sprite4.png);
     background-repeat: no-repeat;
 
 }
-.catalog_filter input[type="checkbox"] + label::before {
+input[type="checkbox"] + label::before {
     background-position: -38px -260px;    
 }
 
-.catalog_filter input[type="checkbox"]:checked + label::before {
+input[type="checkbox"]:checked + label::before {
     background-position: -114px -260px;
 }
 
-.catalog_filter input[type="checkbox"]:disabled + label::before {
+input[type="checkbox"]:disabled + label::before {
     background-position: -152px -260px;
 }
-.catalog_filter input[type="checkbox"]:checked:disabled + label::before {
+input[type="checkbox"]:checked:disabled + label::before {
     background-position: -171px -260px;
 }
 
+/* Добавлено 30.04.14 */
 
+.catalog .izb_block {
+	width:100% !important;
+	min-height: 634px;
+}
+
+.catalog .info {
+	
+	width:300px !important;
+}
+
+.catalog .info  div{
+	margin:0 10px;
+}
+
+.catalog .info .left {
+	float:left;
+}
+.catalog .info .right {
+	float:right;
+}
+.catalog .center_col .media {
+	margin-right: 20px !important;
+}
+
+
+.catalog .but {
+	color:white;
+	font-size: 12px;
+	text-decoration: none;
+	padding:8px 7px;
+	background-color: #c69d20;
+	float: left;
+	margin-top: 0px;
+	font-size:14px; 
+
+}
+
+.pager {
+	float:left;
+	font-size: 14px;
+	text-align: center;
+	width: 330px;
+}
+.pager ul{
+	margin:0;
+	padding:0; 
+	display: inline-block;
+}
+.pager li{
+	float:left;
+	list-style: none;
+	/*padding: 7px 5px;*/
+	font-weight: bold;
+	line-height: 13px;
+	
+}
+.pager .page a {
+	padding: 7px 9px;
+	text-decoration: none;
+	display: block;
+}
+.pager .selected {
+	color:white;
+	background: url("../images/pager_active.png") no-repeat scroll center top transparent;
+}
+
+.pager .hidden {
+	display: none;
+}
+.pager .last,.pager .first  {
+	display: none;
+}
+.pager .selected a {
+	color:white;
+	
+}
+.pager li img{
+	/*margin-top:-7px;*/
+}
+
+.catalog .izb_block .pager {
+	width: 520px;
+}
+
+
+/* Карточка квартиры */
+.catalog .media.card {
+	width:620px;
+	display: none;
+}
+
+.card .block1 {
+	width:320px;
+	float:left;
+	overflow: hidden;
+}
+
+.card .block2 {
+	width:140px;
+	float:right;
+	overflow: hidden;
+	text-align: right;
+
+}
+.card .block2 i {
+	color:#c69d20;
+	margin-top: 20px;
+}
+.card .block3 {
+	width:140px;
+	float:left;
+	overflow: hidden;
+	margin-right:20px; 
+
+}
+.card .price  span{
+	color:#c69d20;
+}
+
+.card .block2 .object_id {
+	width:100%;
+
+}
+.card .block2 .object_id div{
+	width:50%;
+	float: left;
+	text-align: center;
+
+}
+
+.card .block2 .object_id .hdr{
+	color:white;
+	background-color: #000000;
+	padding: 5px 0; 
+}
+.card .block2 .object_id .id{
+	border: 1px solid black;
+	width:66px;
+	overflow: hidden;
+	padding: 4px 0;
+}
+.card .block4 {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 140px; 
+	text-align: right;
+}
+.card .block4 label{
+	cursor: pointer;
+}
+.card .media-body {
+	position: relative !important;
+}
+.catalog .card .but {
+	font-size: 14px !important;
+	padding:5px 2px !important;
+	float: right!important;
+	width: 100% !important;
+	text-align: center; 
+	margin-top: 10px;
+}
+.catalog .card label {
+	font-weight: bold;
+	vertical-align: top;
+}
+
+/* подвал */
+.splitter_footer {
+	position: relative;
+}
+.splitter_footer .hack {
+	height: 45px;
+	margin:-1px auto 0 auto;
+	background: url("../images/content_fon.png") repeat scroll center top transparent;
+	width: 995px;
+}
+.secont_footer .line_content {
+	padding-top:30px;
+}

@@ -65,7 +65,7 @@ class Apartments extends EActiveRecord
             'area' => array(self::BELONGS_TO, 'Areas', 'area_id'),
             'street' => array(self::BELONGS_TO, 'Streets', 'street_id'),
             'wall' => array(self::BELONGS_TO, 'WallTypes', 'walls_type_id'),
-            'series' => array(self::BELONGS_TO, 'Series', 'series'),
+            'series' => array(self::BELONGS_TO, 'Series', 'series_id'),
             'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
             'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id'),
             'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_photos'),
@@ -171,6 +171,18 @@ class Apartments extends EActiveRecord
         ));
     }
 
+    public function isNew(){
+        if($this->create_time){
+            $now = new DateTime();
+            $create = new DateTime($this->create_time);
+           
+            $interval = $now->diff($create);
+            $interval = (int) $interval->format('%a');
+            
+            return $interval <= 7;
+        }
+    }
+
     public static function addedList(){
         return array(
             self::APART_HOT => 'Срочно',
@@ -195,5 +207,15 @@ class Apartments extends EActiveRecord
         $this->price = number_format($this->price, 0, '', '');
         $this->price_agency = number_format($this->price_agency, 0, '', '');
         $this->price_1m = number_format($this->price_1m, 0, '', '');
+    }
+
+    public function beforeValidate(){
+
+        if($this->added && is_array($this->added)){
+            $this->added = implode(',', $this->added);
+        }else
+            $this->added = '';
+
+        return parent::beforeValidate();
     }
 }
