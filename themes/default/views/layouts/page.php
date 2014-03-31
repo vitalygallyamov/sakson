@@ -50,7 +50,7 @@
     </div>
 
     <div class="line splitter_footer">
-
+        <div class="hack"></div>
     </div>
 
     <div class="line footer secont_footer">

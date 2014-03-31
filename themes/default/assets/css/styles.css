@@ -763,3 +763,17 @@ input[type="checkbox"]:checked:disabled + label::before {
 	font-weight: bold;
 	vertical-align: top;
 }
+
+/* подвал */
+.splitter_footer {
+	position: relative;
+}
+.splitter_footer .hack {
+	height: 45px;
+	margin:-1px auto 0 auto;
+	background: url("../images/content_fon.png") repeat scroll center top transparent;
+	width: 995px;
+}
+.secont_footer .line_content {
+	padding-top:30px;
+}
