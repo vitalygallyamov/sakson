@@ -130,7 +130,9 @@ class CatalogController extends FrontController
 		$criteria->addInCondition('id', $ids);
 
 		$dataProvider=new CActiveDataProvider('Apartments', array(
-			'pagination'=>false,
+			'pagination'=>array(
+				'pageSize' => 18
+			),
 			'criteria' => $criteria
 		));
 
