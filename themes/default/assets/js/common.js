@@ -2,6 +2,8 @@ $(document).ready(function() {
 	var timeId = false;
 	var card = false;
 
+	if($('.items .empty').length)
+		$('.to_mail').hide();
 	// var stopEvent = function stopEvent(evt) {
 	// 	(evt && evt.stopPropagation) ? evt.stopPropagation() : window.event.cancelBubble = true;
 	// };
@@ -29,13 +31,16 @@ $(document).ready(function() {
 			});
 		}
 
+		var inIzb = $this.closest('.izb_block').length;
+
 		timeId = setTimeout(function(){
 			$.ajax({
 				url: checked ? "/catalog/addToFavorites" : "/catalog/deleteFromFavorites",
 				data: {id: id, type: type},
 				success: function(data){
-					if($this.closest('.izb_block').length)
+					if(inIzb)
 						$.fn.yiiListView.update("catalog-list",{ajaxType: 'GET'});
+					
 				}
 			});
 		}, 400);

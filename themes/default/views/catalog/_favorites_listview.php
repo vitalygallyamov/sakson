@@ -8,6 +8,7 @@ $this->widget('zii.widgets.CListView', array(
     'summaryCssClass' => '',
     'pagerCssClass' => 'pager',
     'cssFile' => false,
+    'afterAjaxUpdate' => "js:function(){if($('.items .empty').length) $('.to_mail').hide()}",
     'pager' => array(
         'nextPageLabel' => CHtml::image($this->getAssetsUrl().'/images/pager_to_right.png'),
         'prevPageLabel' => CHtml::image($this->getAssetsUrl().'/images/pager_to_left.png'),
