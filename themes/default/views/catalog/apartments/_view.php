@@ -9,6 +9,14 @@
 
     $added = explode(',', $data->added);
     $inCookie = $data->inCookies('apartment');
+
+    $flat_num = 0;
+    if($data->apartment_types){
+        $t = $data->apartment_types->name;
+        
+        if($t == 4) $flat_num = '4+';
+        else $flat_num = $data->apartment_type_id;
+    }
 ?>
 
 <div class="media" data-id="<?=$data->id?>">
@@ -101,6 +109,9 @@
         </div>
 
         <div class="block3">
+            <? if($data->apartment_types): ?>  
+                <b>Кол-во комнат:</b> <?=CHtml::encode($flat_num ? $flat_num : $data->apartment_types->name)?> <br>
+            <? endif; ?>
             <? if($data->square): ?>  
                 <b>Площадь:</b> <?=CHtml::encode($square)?> <br>
             <? endif; ?>

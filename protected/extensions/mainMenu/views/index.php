@@ -14,7 +14,7 @@
             <? endif; ?>
 
             <ul class="right">
-                <li><a href="#">Вход</a></li>
+                <li><a href="/admin">Вход</a></li>
             </ul>
         </div>
     </div>
