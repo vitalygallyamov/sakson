@@ -17,6 +17,8 @@ class NewsController extends FrontController
 
 	public function actionIndex()
 	{
+		$this->seo = Seo::model()->find();
+		
 		$dataProvider=new CActiveDataProvider('News');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,

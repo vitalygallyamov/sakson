@@ -65,7 +65,7 @@ class Apartments extends EActiveRecord
             'area' => array(self::BELONGS_TO, 'Areas', 'area_id'),
             'street' => array(self::BELONGS_TO, 'Streets', 'street_id'),
             'wall' => array(self::BELONGS_TO, 'WallTypes', 'walls_type_id'),
-            'series' => array(self::BELONGS_TO, 'Series', 'series'),
+            'series' => array(self::BELONGS_TO, 'Series', 'series_id'),
             'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
             'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id'),
             'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_photos'),

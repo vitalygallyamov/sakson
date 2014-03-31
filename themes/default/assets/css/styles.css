@@ -316,6 +316,7 @@ a {
 	margin-top:20px;
 	width: 300px;
 	float: left;
+	cursor: pointer;
 }
 .catalog .center_col .media a{
 	text-decoration: none; 
@@ -674,4 +675,87 @@ input[type="checkbox"]:checked:disabled + label::before {
 
 .catalog .izb_block .pager {
 	width: 520px;
+}
+
+
+/* Карточка квартиры */
+.catalog .media.card {
+	width:620px;
+	display: none;
+}
+
+.card .block1 {
+	width:320px;
+	float:left;
+	overflow: hidden;
+}
+
+.card .block2 {
+	width:140px;
+	float:right;
+	overflow: hidden;
+	text-align: right;
+
+}
+.card .block2 i {
+	color:#c69d20;
+	margin-top: 20px;
+}
+.card .block3 {
+	width:140px;
+	float:left;
+	overflow: hidden;
+	margin-right:20px; 
+
+}
+.card .price  span{
+	color:#c69d20;
+}
+
+.card .block2 .object_id {
+	width:100%;
+
+}
+.card .block2 .object_id div{
+	width:50%;
+	float: left;
+	text-align: center;
+
+}
+
+.card .block2 .object_id .hdr{
+	color:white;
+	background-color: #000000;
+	padding: 5px 0; 
+}
+.card .block2 .object_id .id{
+	border: 1px solid black;
+	width:66px;
+	overflow: hidden;
+	padding: 4px 0;
+}
+.card .block4 {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 140px; 
+	text-align: right;
+}
+.card .block4 label{
+	cursor: pointer;
+}
+.card .media-body {
+	position: relative !important;
+}
+.catalog .card .but {
+	font-size: 14px !important;
+	padding:5px 2px !important;
+	float: right!important;
+	width: 100% !important;
+	text-align: center; 
+	margin-top: 10px;
+}
+.catalog .card label {
+	font-weight: bold;
+	vertical-align: top;
 }

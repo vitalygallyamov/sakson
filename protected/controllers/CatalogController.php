@@ -18,7 +18,7 @@ class CatalogController extends FrontController
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'apartments', 'lands', 'favorites', 'addToFavorites', 'deleteFromFavorites'),
+				'actions'=>array('index','view', 'apartments', 'lands', 'favorites', 'addToFavorites', 'deleteFromFavorites', 'getDetailView'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -209,6 +209,26 @@ class CatalogController extends FrontController
 		Yii::app()->end();
 	}
 
+	/*public function actionGetDetailView($id, $type = 'apartments'){
+		$model = null;
+
+		switch ($type) {
+			case 'apartments':
+				$model = Apartments::model()->findByPk($id);
+				break;
+			case 'lands':
+				$model = Lands::model()->findByPk($id);
+				break;
+		}
+
+		if(!$model)
+			throw new HttpException(404);
+
+		$this->renderPartial($type.'/_view_detail', array('data' => $model));
+
+		Yii::app()->end();
+	}
+*/
 	public function actionLands(){
 		$this->seo = Seo::model()->find();
 		$this->render('lands', array());

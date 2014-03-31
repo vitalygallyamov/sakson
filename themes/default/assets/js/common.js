@@ -1,6 +1,18 @@
 $(document).ready(function() {
 	var timeId = false;
-	$('.catalog').on('change', '.center_col .izb', function(e){
+	var card = false;
+
+	// var stopEvent = function stopEvent(evt) {
+	// 	(evt && evt.stopPropagation) ? evt.stopPropagation() : window.event.cancelBubble = true;
+	// };
+	$('.catalog').on('click', '.center_col .izb, .izb-detail', function(e){
+		e.stopPropagation();
+	});
+
+	$('.catalog').on('change', '.center_col .izb, .izb-detail', function(e){
+		//e.stopPropagation();
+		// e.preventDefault();
+
 		var $this = $(this),
 			id = $this.data('id'),
 			type = $this.data('type');
@@ -14,7 +26,6 @@ $(document).ready(function() {
 		if(!checked && $this.closest('.izb_block').length){
 			$this.closest('.media').hide(300, function(){
 				$(this).remove();
-
 			});
 		}
 
@@ -22,11 +33,40 @@ $(document).ready(function() {
 			$.ajax({
 				url: checked ? "/catalog/addToFavorites" : "/catalog/deleteFromFavorites",
 				data: {id: id, type: type},
-				success: function(){
-					jQuery('#catalog-list').yiiListView('update');
+				success: function(data){
+					if($this.closest('.izb_block').length)
+						$.fn.yiiListView.update("catalog-list",{ajaxType: 'GET'});
 				}
 			});
 		}, 400);
+
+	});
+
+
+	$('.catalog').on('click', '.media', function(e){
+		e.preventDefault();
+		// e.preventDefault();
+
+		var $this = $(this),
+			id = $this.data('id');
+
+		if($this.hasClass('card')){
+			$this.hide();
+			$this.prev().fadeIn(500);
+		}else{
+			$this.hide();
+			$this.next().fadeIn(500);
+		}
+
+		/*$.ajax({
+			url: '/catalog/getDetailView',
+			data: {id: id},
+			success: function(res){
+				// var $body = $(res).find('.media').html();
+				// console.log($(res).find('.media'));
+				$this.addClass('card').html(res);
+			}
+		});*/
 	});
 
 	/*$('.catalog .media').hover(function(){
