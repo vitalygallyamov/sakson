@@ -51,5 +51,6 @@
 	</div>
 	
 	<?php echo TbHtml::submitButton('Найти', array('color' => TbHtml::BUTTON_COLOR_PRIMARY)); ?>
+	<?php echo TbHtml::linkButton('Сбросить', array('color' => TbHtml::BUTTON_COLOR_INVERSE, 'url' => '/admin/apartments')); ?>
 
 <?php $this->endWidget(); ?>

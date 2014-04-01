@@ -783,3 +783,6 @@ input[type="checkbox"]:checked:disabled + label::before {
 .secont_footer .line_content {
 	padding-top:30px;
 }
+.jcarousel-control-prev, .jcarousel-control-next, .jcarousel-pagination{
+	display: none;
+}
