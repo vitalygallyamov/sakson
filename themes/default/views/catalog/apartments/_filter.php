@@ -11,7 +11,7 @@
     <?php echo $form->label($model, 'area_id'); ?>
     <?php echo $form->dropDownList($model, 'area_id', $this->getDropDownList('Areas', true)); ?>
     
-    <?php echo CHtml::label('Цена (тыс. руб.)', 'price_from'); ?>
+    <?php echo CHtml::label('Цена', 'price_from'); ?>
     <?php echo CHtml::textField('price_from', isset($_GET['price_from']) ? $_GET['price_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('price_to', isset($_GET['price_to']) ? $_GET['price_to'] : '', array('placeholder' => 'До')); ?>

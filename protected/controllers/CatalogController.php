@@ -93,7 +93,8 @@ class CatalogController extends FrontController
 
 			//price 
 			if($_GET['price_from'] > 0 && $_GET['price_to'] > 0)
-				$criteria->addBetweenCondition('price', $_GET['price_from'] * 1000, $_GET['price_to'] * 1000);
+				$criteria->addBetweenCondition('price', $_GET['price_from'], $_GET['price_to']);
+				//$criteria->addBetweenCondition('price', $_GET['price_from'] * 1000, $_GET['price_to'] * 1000);
 			
 			//square
 			if($_GET['square_from'] > 0 && $_GET['square_to'] > 0)
