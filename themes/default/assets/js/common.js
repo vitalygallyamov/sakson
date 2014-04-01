@@ -48,9 +48,8 @@ $(document).ready(function() {
 	});
 
 
-	$('.catalog').on('click', '.media', function(e){
+	$('.catalog').on('click', '.media-item, .card .media-body', function(e){
 		e.preventDefault();
-		// e.preventDefault();
 
 		var $this = $(this),
 			id = $this.data('id');

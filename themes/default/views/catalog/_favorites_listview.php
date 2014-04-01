@@ -25,3 +25,13 @@ $this->widget('zii.widgets.CListView', array(
     ),
 ));
 ?>
+
+<?php
+
+Yii::app()->clientScript->registerScriptFile($this->getAssetsUrl().'/js/lib/jquery.fancybox.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/css/fancybox/jquery.fancybox.css', "screen");
+
+Yii::app()->clientScript->registerScript('apartments', '
+    $(".fancybox").fancybox();
+', CClientScript::POS_READY);
+?>

@@ -19,7 +19,7 @@
     }
 ?>
 
-<div class="media" data-id="<?=$data->id?>">
+<div class="media media-item" data-id="<?=$data->id?>">
     <a class="pull-left" href="#">
         <img src="<?=$data->gallery->main ? $data->gallery->main->getUrl('small') : "http://placehold.it/140x180"?>">
         <?if($data->isNew()):?><div class="wtm new">new</div><?endif;?>
@@ -57,14 +57,23 @@
     </div>
 </div>
 <? /*detail view*/?>
+<?
+$preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
+?>
 <div class="media card">
-    <a class="pull-left" href="#">
+    <a class="pull-left fancybox" rel="ap<?=$data->id?>" href="<?=$data->gallery->main ? $data->gallery->main->getUrl('big') : "http://placehold.it/140x180"?>">
         <img src="<?=$data->gallery->main ? $data->gallery->main->getUrl('small') : "http://placehold.it/140x180"?>">
         <?if($data->isNew()):?><div class="wtm new">new</div><?endif;?>
         <?if(in_array(Apartments::APART_HOT, $added)):?><div class="wtm hot">hot</div><?endif;?>
         <?if(in_array(Apartments::APART_VIP, $added)):?><div class="wtm vip">vip</div><?endif;?>
         
     </a>
+    <?if($data->gallery->galleryPhotos):?>
+        <?foreach ($data->gallery->galleryPhotos as $photo):?>
+            <?if($preview_id == $photo->id) continue; ?>
+            <a class="fancybox" rel="ap<?=$data->id?>" style="display: none;" href="<?=$photo->getUrl('big')?>"></a>
+        <?endforeach;?>
+    <?endif;?>
     <div class="media-body">
         <div class="block1">
             <span class="price"><span><?=CHtml::encode(number_format($data->price, 0, '', ' '))?></span> руб.</span>
