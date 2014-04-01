@@ -54,9 +54,9 @@ $(document).ready(function() {
 		var $this = $(this),
 			id = $this.data('id');
 
-		if($this.hasClass('card')){
-			$this.hide();
-			$this.prev().fadeIn(500);
+		if($this.closest('.card').length){
+			$this.closest('.card').hide();
+			$this.closest('.card').prev().fadeIn(500);
 		}else{
 			$this.hide();
 			$this.next().fadeIn(500);
