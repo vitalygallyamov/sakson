@@ -181,7 +181,9 @@ a {
 
 
 /* Последние новости */
-
+.news{
+	min-height: 500px;
+}
 .last_news {
 	margin-top:0 !important;
 }
