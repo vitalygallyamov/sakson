@@ -30,9 +30,10 @@ class AdminUser extends EActiveRecord
     public function rules()
     {
         return array(
-            array('login, pass, email', 'required'),
+            array('login, email', 'required'),
             array('login, email', 'unique'),
-            array('login, pass', 'length', 'min' => 5, 'max' => 25),
+            array('login', 'length', 'min' => 5, 'max' => 25),
+            array('pass', 'length', 'min' => 5),
             array('login', 'match', 'pattern' => '/^[a-z0-9_]+$/i', 'message' => 'Логин должен содержать только латинские буквы, цифры и знак подчеркивания.'),
             array('email', 'email'),
             array('status', 'numerical', 'integerOnly'=>true),
@@ -136,7 +137,7 @@ class AdminUser extends EActiveRecord
 
     public function beforeSave(){
 
-        if($this->pass){
+        if($this->pass && $this->isNewRecord){
             $this->pass = $this->hashPassword($this->pass);
         }
 

@@ -43,10 +43,15 @@ class UserController extends AdminController
 			throw new HttpException(403, 'Доступ запрещен');
 
 		$user = AdminUser::model()->findByPk($id);
+
+		$oldPass = $user->pass;
 		$user->pass = '';
 
 		if(isset($_POST['AdminUser'])){
 			$user->attributes = $_POST['AdminUser'];
+
+			if(!$user->pass) $user->pass = $oldPass;
+            else $user->pass = $user->hashPassword($user->pass);
 
 			if($user->save())
 				$this->redirect($this->createUrl('profile', array('id' => $user->id)));

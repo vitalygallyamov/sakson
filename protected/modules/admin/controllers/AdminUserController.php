@@ -44,6 +44,8 @@ class AdminUserController extends AdminController
     public function actionUpdate($id){
         $model = AdminUser::model()->findByPk($id);
 
+        $oldPass = $model->pass;
+
         if(!Yii::app()->user->checkAccess('admin') && Yii::app()->user->id != $model->id){
              throw new CHttpException(403, 'Ошибка доступа');
         }
@@ -54,6 +56,9 @@ class AdminUserController extends AdminController
             if(isset($_POST['role'])){
                 $model->role = $_POST['role'];
             }
+
+            if(!$model->pass) $model->pass = $oldPass;
+            else $model->pass = $model->hashPassword($model->pass);
 
             if($model->save())
                 $this->redirect($this->createUrl('list'));

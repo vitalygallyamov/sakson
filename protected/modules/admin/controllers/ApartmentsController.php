@@ -20,6 +20,7 @@ class ApartmentsController extends AdminController
             echo "ok";
             Yii::app()->end();
         }
+
         /*if(isset($_POST['DeleteApartments'])){
             $deleteApartment->attributes = $_POST['DeleteApartments'];
 
