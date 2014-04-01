@@ -23,6 +23,7 @@ return array(
     'import'=>array(
         'application.models.*',
         'application.components.*',
+        'application.modules.admin.models.AdminUser'
         //'application.behaviors.*',
     ),
     'aliases'=>array(

@@ -62,6 +62,10 @@ class CatalogController extends FrontController
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('status=1');
 
+		$criteria->with = 'gallery';
+		$criteria->together = true;
+		$criteria->addCondition('galleryPhotos.file_name != ""');
+
 		if(isset($_GET['Apartments'])){
 			$model->attributes = $_GET['Apartments'];
 
@@ -72,16 +76,9 @@ class CatalogController extends FrontController
 
 				$added_criteria = new CDbCriteria;
 				foreach ($model->added as $k => $value) {
-					//$added_criteria->addCondition('added=:r'.$k, 'OR');
 					$added_criteria->compare('added', $value, true, 'OR');
-
-					//$added_criteria->params[':r'.$k] = $value;
 				}
 				$criteria->mergeWith($added_criteria);
-
-				/*foreach ($model->added as $value) {
-					$criteria->compare('added', $value, true);
-				}*/
 			}
 
 			if($model->apartment_type_id && is_array($model->apartment_type_id)){

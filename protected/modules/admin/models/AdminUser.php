@@ -36,7 +36,7 @@ class AdminUser extends EActiveRecord
             array('login', 'match', 'pattern' => '/^[a-z0-9_]+$/i', 'message' => 'Логин должен содержать только латинские буквы, цифры и знак подчеркивания.'),
             array('email', 'email'),
             array('status', 'numerical', 'integerOnly'=>true),
-            array('fio, login, pass, email', 'length', 'max'=>255),
+            array('fio, login, pass, email, phone', 'length', 'max'=>255),
             array('create_time, update_time', 'safe'),
             // The following rule is used by search().
             array('id, fio, login, pass, email, status, create_time, update_time', 'safe', 'on'=>'search'),
@@ -59,6 +59,7 @@ class AdminUser extends EActiveRecord
             'login' => 'Логин',
             'pass' => 'Пароль',
             'email' => 'E-mail',
+            'phone' => 'Телефон',
             'status' => 'Статус',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
@@ -83,7 +84,8 @@ class AdminUser extends EActiveRecord
 		$criteria->compare('fio',$this->fio,true);
 		$criteria->compare('login',$this->login,true);
 		$criteria->compare('pass',$this->pass,true);
-		$criteria->compare('email',$this->email,true);
+        $criteria->compare('email',$this->email,true);
+		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);

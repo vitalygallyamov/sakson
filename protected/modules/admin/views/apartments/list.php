@@ -25,11 +25,11 @@ $this->menu=array(
         "data-id" => $data->id
     )',
 	'columns'=>array(
-		/*array(
-			'header' => 'Название',
+		array(
+			'header' => 'Превью',
 			'type' => 'raw',
-			'value' => '$data->area->name.", ул. ".$data->street->name.", ".$data->house'
-		),*/
+			'value' => '$data->gallery->main ? TbHtml::imageRounded($data->gallery->main->getUrl("small")) : ""'
+		),
 		array(
 			'name' => 'apartment_type_id',
 			'type' => 'raw',

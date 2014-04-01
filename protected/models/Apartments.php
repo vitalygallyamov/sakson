@@ -118,7 +118,11 @@ class Apartments extends EActiveRecord
             'series' => array(self::BELONGS_TO, 'Series', 'series_id'),
             'category' => array(self::BELONGS_TO, 'Categories', 'category_id'),
             'deleteAparts' => array(self::HAS_MANY, 'DeleteApartments', 'apart_id'),
-            'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_photos'),
+            'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_photos',
+                'with'=>array(
+                    'galleryPhotos'=>array(),
+                ),
+            ),
             'user' => array(self::BELONGS_TO, 'AdminUser', 'agent_id'),
         );
     }

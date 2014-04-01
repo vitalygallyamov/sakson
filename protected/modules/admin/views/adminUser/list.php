@@ -21,6 +21,7 @@ $this->menu=array(
 		'login',
 		// 'pass',
 		'email',
+		'phone',
 		array(
 			'name'=>'status',
 			'type'=>'raw',

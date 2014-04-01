@@ -94,8 +94,7 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             </div>
 
             <i>Специалист</i><BR>
-            Измайлова Лариса<BR>
-            55-55-88
+            <?=$data->user->fio?><BR><?=$data->user->phone?>
 
         </div>
 
