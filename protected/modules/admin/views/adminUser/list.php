@@ -23,6 +23,11 @@ $this->menu=array(
 		'email',
 		'phone',
 		array(
+			'header'=>'Права доступа',
+			'type'=>'raw',
+			'value'=>'$data->getRole()'
+		),
+		array(
 			'name'=>'status',
 			'type'=>'raw',
 			'value'=>'AdminUser::getStatusAliases($data->status)',

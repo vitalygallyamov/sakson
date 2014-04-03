@@ -52,7 +52,6 @@ class AdminUser extends EActiveRecord
         );
     }
 
-
     public function attributeLabels()
     {
         return array(
@@ -116,6 +115,12 @@ class AdminUser extends EActiveRecord
         return CPasswordHelper::hashPassword($password);
     }
 
+    public function getRole(){
+        $roles = self::getRoles();
+
+        return $roles[$this->role];
+    }
+
     public static function getRoles(){
         return array(
             self::ROLE_ADMIN => 'Администратор',
@@ -161,6 +166,14 @@ class AdminUser extends EActiveRecord
         }
 
         parent::afterSave();
+    }
+
+    public function afterFind(){
+        parent::afterFind();
+
+        foreach (Yii::app()->authManager->getAuthAssignments($this->id) as $key => $value) {
+            $this->role = $key;
+        }
     }
 
     public static function getAgents(){
