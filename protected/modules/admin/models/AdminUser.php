@@ -31,6 +31,7 @@ class AdminUser extends EActiveRecord
     {
         return array(
             array('login, email', 'required'),
+            array('pass', 'required', 'on' => 'create'),
             array('login, email', 'unique'),
             array('login', 'length', 'min' => 5, 'max' => 25),
             array('pass', 'length', 'min' => 5),
@@ -147,23 +148,15 @@ class AdminUser extends EActiveRecord
     public function afterSave(){
         $authMahager = Yii::app()->authManager;
 
-        if(!$this->role){
+        if($this->role){
             $assignments = $authMahager->getAuthAssignments($this->id);
-
-            // print_r($assignments); die();
             if(!empty($assignments)){
                 foreach ($assignments as $key => $value) {
-                    $this->role = $key;
-                    //$authMahager->revoke($key, $this->id);
+                    //$this->role = $key;
+                    $authMahager->revoke($key, $this->id);
                 }
                 // $this->role = $authAssignment->itemName;
             }
-        }
-        
-        if(!$authMahager->isAssigned($this->role, $this->id)){
-            $authMahager->assign($this->role, $this->id);
-        }else{
-            $authMahager->revoke($this->role, $this->id);
             $authMahager->assign($this->role, $this->id);
         }
 

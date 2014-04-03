@@ -44,6 +44,10 @@ class AdminUserController extends AdminController
     public function actionUpdate($id){
         $model = AdminUser::model()->findByPk($id);
 
+        foreach (Yii::app()->authManager->getAuthAssignments($id) as $key => $value) {
+            $model->role = $key;
+        }
+
         $oldPass = $model->pass;
 
         if(!Yii::app()->user->checkAccess('admin') && Yii::app()->user->id != $model->id){
