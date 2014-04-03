@@ -210,7 +210,7 @@ class Apartments extends EActiveRecord
 		$criteria->compare('price',$this->price,true);
 		$criteria->compare('desc',$this->desc,true);
 		$criteria->compare('gllr_photos',$this->gllr_photos);
-        $criteria->compare('agent_id',$this->agent_id);
+        //$criteria->compare('agent_id',$this->agent_id);
         $criteria->compare('delete_reason',$this->delete_reason);
 		$criteria->compare('room_num',$this->room_num);
 		$criteria->compare('seo_id',$this->seo_id);
@@ -218,6 +218,11 @@ class Apartments extends EActiveRecord
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $criteria->addCondition('agent_id=:agent_id');
+            $criteria->params[':agent_id'] = Yii::app()->user->id;
+        }
 
         $criteria->addCondition('status!=:s');
         $criteria->params[':s'] = parent::STATUS_REMOVED;

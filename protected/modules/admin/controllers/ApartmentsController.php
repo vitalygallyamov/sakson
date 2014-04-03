@@ -44,6 +44,25 @@ class ApartmentsController extends AdminController
         Yii::app()->end();
     }
 
+    public function actionUpdate($id){
+        $model = Apartments::model()->findByPk($id);
+
+        if(!$model) 
+            throw new CHttpException(404, 'Объект не найден');
+
+        if(!Yii::app()->user->checkAccess('admin') && Yii::app()->user->id != $model->agent_id)
+            throw new CHttpException(403, 'Доступ запрещен!');
+
+        if(isset($_POST['Apartments'])){
+            $model->attributes = $_POST['Apartments'];
+
+            if($model->save())
+                $this->redirect($this->createUrl('list'));
+        }
+
+        $this->render('update', array('model' => $model));
+    }
+
     public function actionList(){
         $model = new Apartments;
 

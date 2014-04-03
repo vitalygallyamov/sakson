@@ -7,7 +7,7 @@
 
 	<?php $tabs = array(); ?>
 	<?php $tabs[] = array('label' => 'Основные данные', 'content' => $this->renderPartial('_rows', array('form'=>$form, 'model' => $model), true), 'active' => true); ?>
-	<?php $tabs[] = array('label' => 'SEO раздел', 'content' => $this->getSeoForm($model)); ?>
+	<?php if(Yii::app()->user->checkAccess('admin'))  $tabs[] = array('label' => 'SEO раздел', 'content' => $this->getSeoForm($model)); ?>
 
 	<?php $this->widget('bootstrap.widgets.TbTabs', array( 'tabs' => $tabs)); ?>
 	
