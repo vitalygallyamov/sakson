@@ -81,9 +81,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if($data->price_1m): ?>  
                 <b>Стоимость за 1 м<sup>2</sup>:</b> <?=CHtml::encode(number_format($data->price_1m, 0, '', ' '))?> руб.<br>
             <? endif; ?>
-            <? if($data->price_agency): ?>
+            <? /*if($data->price_agency): ?>
                 <b>Стоимость услуг агенства:</b> <?=CHtml::encode(number_format($data->price_agency, 0, '', ' '))?> руб.<br>
-            <? endif; ?>
+            <? endif;*/ ?>
             <div class="pixel" style="width:20px;height:2px;margin:8px 0px;"></div>
         </div>
 
