@@ -82,7 +82,9 @@
 	<?php echo $form->textFieldControlGroup($model,'price_1m',array('append' => '.00 руб.','maxlength'=>10, 'class' => 'price-1m', 'disabled' => 'disabled')); ?>
 	<?php echo $form->hiddenField($model,'price_1m',array('class' => 'price-1m-true')); ?>
 
-	<?php echo $form->textFieldControlGroup($model,'price_agency',array('append' => '.00 руб.','maxlength'=>10)); ?>
+	<?php echo $form->textFieldControlGroup($model,'phone_own'); ?>
+
+	<?php echo $form->textFieldControlGroup($model,'life_time_house'); ?>
 
 	<?php echo $form->textAreaControlGroup($model,'desc',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 

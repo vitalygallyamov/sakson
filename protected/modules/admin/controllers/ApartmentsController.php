@@ -2,6 +2,31 @@
 
 class ApartmentsController extends AdminController
 {
+    public function filters()
+    {
+        return array(
+            'accessControl'
+        );
+    }
+
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow authenticated users to access all actions
+                'actions' => array('list', 'create', 'update', 'getDeleteForm', 'changeStatus', 'view'),
+                'users'=>array('@'),
+            ),
+            array(
+                'actions' => array('cart', 'delete'),
+                'roles'=>array('admin'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+        );
+    }
+
+
 	public $layout = '/layouts/custom';
 
     public function actionGetDeleteForm($id){
@@ -66,14 +91,33 @@ class ApartmentsController extends AdminController
     public function actionList(){
         $model = new Apartments;
 
-        if(isset($_GET['Apartments']))
+        $filter = new Apartments;
+        $filterData = null;
+
+        //Фильтр грида
+        if(!isset($_GET['Apartments']['Filter']) && isset($_GET['Apartments'])){
             $model->attributes = $_GET['Apartments'];
-        
-        if(isset($_GET['priceBegin'])) $model->priceBegin = $_GET['priceBegin'];
-        if(isset($_GET['priceEnd'])) $model->priceEnd = $_GET['priceEnd'];
+        }
+
+        //Находим квартиры других агентов через фильтр
+        if(isset($_GET['Apartments']['Filter'])){
+            $getFilter = $_GET['Apartments']['Filter'];
+            $filter->attributes = $getFilter;
+
+            // if(isset($_GET['Apartments'])) $filter->attributes = $_GET['Apartments'];
+
+            $filter->priceBegin = $getFilter['priceBegin'];
+            $filter->priceEnd = $getFilter['priceEnd'];
+
+            $filterData = $filter->searchNotOwn();
+        }
+
+        //if(isset($_GET['Apartments'])){print_r($_GET); die();}
 
         $this->render('list', array(
-            'model' => $model
+            'model' => $model,
+            'filter' => $filter,
+            'filterData' => $filterData
         ));
     }
 

@@ -17,7 +17,6 @@
     * @property integer $walls_type_id
     * @property integer $series_id
     * @property string $price_1m
-    * @property string $price_agency
     * @property string $price
     * @property string $desc
     * @property integer $gllr_photos
@@ -100,11 +99,12 @@ class Apartments extends EActiveRecord
             array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, gllr_photos, agent_id, seo_id, status, sort, delete_reason, room_num', 'numerical', 'integerOnly'=>true),
             array('house', 'length', 'max'=>20),
             array('added', 'length', 'max'=>40),
+            array('phone_own, life_time_house', 'length', 'max'=>255),
             array('square, kitchen_area', 'length', 'max'=>8),
-            array('price_1m, price_agency, price', 'length', 'max'=>10),
+            array('price_1m, price', 'length', 'max'=>10),
             array('desc, create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, apartment_type_id, area_id, street_id, house, category_id, floor, house_floors, square, kitchen_area, walls_type_id, series_id, price_1m, price_agency, price, desc, gllr_photos, agent_id, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, apartment_type_id, area_id, street_id, house, category_id, floor, house_floors, square, kitchen_area, walls_type_id, series_id, price_1m, price, desc, gllr_photos, agent_id, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -143,7 +143,6 @@ class Apartments extends EActiveRecord
             'walls_type_id' => 'Стены',
             'series_id' => 'Серия',
             'price_1m' => 'Стоимость 1 кв.м.',
-            'price_agency' => 'Стоимость услуг агенства',
             'price' => 'Стоимость',
             'desc' => 'Описание',
             'added' => 'Дополнительно',
@@ -156,6 +155,8 @@ class Apartments extends EActiveRecord
             'sort' => 'Вес для сортировки',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
+            'phone_own' => 'Телефон собственника',
+            'life_time_house' => 'Срок эксплуатации дома',
         );
     }
 
@@ -197,7 +198,7 @@ class Apartments extends EActiveRecord
 		$criteria->compare('apartment_type_id',$this->apartment_type_id);
 		$criteria->compare('area_id',$this->area_id);
 		$criteria->compare('street_id',$this->street_id);
-		$criteria->compare('house',$this->house,true);
+		// $criteria->compare('house',$this->house,true);
 		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('floor',$this->floor);
 		$criteria->compare('house_floors',$this->house_floors);
@@ -206,13 +207,12 @@ class Apartments extends EActiveRecord
 		$criteria->compare('walls_type_id',$this->walls_type_id);
 		$criteria->compare('series_id',$this->series_id);
 		$criteria->compare('price_1m',$this->price_1m,true);
-		$criteria->compare('price_agency',$this->price_agency,true);
 		$criteria->compare('price',$this->price,true);
 		$criteria->compare('desc',$this->desc,true);
 		$criteria->compare('gllr_photos',$this->gllr_photos);
         //$criteria->compare('agent_id',$this->agent_id);
         $criteria->compare('delete_reason',$this->delete_reason);
-		$criteria->compare('room_num',$this->room_num);
+		// $criteria->compare('room_num',$this->room_num);
 		$criteria->compare('seo_id',$this->seo_id);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('sort',$this->sort);
@@ -234,6 +234,45 @@ class Apartments extends EActiveRecord
         $criteria->order = 'create_time DESC, sort';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+        ));
+    }
+
+    public function searchNotOwn(){
+        $criteria = new CDbCriteria;
+
+        $criteria->addCondition('status!=:s');
+        $criteria->params[':s'] = self::STATUS_REMOVED;
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $criteria->addCondition('agent_id!=:agent_id'); //!=
+            $criteria->params[':agent_id'] = Yii::app()->user->id;
+        }
+
+        if($this->priceBegin > 0 && !$this->priceEnd){
+            $criteria->addCondition('price>=:p');
+            $criteria->params[':p'] = $this->priceBegin;
+        }
+        elseif($this->priceEnd > 0 && !$this->priceBegin){
+            $criteria->addCondition('price<=:p');
+            $criteria->params[':p'] = $this->priceEnd;
+        }
+        elseif($this->priceBegin > 0 && $this->priceEnd > 0){
+            $criteria->addBetweenCondition('price', $this->priceBegin, $this->priceEnd);
+        }
+
+        $criteria->compare('apartment_type_id',$this->apartment_type_id);
+        $criteria->compare('area_id',$this->area_id);
+        $criteria->compare('street_id',$this->street_id);
+        // $criteria->compare('house',$this->house,true);
+        $criteria->compare('category_id',$this->category_id);
+        $criteria->compare('floor',$this->floor);
+        $criteria->compare('house_floors',$this->house_floors);
+        $criteria->compare('square',$this->square,true);
+        $criteria->compare('price',$this->price,true);
+        $criteria->compare('status',$this->status);
+
+        return new CActiveDataProvider('Apartments', array(
+            'criteria' => $criteria
         ));
     }
 
@@ -271,7 +310,6 @@ class Apartments extends EActiveRecord
         parent::afterFind();
 
         $this->price = number_format($this->price, 0, '', '');
-        $this->price_agency = number_format($this->price_agency, 0, '', '');
         $this->price_1m = number_format($this->price_1m, 0, '', '');
     }
 
@@ -294,6 +332,13 @@ class Apartments extends EActiveRecord
 
         if(Yii::app()->user->checkAccess('agent') && Yii::app()->user->id == $this->agent_id)
             return true;
+
+        return false;
+    }
+
+    public function isOwn(){
+        if(Yii::app()->user->checkAccess('admin')) return true;
+        if(Yii::app()->user->id == $this->agent_id) return true;
 
         return false;
     }

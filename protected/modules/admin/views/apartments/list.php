@@ -9,13 +9,13 @@ $this->menu=array(
 
 <div class="search-form">
 <?php $this->renderPartial('_search',array(
-    'model' => $model,
+    'model' => $filter,
 )); ?>
 </div><!-- search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'apartments-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$filterData ? $filterData : $model->search(),
 	'filter'=>$model,
 	'type'=>TbHtml::GRID_TYPE_HOVER,
     'afterAjaxUpdate'=>"function() {sortGrid('apartments')}",
@@ -103,7 +103,7 @@ $this->menu=array(
 		// ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-			'template' => '{update} {delete}',
+			// 'template' => '{update} {delete}',
 			'buttons' => array(
 				'delete' => array(
 					'click' => 'js:function(){
