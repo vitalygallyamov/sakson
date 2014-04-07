@@ -47,7 +47,7 @@ class GalleryController extends CController
         $model->gallery_id = $gallery_id;
         $imageFile = CUploadedFile::getInstanceByName('image');
         $model->file_name = $imageFile->getName();
-        $model->ext = $imageFile->extensionName;
+        $model->ext = strtolower($imageFile->extensionName);
         $model->save();
 
         $model->setImage($imageFile->getTempName());

@@ -16,7 +16,7 @@ class ApartmentsController extends AdminController
                 'actions' => array('list', 'create', 'update', 'getDeleteForm', 'changeStatus', 'view'),
                 'users'=>array('@'),
             ),
-            array(
+            array('allow',
                 'actions' => array('cart', 'delete'),
                 'roles'=>array('admin'),
             ),

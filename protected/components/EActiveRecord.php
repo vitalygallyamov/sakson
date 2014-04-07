@@ -39,10 +39,10 @@ class EActiveRecord extends CActiveRecord
         return array();
     }
 
-    public static function all(){
+    public static function all($condition = ''){
         $className = get_called_class();
 
-        $items = call_user_func(array($className, 'model'))->findAll();
+        $items = call_user_func(array($className, 'model'))->findAll($condition);
 
         if(empty($items)) 
             return array(new $className);

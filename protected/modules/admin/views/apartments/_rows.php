@@ -28,7 +28,7 @@
 				'attribute' => 'street_id',
 				'data' => CHtml::listData(Streets::all(), 'id', 'name'),
 				'pluginOptions' => array(
-				    'width' => '40%',
+				    'width' => '40%'
 					)
 				));?>
 		</div>
