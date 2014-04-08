@@ -28,6 +28,10 @@
                         array('label'=>'Партнеры', 'url'=>'/admin/partner/list'),
                     )
                 ),
+                array('label'=>'Управление справочниками', 'url'=>'#', 'visible' => Yii::app()->user->checkAccess('admin'), 'items'=>array(
+                        array('label'=>'Улицы', 'url'=>'/admin/streets/list'),
+                    )
+                ),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
 				array('label'=>'Настройки', 'visible' => Yii::app()->user->checkAccess('admin'), 'url'=>'/admin/settings/'),
 			);

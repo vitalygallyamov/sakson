@@ -65,10 +65,9 @@
 			'name' => 'phone_own',
 			'visible' => $model->isOwn()
 		),
-		array(
-			'name' => 'life_time_house',
-			'visible' => $model->isOwn()
-		),
+		'life_time_house',
+		'limit',
+		'comment',
 	),
 )); ?>
 

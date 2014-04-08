@@ -23,14 +23,32 @@
 	<div class="control-group">
 		<label class="control-label" for="Parts_category_id"><?=$model->getAttributeLabel('street_id')?></label>
 		<div class="controls">
-			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
+			<?php
+				$this->widget('yiiwheels.widgets.select2.WhSelect2', array(
+					'model' => $model,
+					'attribute' => 'street_id',
+					'asDropDownList' => false,
+					'pluginOptions' => array(
+						'width' => '40%',
+						'ajax' => array(
+							'url' => '/admin/streets/allJson',
+							'dataType' => 'json',
+							'quietMillis' => 300,
+							'data' => 'js: function(term, page){return {q: term};}',
+							'results' => 'js: function(data, page){return { results: data };}'
+						),
+						'initSelection' => 'js:function (element, callback) {var id=$(element).val(); $.getJSON("/admin/streets/getOneById", {id: id}, function(data) { callback(data); }) }'
+					)
+				));
+			?>
+			<?php /*$this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
 				'attribute' => 'street_id',
 				'data' => CHtml::listData(Streets::all(), 'id', 'name'),
 				'pluginOptions' => array(
 				    'width' => '40%'
 					)
-				));?>
+				));*/?>
 		</div>
 	</div>
 
@@ -84,9 +102,12 @@
 
 	<?php echo $form->textFieldControlGroup($model,'phone_own'); ?>
 
+	<?php echo $form->textFieldControlGroup($model,'limit', array('maxlength'=>30)); ?>
+
 	<?php echo $form->textFieldControlGroup($model,'life_time_house'); ?>
 
 	<?php echo $form->textAreaControlGroup($model,'desc',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
+	<?php echo $form->textAreaControlGroup($model,'comment',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
 	<div class='control-group'>
 		<?php echo CHtml::activeLabelEx($model, 'gllr_photos'); ?>

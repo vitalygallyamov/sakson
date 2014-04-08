@@ -19,6 +19,7 @@ class Streets extends EActiveRecord
     {
         return array(
             array('name', 'length', 'max'=>255),
+            array('name', 'unique'),
             // The following rule is used by search().
             array('id, name', 'safe', 'on'=>'search'),
         );
@@ -46,6 +47,8 @@ class Streets extends EActiveRecord
         $criteria=new CDbCriteria;
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
+
+        $criteria->order = 'name';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));

@@ -39,9 +39,9 @@
         <? if($data->street): ?>
             <b>Адрес:</b> ул. <?=CHtml::encode($data->street->name)?> <br>
         <? endif; ?>
-        <? if($data->house): ?> 
+        <? /*if($data->house): ?> 
             <b>Дом:</b> <?=CHtml::encode($data->house)?> <br>
-        <? endif; ?>
+        <? endif;*/ ?>
         <? if($data->wall): ?>  
             <b>Тип дома:</b> <?=CHtml::encode($data->wall->name)?> <br>
         <? endif; ?>
@@ -105,9 +105,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if($data->street): ?>
                 <b>Адрес:</b> ул. <?=CHtml::encode($data->street->name)?> <br>
             <? endif; ?>
-            <? if($data->house): ?> 
+            <? /*if($data->house): ?> 
                 <b>Дом:</b> <?=CHtml::encode($data->house)?> <br>
-            <? endif; ?>
+            <? endif;*/ ?>
             <? if($data->wall): ?>  
                 <b>Тип дома:</b> <?=CHtml::encode($data->wall->name)?> <br>
             <? endif; ?>

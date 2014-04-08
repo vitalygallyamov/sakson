@@ -98,11 +98,12 @@ class Apartments extends EActiveRecord
             array('price', 'required'),
             array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, gllr_photos, agent_id, seo_id, status, sort, delete_reason, room_num', 'numerical', 'integerOnly'=>true),
             array('house', 'length', 'max'=>20),
+            array('limit', 'length', 'max'=>30),
             array('added', 'length', 'max'=>40),
             array('phone_own, life_time_house', 'length', 'max'=>255),
             array('square, kitchen_area', 'length', 'max'=>8),
             array('price_1m, price', 'length', 'max'=>10),
-            array('desc, create_time, update_time', 'safe'),
+            array('desc, comment, create_time, update_time', 'safe'),
             // The following rule is used by search().
             array('id, apartment_type_id, area_id, street_id, house, category_id, floor, house_floors, square, kitchen_area, walls_type_id, series_id, price_1m, price, desc, gllr_photos, agent_id, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
@@ -156,7 +157,9 @@ class Apartments extends EActiveRecord
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
             'phone_own' => 'Телефон собственника',
-            'life_time_house' => 'Срок эксплуатации дома',
+            'life_time_house' => 'Год постройки',
+            'limit' => 'Предел торга',
+            'comment' => 'Комментарий'
         );
     }
 
@@ -171,9 +174,9 @@ class Apartments extends EActiveRecord
 					'small' => array(
 						'adaptiveResize' => array(140, 180),
 					),
-					'medium' => array(
-						'resize' => array(600, 500),
-					),
+					// 'medium' => array(
+					// 	'resize' => array(600, 500),
+					// ),
                     'big' => array(
                         'resize' => array(1000, 1000),
                     )
