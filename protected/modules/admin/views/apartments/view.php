@@ -1,6 +1,6 @@
 <h1>Квартира #<?=$model->id?></h1>
 
-<?if($model->gallery->galleryPhotos):?>
+<?if($model->gallery->galleryPhotos): ?>
 <h3>Фотографии квартиры</h3>
 <div class="row-fluid">
 	<?foreach ($model->gallery->galleryPhotos as $photo):?>

@@ -62,9 +62,12 @@ class CatalogController extends FrontController
 		$criteria = new CDbCriteria;
 		$criteria->addCondition('status=1');
 
-		$criteria->with = 'gallery';
-		$criteria->together = true;
-		$criteria->addCondition('galleryPhotos.file_name != ""');
+		$criteria->distinct = true;
+		$criteria->join = 'INNER JOIN gallery ON gllr_photos = gallery.id INNER JOIN gallery_photo ON gallery.id = gallery_photo.gallery_id';
+
+		// $criteria->with = 'gallery';
+		// $criteria->together = true;
+		// $criteria->addCondition('galleryPhotos.file_name != ""');
 
 		if(isset($_GET['Apartments'])){
 			$model->attributes = $_GET['Apartments'];
