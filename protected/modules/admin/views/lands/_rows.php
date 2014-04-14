@@ -32,6 +32,11 @@
         } ?>
     </div>
 
+    <?php echo $form->textFieldControlGroup($model,'phone_own'); ?>
+
+    <?php echo $form->textAreaControlGroup($model,'desc',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
+	<?php echo $form->textAreaControlGroup($model,'comment',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
+
 	<?php echo $form->dropDownListControlGroup($model, 'status', Lands::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
 
 	<?php 

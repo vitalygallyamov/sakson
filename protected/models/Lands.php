@@ -28,14 +28,30 @@ class Lands extends EActiveRecord
         return '{{lands}}';
     }
 
+    public static function deleteReasons($reason = -1)
+    {
+        $aliases = array(
+            1 => 'Продана самостоятельно,',
+            2 => 'Продана другим агентством',
+            3 => 'Продана АН «САКСОН»',
+            4 => 'Снята с продажи.'
+            //parent::STATUS_REMOVED => 'Удалено',
+        );
+
+        if ($reason > -1)
+            return $aliases[$reason];
+
+        return $aliases;
+    }
 
     public function rules()
     {
         return array(
-            array('way_id, city_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id', 'numerical', 'integerOnly'=>true),
+            array('way_id, city_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id, delete_reason', 'numerical', 'integerOnly'=>true),
             array('square', 'length', 'max'=>8),
             array('price', 'length', 'max'=>10),
-            array('create_time, update_time', 'safe'),
+            array('phone_own', 'length', 'max'=>255),
+            array('desc, comment, create_time, update_time', 'safe'),
             // The following rule is used by search().
             array('id, way_id, city_id, locality_id, type_id, state_id, square, material_id, target_id, price, gllr_images, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
@@ -52,6 +68,8 @@ class Lands extends EActiveRecord
             'state' => array(self::BELONGS_TO, 'LandStates', 'state_id'),
             'material' => array(self::BELONGS_TO, 'LandMaterials', 'material_id'),
             'target' => array(self::BELONGS_TO, 'LandTargets', 'target_id'),
+            'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_images'),
+            'user' => array(self::BELONGS_TO, 'AdminUser', 'user_id'),
         );
     }
 
@@ -76,6 +94,10 @@ class Lands extends EActiveRecord
             'sort' => 'Вес для сортировки',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
+            'delete_reason' => 'Причина удаления',
+            'desc' => 'Описание',
+            'comment' => 'Коментарий',
+            'phone_own' => 'Телефон собственника',
         );
     }
 
@@ -88,10 +110,10 @@ class Lands extends EActiveRecord
                 'idAttribute' => 'gllr_images',
                 'versions' => array(
                     'small' => array(
-                        'adaptiveResize' => array(90, 90),
+                        'adaptiveResize' => array(140, 180),
                     ),
-                    'medium' => array(
-                        'resize' => array(600, 500),
+                    'big' => array(
+                        'resize' => array(1000, 1000),
                     )
                 ),
                 'name' => true,
@@ -123,13 +145,35 @@ class Lands extends EActiveRecord
 		$criteria->compare('gllr_images',$this->gllr_images);
 		$criteria->compare('seo_id',$this->seo_id);
 		$criteria->compare('status',$this->status);
-		$criteria->compare('sort',$this->sort);
+        $criteria->compare('sort',$this->sort);
+		$criteria->compare('delete_reason',$this->delete_reason);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
+
+        $criteria->addCondition('status!=:s');
+        $criteria->params[':s'] = parent::STATUS_REMOVED;
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $criteria->addCondition('user_id=:user_id');
+            $criteria->params[':user_id'] = Yii::app()->user->id;
+        }
+
         $criteria->order = 'sort';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    public function isNew(){
+        if($this->create_time){
+            $now = new DateTime();
+            $create = new DateTime($this->create_time);
+           
+            $interval = $now->diff($create);
+            $interval = (int) $interval->format('%a');
+            
+            return $interval <= 7;
+        }
     }
 
     public static function model($className=__CLASS__)
@@ -146,5 +190,12 @@ class Lands extends EActiveRecord
         parent::afterFind();
 
         $this->price = number_format($this->price, 0, '', '');
+    }
+
+    public function isOwn(){
+        if(Yii::app()->user->checkAccess('admin')) return true;
+        if(Yii::app()->user->id == $this->agent_id) return true;
+
+        return false;
     }
 }

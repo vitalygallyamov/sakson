@@ -71,6 +71,7 @@ class ApartmentsController extends AdminController
 
     public function actionUpdate($id){
         $model = Apartments::model()->findByPk($id);
+        $old_agent_id = $model->agent_id;
 
         if(!$model) 
             throw new CHttpException(404, 'Объект не найден');
@@ -80,6 +81,7 @@ class ApartmentsController extends AdminController
 
         if(isset($_POST['Apartments'])){
             $model->attributes = $_POST['Apartments'];
+            $model->agent_id = $old_agent_id;
 
             if($model->save())
                 $this->redirect($this->createUrl('list'));

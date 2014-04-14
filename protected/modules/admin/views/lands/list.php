@@ -1,6 +1,7 @@
 <?php
 $this->menu=array(
 	array('label'=>'Добавить','url'=>array('create')),
+	array('label'=>'Корзина','url'=>array('cart'), 'visible' => Yii::app()->user->checkAccess('admin')),
 );
 ?>
 
@@ -15,8 +16,14 @@ $this->menu=array(
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
         "class"=>"status_".(isset($data->status) ? $data->status : ""),
+        "data-id" => $data->id
     )',
 	'columns'=>array(
+		array(
+			'header' => 'Превью',
+			'type' => 'raw',
+			'value' => '$data->gallery->main ? TbHtml::imageRounded($data->gallery->main->getUrl("small")) : ""'
+		),
 		array(
 			'name'=>'way_id',
 			'type'=>'raw',
@@ -86,8 +93,52 @@ $this->menu=array(
 		// ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+			// 'template' => '{update} {delete}',
+			'buttons' => array(
+				'delete' => array(
+					'click' => 'js:function(){
+						var id = jQuery(this).closest("tr").data("id");
+
+						jQuery.ajax({
+							url: "/admin/lands/getDeleteForm",
+							data: {id: id},
+							success: function(data){
+								jQuery("#modal").html(data);
+								jQuery("#confirmDelete").modal("show");
+							}
+						});
+						return false;
+					}'
+				)
+			)
 		),
 	),
 )); ?>
+
+<div id="modal"></div>
+
+<script>
+	jQuery('#modal').on('click', '.save-delete-form', function(){
+		var $this = jQuery(this),
+			$form = $this.closest('#modal').find('form');
+
+		$this.button("loading");
+		jQuery.ajax({
+			url: "/admin/lands/getDeleteForm/id/" + $this.data('id'),
+			type: 'POST',
+			data: $form.serialize(),
+			success: function(data){
+				if(data == 'ok'){
+					jQuery('#lands-grid').yiiGridView('update');
+					jQuery("#confirmDelete").modal("hide");
+				}else{
+					jQuery("#confirmDelete").modal("hide");
+					jQuery("#modal").html(data);
+					jQuery("#confirmDelete").modal("show");
+				}
+			}
+		});
+	});
+</script>
 
 <?php if($model->hasAttribute('sort')) Yii::app()->clientScript->registerScript('sortGrid', 'sortGrid("lands");', CClientScript::POS_END) ;?>

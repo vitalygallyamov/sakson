@@ -107,6 +107,7 @@
 	<?php echo $form->textFieldControlGroup($model,'life_time_house'); ?>
 
 	<?php echo $form->textAreaControlGroup($model,'desc',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
+	
 	<?php echo $form->textAreaControlGroup($model,'comment',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
 	<div class='control-group'>

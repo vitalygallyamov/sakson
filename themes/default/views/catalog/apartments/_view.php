@@ -26,8 +26,8 @@
         <?if(in_array(Apartments::APART_HOT, $added)):?><div class="wtm hot">hot</div><?endif;?>
         <?if(in_array(Apartments::APART_VIP, $added)):?><div class="wtm vip">vip</div><?endif;?>
         <div class="wtm izb" data-id="<?=$data->id?>" data-type="apartment" title="<?=!$inCookie ? "Добавить в избранное" : "Удалить из избранного"?>">
-            <input id="cfirst<?=$data->id?>" type="checkbox" name="izb<?=$data->id?>" <?=$inCookie ? 'checked' : ''?> hidden />
-            <label for="cfirst<?=$data->id?>"></label>
+            <input id="cfirst<?=$data->id.$data->uniqueId()?>" type="checkbox" name="izb<?=$data->id.$data->uniqueId()?>" <?=$inCookie ? 'checked' : ''?> hidden />
+            <label for="cfirst<?=$data->id.$data->uniqueId()?>"></label>
         </div>
     </a>
     <div class="media-body">
@@ -137,7 +137,8 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
 
         <div class="block4">
             <div class="izb-detail" data-id="<?=$data->id?>" data-type="apartment">
-                <input id="cfirst<?=$data->id?>d" type="checkbox" name="izb<?=$data->id?>d" <?=$inCookie ? 'checked' : ''?> hidden /><label for="cfirst<?=$data->id?>d">В избранное</label>
+                <input id="cfirst<?=$data->id.$data->uniqueId()?>d" type="checkbox" name="izb<?=$data->id.$data->uniqueId()?>d" <?=$inCookie ? 'checked' : ''?> hidden />
+                <label for="cfirst<?=$data->id.$data->uniqueId()?>d">В избранное</label>
             </div>
             <a href="#" class="but">Отправить на почту</a>
         </div>

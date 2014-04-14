@@ -13,12 +13,11 @@ class CatalogController extends FrontController
 		);
 	}
 
-	
 	public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'apartments', 'lands', 'favorites', 'addToFavorites', 'deleteFromFavorites', 'getDetailView'),
+				'actions'=>array('index','view', 'apartments', 'lands', 'getDetailView'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -29,9 +28,9 @@ class CatalogController extends FrontController
 
 	public function beforeAction($action){
 		$this->subMenu = array(
-			array('name' => 'Квартиры', 'url' => $this->createUrl('apartments'), 'active' => $action->id == 'apartments'),
-			array('name' => 'Загородная', 'url' => $this->createUrl('lands'), 'active' => $action->id == 'lands'),
-			array('name' => 'Избранное', 'url' => $this->createUrl('favorites'), 'active' => $action->id == 'favorites'),
+			array('name' => 'Квартиры', 'url' => $this->createUrl('catalog/apartments'), 'active' => $action->id == 'apartments'),
+			array('name' => 'Загородная', 'url' => $this->createUrl('catalog/lands'), 'active' => $action->id == 'lands'),
+			array('name' => 'Избранное', 'url' => $this->createUrl('favorites/index'), 'active' => $action->id == 'favorites'),
 		);
 
 		return parent::beforeAction($action);
@@ -119,109 +118,6 @@ class CatalogController extends FrontController
 		$this->render('apartments/main', array('dataProvider'=>$dataProvider, 'model' => $model));
 	}
 
-	public function actionFavorites(){
-
-		$this->seo = Seo::model()->find();
-
-		$is_cookie = isset(Yii::app()->request->cookies['favorites']);
-
-		$values = array();
-		if($is_cookie){
-			$values = unserialize(Yii::app()->request->cookies['favorites']->value);
-		}
-
-		$criteria = new CDbCriteria;
-
-		//only apartments yet
-		$ids = array();
-		foreach ($values as $key => $value) {
-			$ids[] = $value['id'];
-		}
-
-		$criteria->addInCondition('id', $ids);
-
-		$dataProvider=new CActiveDataProvider('Apartments', array(
-			'pagination'=>array(
-				'pageSize' => 18
-			),
-			'criteria' => $criteria
-		));
-
-		$this->render('favorites', array('dataProvider'=>$dataProvider));
-	}
-
-
-	//Add to Favorites
-	public function actionAddToFavorites($id, $type){
-		$model = null;
-
-		switch ($type) {
-			case 'apartment':
-				$model = Apartments::model()->findByPk($id);
-				break;
-			case 'land':
-				$model = Lands::model()->findByPk($id);
-				break;
-		}
-
-		if(!$model)
-			throw new HttpException(404);
-
-		$is_cookie = isset(Yii::app()->request->cookies['favorites']);
-
-		$values = array();
-		if($is_cookie){
-			$values = unserialize(Yii::app()->request->cookies['favorites']->value);
-		}
-
-		$exist = false;
-		foreach ($values as $value) {
-			if($value['id'] == $id && $value['type'] == $type) $exist = true;
-		}
-
-		if(!$exist) $values[] = array('id' => $id, 'type' => $type);
-
-		$cookie = new CHttpCookie('favorites', serialize($values));
-		$cookie->expire = time()+60*60*24*180;
-		Yii::app()->request->cookies['favorites'] = $cookie;
-
-		Yii::app()->end();
-	}
-
-	//Delete from Favorites
-	public function actionDeleteFromFavorites($id, $type){
-		$model = null;
-
-		switch ($type) {
-			case 'apartment':
-				$model = Apartments::model()->findByPk($id);
-				break;
-			case 'land':
-				$model = Lands::model()->findByPk($id);
-				break;
-		}
-
-		if(!$model)
-			throw new HttpException(404);
-
-		$is_cookie = isset(Yii::app()->request->cookies['favorites']);
-
-		$values = array();
-		if($is_cookie){
-			$values = unserialize(Yii::app()->request->cookies['favorites']->value);
-		}
-
-		foreach ($values as $key => $value) {
-			if($value['id'] == $id && $value['type'] == $type) unset($values[$key]);
-		}
-
-		$cookie = new CHttpCookie('favorites', serialize($values));
-		$cookie->expire = time()+60*60*24*30; //30 days
-		Yii::app()->request->cookies['favorites'] = $cookie;
-
-		Yii::app()->end();
-	}
-
 	/*public function actionGetDetailView($id, $type = 'apartments'){
 		$model = null;
 
@@ -244,7 +140,43 @@ class CatalogController extends FrontController
 */
 	public function actionLands(){
 		$this->seo = Seo::model()->find();
-		$this->render('lands', array());
+
+		$model = new Lands;
+
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('status=1');
+
+		$criteria->distinct = true;
+		$criteria->join = 'INNER JOIN gallery ON gllr_images = gallery.id INNER JOIN gallery_photo ON gallery.id = gallery_photo.gallery_id';
+
+		if(isset($_GET['Lands'])){
+			$model->attributes = $_GET['Lands'];
+
+			$criteria->compare('way_id',$model->way_id);
+			$criteria->compare('city_id',$model->city_id);
+			$criteria->compare('type_id',$model->type_id);
+			$criteria->compare('state_id',$model->state_id);
+			$criteria->compare('material_id',$model->material_id);
+			$criteria->compare('target_id',$model->target_id);
+
+			//price 
+			if($_GET['price_from'] > 0 && $_GET['price_to'] > 0)
+				$criteria->addBetweenCondition('price', $_GET['price_from'], $_GET['price_to']);
+			
+			//square
+			if($_GET['square_from'] > 0 && $_GET['square_to'] > 0)
+				$criteria->addBetweenCondition('square', $_GET['square_from'], $_GET['square_to']);
+
+		} 
+
+		$dataProvider=new CActiveDataProvider('Lands', array(
+			'pagination'=>array(
+				'pageSize'=>12
+			),
+			'criteria'=>$criteria,
+		));
+
+		$this->render('lands/main', array('dataProvider'=>$dataProvider, 'model' => $model));
 	}
 
 	public function getDropDownList($className, $empty = false){

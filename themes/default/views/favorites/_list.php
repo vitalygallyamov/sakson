@@ -1,9 +1,9 @@
 <?php
-$this->widget('zii.widgets.CListView', array(
-    'id' => 'catalog-list',
+$this->widget('EListView', array(
+    'id' => 'favorites-list',
     'dataProvider'=>$dataProvider,
-    'template' => '{sorter}<div class="clear"></div>{items}<div class="clear"></div><br><a href="#" class="but to_mail">Отправить на почту</a>{pager}<div class="info">{summary}</div>',
-    'itemView'=>'apartments/_view',   // refers to the partial view named '_post'
+    //'template' => '{sorter}<div class="clear"></div>{items}<div class="clear"></div><br><a href="#" class="but to_mail">Отправить на почту</a>{pager}<div class="info">{summary}</div>',
+    'template' => '{sorter}<div class="clear"></div>{items}<div class="clear"></div><br>{pager}<div class="info">{summary}</div>',
     'summaryText' => "<div class=\"left\">НАЙДЕНО : {count}</div><div class=\"right\">НА СТРАНИЦЕ : {start}-{end}</div>",
     'summaryCssClass' => '',
     'pagerCssClass' => 'pager',
@@ -17,12 +17,12 @@ $this->widget('zii.widgets.CListView', array(
     ),
     // 'sorterCssClass' => 'sortblock',
     'sorterHeader' => '',
-    'sortableAttributes'=>array(
+    /*'sortableAttributes'=>array(
         'price',
         'square',
         'house_floors',
         //'create_time'=>'Post Time',
-    ),
+    ),*/
 ));
 ?>
 

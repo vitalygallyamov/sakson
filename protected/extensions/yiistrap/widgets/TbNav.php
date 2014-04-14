@@ -104,7 +104,7 @@ class TbNav extends CWidget
             if (is_string($item)) {
                 continue;
             }
-
+            
             if (isset($item['visible']) && !$item['visible']) {
                 unset($items[$i]);
                 continue;

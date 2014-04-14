@@ -20,6 +20,8 @@ class EActiveRecord extends CActiveRecord
 
     public $max_sort;
 
+    public $fastDelete = false;
+
     public static function getStatusAliases($status = -1)
     {
         $aliases = array(
@@ -194,7 +196,7 @@ class EActiveRecord extends CActiveRecord
 
     public function beforeDelete()
     {
-        if($this->hasAttribute('status') && $this->status == self::STATUS_DEFAULT)
+        if(!$this->fastDelete && $this->hasAttribute('status') && $this->status == self::STATUS_DEFAULT)
         {
             $this->status = self::STATUS_REMOVED;
             $this->save(false, array('status'));
@@ -235,5 +237,9 @@ class EActiveRecord extends CActiveRecord
         }
 
         return false;
+    }
+
+    public function uniqueId(){
+        return strtolower(get_class($this));
     }
 }

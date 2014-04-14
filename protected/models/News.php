@@ -16,6 +16,8 @@
 */
 class News extends EActiveRecord
 {
+    public $fastDelete = true;
+
     public function tableName()
     {
         return '{{news}}';

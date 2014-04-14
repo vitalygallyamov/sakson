@@ -1,7 +1,7 @@
 <?php
 $this->menu=array(
 	array('label'=>'Добавить','url'=>array('create')),
-	array('label'=>'Корзина','url'=>array('cart')),
+	array('label'=>'Корзина','url'=>array('cart'), 'visible' => Yii::app()->user->checkAccess('admin')),
 );
 ?>
 

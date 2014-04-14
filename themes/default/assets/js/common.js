@@ -13,33 +13,32 @@ $(document).ready(function() {
 
 	$('.catalog').on('change', '.center_col .izb, .izb-detail', function(e){
 		//e.stopPropagation();
-		// e.preventDefault();
+		e.preventDefault();
 
 		var $this = $(this),
 			id = $this.data('id'),
 			type = $this.data('type');
 
-		var checked = $this.find('input[type=checkbox]').is(':checked');
+		var checked = $this.find('input[type=checkbox]').is(':checked'),
+			inIzb = $this.closest('.izb_block').length;
 
 		checked ? $this.attr('title', "Удалить из избранного") : $this.attr('title', "Добавить в избранное");
 
 		if(timeId) clearTimeout(timeId);
 
-		if(!checked && $this.closest('.izb_block').length){
+		if(!checked && inIzb){
 			$this.closest('.media').hide(300, function(){
 				$(this).remove();
 			});
 		}
 
-		var inIzb = $this.closest('.izb_block').length;
-
 		timeId = setTimeout(function(){
 			$.ajax({
-				url: checked ? "/catalog/addToFavorites" : "/catalog/deleteFromFavorites",
+				url: checked ? "/favorites/add" : "/favorites/delete",
 				data: {id: id, type: type},
 				success: function(data){
 					if(inIzb)
-						$.fn.yiiListView.update("catalog-list",{ajaxType: 'GET'});
+						$.fn.yiiListView.update("favorites-list",{ajaxType: 'GET'});
 					
 				}
 			});
