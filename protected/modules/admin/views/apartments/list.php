@@ -21,7 +21,7 @@ $this->menu=array(
     'afterAjaxUpdate'=>"function() {sortGrid('apartments')}",
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
-        "class"=>"status_".(isset($data->status) ? $data->status : ""),
+        "class"=>$data->agent_id == Yii::app()->user->id ? "my" : "",
         "data-id" => $data->id
     )',
 	'columns'=>array(
@@ -68,15 +68,6 @@ $this->menu=array(
 		'house_floors',
 		'square',
 		'price',
-/*		'kitchen_area',
-		'walls_type_id',
-		'series_id',
-		'price_1m',
-		'price_agency',
-		'price',*/
-/*		'gllr_photos',
-		'agent_id',
-		'seo_id',*/
 		array(
 			'name'=>'agent_id',
 			'type'=>'raw',
@@ -90,17 +81,6 @@ $this->menu=array(
 			'value'=>'Apartments::getStatusAliases($data->status)',
 			'filter'=>Apartments::getStatusAliases()
 		),
-		// 'sort',
-		// array(
-		// 	'name'=>'create_time',
-		// 	'type'=>'raw',
-		// 	'value'=>'$data->create_time ? SiteHelper::russianDate($data->create_time).\' в \'.date(\'H:i\', strtotime($data->create_time)) : ""'
-		// ),
-		// array(
-		// 	'name'=>'update_time',
-		// 	'type'=>'raw',
-		// 	'value'=>'$data->update_time ? SiteHelper::russianDate($data->update_time).\' в \'.date(\'H:i\', strtotime($data->update_time)) : ""'
-		// ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			// 'template' => '{update} {delete}',

@@ -15,7 +15,7 @@ $this->menu=array(
     'afterAjaxUpdate'=>"function() {sortGrid('lands')}",
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
-        "class"=>"status_".(isset($data->status) ? $data->status : ""),
+        "class"=>$data->user_id == Yii::app()->user->id ? "my" : "",
         "data-id" => $data->id
     )',
 	'columns'=>array(
