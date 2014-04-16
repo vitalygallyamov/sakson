@@ -46,24 +46,6 @@ class ApartmentsController extends AdminController
             Yii::app()->end();
         }
 
-        /*if(isset($_POST['DeleteApartments'])){
-            $deleteApartment->attributes = $_POST['DeleteApartments'];
-
-            if($deleteApartment->validate()){
-                $deleteApartment->save(false);
-                $model->status = Apartments::STATUS_REMOVED;
-                $model->update(array('status'));
-
-                echo "ok";
-            }else{
-                $this->renderPartial('_modal', array('deleteApartment' => $deleteApartment, 'model' => $model));
-            }
-
-            Yii::app()->end();
-        }*/
-        /*$deleteApartment->apart_id = $model->id;
-        $deleteApartment->user_id = Yii::app()->user->id;*/
-
         $this->renderPartial('_modal', array('model' => $model));
 
         Yii::app()->end();
@@ -93,33 +75,29 @@ class ApartmentsController extends AdminController
     public function actionList(){
         $model = new Apartments;
 
-        $filter = new Apartments;
-        $filterData = null;
-
         //Фильтр грида
-        if(!isset($_GET['Apartments']['Filter']) && isset($_GET['Apartments'])){
+        if(isset($_GET['Apartments'])){
             $model->attributes = $_GET['Apartments'];
+
+            if(isset($_GET['Apartments']['priceBegin']))
+                $model->priceBegin = $_GET['Apartments']['priceBegin'];
+            if(isset($_GET['Apartments']['priceEnd']))
+                $model->priceEnd = $_GET['Apartments']['priceEnd'];
         }
 
-        //Находим квартиры других агентов через фильтр
-        if(isset($_GET['Apartments']['Filter'])){
-            $getFilter = $_GET['Apartments']['Filter'];
-            $filter->attributes = $getFilter;
+        if(!Yii::app()->user->checkAccess('admin')){
+            $own = $model->search();
+            $notOwn = $model->searchNotOwn();
 
-            // if(isset($_GET['Apartments'])) $filter->attributes = $_GET['Apartments'];
-
-            $filter->priceBegin = $getFilter['priceBegin'];
-            $filter->priceEnd = $getFilter['priceEnd'];
-
-            $filterData = $filter->searchNotOwn();
-        }
-
-        //if(isset($_GET['Apartments'])){print_r($_GET); die();}
+            $dataProvider = new CActiveDataProvider('Apartments',array(
+                'data'=>array_merge($own->data, $notOwn->data)
+            ));
+        }else
+            $dataProvider = $model->search();
 
         $this->render('list', array(
             'model' => $model,
-            'filter' => $filter,
-            'filterData' => $filterData
+            'dataProvider' => $dataProvider
         ));
     }
 

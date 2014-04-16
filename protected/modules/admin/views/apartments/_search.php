@@ -8,17 +8,17 @@
 		<?/*<div class="span2"><?php echo $form->label($model,'apartment_type_id'); ?><?php echo $form->dropDownList($model,'apartment_type_id', CHtml::listData(ApartmentTypes::all(), 'id', 'name')); ?></div>*/?>
 		<div class="span1">
 			<label for="">Цена от: </label>
-			<?php echo CHtml::textField('Apartments[Filter][priceBegin]', $model->priceBegin ? $model->priceBegin : 0, array('append' => 'руб.', 'class' => 'span11')); ?>
+			<?php echo CHtml::textField('Apartments[priceBegin]', $model->priceBegin ? $model->priceBegin : 0, array('append' => 'руб.', 'class' => 'span11')); ?>
 		</div>
 		<div class="span1">
 			<label for="">Цена до: </label>
-			<?php echo CHtml::textField('Apartments[Filter][priceEnd]', $model->priceEnd ?  $model->priceEnd : 0, array('append' => 'руб.', 'class' => 'span11')); ?>
+			<?php echo CHtml::textField('Apartments[priceEnd]', $model->priceEnd ?  $model->priceEnd : 0, array('append' => 'руб.', 'class' => 'span11')); ?>
 		</div>
 		<div class="span2">
 			<?php echo $form->label($model,'area_id');?>
 			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
-				'attribute' => '[Filter]area_id',
+				'attribute' => 'area_id',
 				'data' => array('' => 'Нет') + CHtml::listData(Areas::all(), 'id', 'name'),
 				'pluginOptions' => array(
 			    	'width' => '100%',
@@ -29,7 +29,7 @@
 			<?php echo $form->label($model,'category_id');?>
 			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
-				'attribute' => '[Filter]category_id',
+				'attribute' => 'category_id',
 				'data' => array('' => 'Нет') + CHtml::listData(Categories::all(), 'id', 'name'),
 				'pluginOptions' => array(
 				    'width' => '100%',
@@ -40,7 +40,7 @@
 			<?php echo $form->label($model,'series_id');?>
 			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
-				'attribute' => '[Filter]series_id',
+				'attribute' => 'series_id',
 				'data' => array('' => 'Нет') + CHtml::listData(Series::all(), 'id', 'name'),
 				'pluginOptions' => array(
 				    'width' => '100%',

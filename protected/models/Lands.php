@@ -129,36 +129,52 @@ class Lands extends EActiveRecord
 			),
         ));
     }
-    public function search()
-    {
+
+    private function getCommonCriteria(){
         $criteria=new CDbCriteria;
-		$criteria->compare('id',$this->id);
-		$criteria->compare('way_id',$this->way_id);
-		$criteria->compare('city_id',$this->city_id);
-		$criteria->compare('locality_id',$this->locality_id);
-		$criteria->compare('type_id',$this->type_id);
-		$criteria->compare('state_id',$this->state_id);
-		$criteria->compare('square',$this->square,true);
-		$criteria->compare('material_id',$this->material_id);
-		$criteria->compare('target_id',$this->target_id);
-		$criteria->compare('price',$this->price,true);
-		$criteria->compare('gllr_images',$this->gllr_images);
-		$criteria->compare('seo_id',$this->seo_id);
-		$criteria->compare('status',$this->status);
-        $criteria->compare('sort',$this->sort);
-		$criteria->compare('delete_reason',$this->delete_reason);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('update_time',$this->update_time,true);
+        $criteria->compare('id',$this->id);
+        $criteria->compare('way_id',$this->way_id);
+        $criteria->compare('city_id',$this->city_id);
+        $criteria->compare('locality_id',$this->locality_id);
+        $criteria->compare('type_id',$this->type_id);
+        $criteria->compare('state_id',$this->state_id);
+        $criteria->compare('square',$this->square,true);
+        $criteria->compare('material_id',$this->material_id);
+        $criteria->compare('target_id',$this->target_id);
+        $criteria->compare('price',$this->price,true);
+        $criteria->compare('status',$this->status);
+        $criteria->compare('delete_reason',$this->delete_reason);
 
         $criteria->addCondition('status!=:s');
         $criteria->params[':s'] = parent::STATUS_REMOVED;
+
+        $criteria->order = 'create_time DESC, sort';
+
+        return $criteria;
+    }
+
+    public function search()
+    {
+        $criteria = $this->getCommonCriteria();
 
         if(!Yii::app()->user->checkAccess('admin')){
             $criteria->addCondition('user_id=:user_id');
             $criteria->params[':user_id'] = Yii::app()->user->id;
         }
 
-        $criteria->order = 'sort';
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
+
+    public function searchNotOwn(){
+        $criteria = $this->getCommonCriteria();
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $criteria->addCondition('user_id!=:user_id');
+            $criteria->params[':user_id'] = Yii::app()->user->id;
+        }
+
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));

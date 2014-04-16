@@ -28,6 +28,35 @@ class LandsController extends AdminController
         );
     }
 
+    public function actionList(){
+        $model = new Lands;
+
+        //Фильтр грида
+        if(isset($_GET['Lands'])){
+            $model->attributes = $_GET['Lands'];
+
+            if(isset($_GET['Lands']['priceBegin']))
+                $model->priceBegin = $_GET['Lands']['priceBegin'];
+            if(isset($_GET['Lands']['priceEnd']))
+                $model->priceEnd = $_GET['Lands']['priceEnd'];
+        }
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $own = $model->search();
+            $notOwn = $model->searchNotOwn();
+
+            $dataProvider = new CActiveDataProvider('Lands',array(
+                'data'=>array_merge($own->data, $notOwn->data)
+            ));
+        }else
+            $dataProvider = $model->search();
+
+        $this->render('list', array(
+            'model' => $model,
+            'dataProvider' => $dataProvider
+        ));
+    }
+
     public function actionUpdate($id){
         $model = Lands::model()->findByPk($id);
         $old_agent_id = $model->user_id;

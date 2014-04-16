@@ -9,13 +9,13 @@ $this->menu=array(
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'lands-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
 	'type'=>TbHtml::GRID_TYPE_HOVER,
     'afterAjaxUpdate'=>"function() {sortGrid('lands')}",
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
-        "class"=>$data->user_id == Yii::app()->user->id ? "my" : "",
+        "class"=> ($data->user_id == Yii::app()->user->id && !Yii::app()->user->checkAccess("admin")) ? "my" : "",
         "data-id" => $data->id
     )',
 	'columns'=>array(
@@ -70,10 +70,17 @@ $this->menu=array(
 		array(
 			'name'=>'price',
 			'type'=>'raw',
-			'value'=>'$data->price." руб."'
+			'value'=>'number_format($data->price, 0, "", " ")." руб."'
 		),
 		// 'gallery_id',
 		// 'seo_id',
+		array(
+			'name'=>'user_id',
+			'type'=>'raw',
+			'value'=>'$data->user->fio',
+			'filter'=>AdminUser::getAgents(),
+			'visible' => Yii::app()->user->checkAccess('admin')
+		),
 		array(
 			'name'=>'status',
 			'type'=>'raw',

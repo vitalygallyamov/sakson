@@ -194,62 +194,32 @@ class Apartments extends EActiveRecord
 			),
         ));
     }
-    public function search()
-    {
+
+    private function getCommonCriteria(){
+
         $criteria=new CDbCriteria;
-		$criteria->compare('id',$this->id);
-		$criteria->compare('apartment_type_id',$this->apartment_type_id);
-		$criteria->compare('area_id',$this->area_id);
-		$criteria->compare('street_id',$this->street_id);
-		// $criteria->compare('house',$this->house,true);
-		$criteria->compare('category_id',$this->category_id);
-		$criteria->compare('floor',$this->floor);
-		$criteria->compare('house_floors',$this->house_floors);
-		$criteria->compare('square',$this->square,true);
-		$criteria->compare('kitchen_area',$this->kitchen_area,true);
-		$criteria->compare('walls_type_id',$this->walls_type_id);
-		$criteria->compare('series_id',$this->series_id);
-		$criteria->compare('price_1m',$this->price_1m,true);
-		$criteria->compare('price',$this->price,true);
-		$criteria->compare('desc',$this->desc,true);
-		$criteria->compare('gllr_photos',$this->gllr_photos);
+        $criteria->compare('id',$this->id);
+        $criteria->compare('apartment_type_id',$this->apartment_type_id);
+        $criteria->compare('area_id',$this->area_id);
+        $criteria->compare('street_id',$this->street_id);
+        // $criteria->compare('house',$this->house,true);
+        $criteria->compare('category_id',$this->category_id);
+        $criteria->compare('floor',$this->floor);
+        $criteria->compare('house_floors',$this->house_floors);
+        $criteria->compare('square',$this->square,true);
+        $criteria->compare('kitchen_area',$this->kitchen_area,true);
+        $criteria->compare('walls_type_id',$this->walls_type_id);
+        $criteria->compare('series_id',$this->series_id);
+        $criteria->compare('price_1m',$this->price_1m,true);
+        $criteria->compare('price',$this->price,true);
+        $criteria->compare('desc',$this->desc,true);
         //$criteria->compare('agent_id',$this->agent_id);
         $criteria->compare('delete_reason',$this->delete_reason);
-		// $criteria->compare('room_num',$this->room_num);
-		$criteria->compare('seo_id',$this->seo_id);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('sort',$this->sort);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('update_time',$this->update_time,true);
-
-        if(!Yii::app()->user->checkAccess('admin')){
-            $criteria->addCondition('agent_id=:agent_id');
-            $criteria->params[':agent_id'] = Yii::app()->user->id;
-        }
+        // $criteria->compare('room_num',$this->room_num);
+        $criteria->compare('status',$this->status);
 
         $criteria->addCondition('status!=:s');
         $criteria->params[':s'] = parent::STATUS_REMOVED;
-
-        if($this->priceBegin && $this->priceEnd){
-            $criteria->addBetweenCondition('price', $this->priceBegin, $this->priceEnd);
-        }
-
-        $criteria->order = 'create_time DESC, sort';
-        return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
-        ));
-    }
-
-    public function searchNotOwn(){
-        $criteria = new CDbCriteria;
-
-        $criteria->addCondition('status!=:s');
-        $criteria->params[':s'] = self::STATUS_REMOVED;
-
-        if(!Yii::app()->user->checkAccess('admin')){
-            $criteria->addCondition('agent_id!=:agent_id'); //!=
-            $criteria->params[':agent_id'] = Yii::app()->user->id;
-        }
 
         if($this->priceBegin > 0 && !$this->priceEnd){
             $criteria->addCondition('price>=:p');
@@ -263,16 +233,31 @@ class Apartments extends EActiveRecord
             $criteria->addBetweenCondition('price', $this->priceBegin, $this->priceEnd);
         }
 
-        $criteria->compare('apartment_type_id',$this->apartment_type_id);
-        $criteria->compare('area_id',$this->area_id);
-        $criteria->compare('street_id',$this->street_id);
-        // $criteria->compare('house',$this->house,true);
-        $criteria->compare('category_id',$this->category_id);
-        $criteria->compare('floor',$this->floor);
-        $criteria->compare('house_floors',$this->house_floors);
-        $criteria->compare('square',$this->square,true);
-        $criteria->compare('price',$this->price,true);
-        $criteria->compare('status',$this->status);
+        return $criteria;
+    }
+
+    public function search()
+    {
+        $criteria = $this->getCommonCriteria();
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $criteria->addCondition('agent_id=:agent_id');
+            $criteria->params[':agent_id'] = Yii::app()->user->id;
+        }
+
+        $criteria->order = 'create_time DESC, sort';
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
+
+    public function searchNotOwn(){
+        $criteria = $this->getCommonCriteria();
+
+        if(!Yii::app()->user->checkAccess('admin')){
+            $criteria->addCondition('agent_id!=:agent_id'); //!=
+            $criteria->params[':agent_id'] = Yii::app()->user->id;
+        }
 
         return new CActiveDataProvider('Apartments', array(
             'criteria' => $criteria

@@ -9,19 +9,19 @@ $this->menu=array(
 
 <div class="search-form">
 <?php $this->renderPartial('_search',array(
-    'model' => $filter,
+    'model' => $model,
 )); ?>
 </div><!-- search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'apartments-grid',
-	'dataProvider'=>$filterData ? $filterData : $model->search(),
+	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
 	'type'=>TbHtml::GRID_TYPE_HOVER,
     'afterAjaxUpdate'=>"function() {sortGrid('apartments')}",
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
-        "class"=>$data->agent_id == Yii::app()->user->id ? "my" : "",
+        "class"=> ($data->agent_id == Yii::app()->user->id && !Yii::app()->user->checkAccess("admin")) ? "my" : "",
         "data-id" => $data->id
     )',
 	'columns'=>array(
@@ -67,7 +67,11 @@ $this->menu=array(
 		'floor',
 		'house_floors',
 		'square',
-		'price',
+		array(
+			'name'=>'price',
+			'type'=>'raw',
+			'value'=>'number_format($data->price, 0, "", " ")." руб."'
+		),
 		array(
 			'name'=>'agent_id',
 			'type'=>'raw',
