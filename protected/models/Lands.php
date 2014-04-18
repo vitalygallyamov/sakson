@@ -10,7 +10,7 @@
     * @property integer $locality_id
     * @property integer $type_id
     * @property integer $state_id
-    * @property string $square
+    * @property string $square_house
     * @property integer $material_id
     * @property integer $target_id
     * @property string $price
@@ -48,12 +48,13 @@ class Lands extends EActiveRecord
     {
         return array(
             array('way_id, city_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id, delete_reason', 'numerical', 'integerOnly'=>true),
-            array('square', 'length', 'max'=>8),
+            array('square_house, square_place', 'length', 'max'=>8),
             array('price', 'length', 'max'=>10),
+            array('distance', 'length', 'max'=>50),
             array('phone_own', 'length', 'max'=>255),
             array('desc, comment, create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, way_id, city_id, locality_id, type_id, state_id, square, material_id, target_id, price, gllr_images, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, way_id, city_id, locality_id, type_id, state_id, square_house, material_id, target_id, price, gllr_images, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -83,8 +84,10 @@ class Lands extends EActiveRecord
             'locality_id' => 'Населенный пункт',
             'type_id' => 'Тип',
             'state_id' => 'Состояние',
-            'square' => 'Площадь (кв.м.)',
+            'square_house' => 'Площадь дома (кв.м.)',
+            'square_place' => 'Площадь участка (сот.)',
             'material_id' => 'Материал',
+            'distance' => 'Удаленность от города',
             'target_id' => 'Назначение земли',
             'price' => 'Цена',
             'gllr_images' => 'Галерея',
@@ -138,7 +141,9 @@ class Lands extends EActiveRecord
         $criteria->compare('locality_id',$this->locality_id);
         $criteria->compare('type_id',$this->type_id);
         $criteria->compare('state_id',$this->state_id);
-        $criteria->compare('square',$this->square,true);
+        $criteria->compare('square_house',$this->square_house,true);
+        $criteria->compare('square_place',$this->square_place,true);
+        $criteria->compare('distance',$this->distance,true);
         $criteria->compare('material_id',$this->material_id);
         $criteria->compare('target_id',$this->target_id);
         $criteria->compare('price',$this->price,true);

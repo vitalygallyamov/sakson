@@ -32,8 +32,14 @@
         <div class="line995px">
             <div class="line_content">
                 <a href="/"><img src="/media/images/logo.png" class="logo_second" title="Саксон"></a>
-
+                <?if($this->id == 'catalog' || $this->id == 'favorites'):?>
+                <div class="minihouse">
+                    <img src="<?=$this->getAssetsUrl()?>/images/minihouse.png" alt="" />
+                    <p>Новостройки и вторичка без<br />комиссии для покупателей</p>
+                </div>
+                <?endif;?>
                 <a href="#" class="but right">Мы заботимся о наших клиентах</a>
+                <div class="clear"></div>
             </div>
         </div>
     </div>

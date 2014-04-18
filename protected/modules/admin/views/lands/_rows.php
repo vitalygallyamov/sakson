@@ -2,23 +2,28 @@
 	
 	<?php echo $form->dropDownListControlGroup($model,'city_id', CHtml::listData( LandCities::all(), 'id', 'name'), array('class' => 'change-city')); ?>
 	
-	<div class="locality">
+	<?php echo $form->dropDownListControlGroup($model,'locality_id', CHtml::listData( LandLocalities::all(array('order' => 'name')), 'id', 'name')); ?>
+	<?/*div class="locality">
 		<? if($model->city && $model->city->localities):?>
 			<?php echo $form->dropDownListControlGroup($model,'locality_id', CHtml::listData($model->city->localities, 'id', 'name')); ?>
 		<? endif; ?>
-	</div>
+	</div>*/?>
 
 	<?php echo $form->dropDownListControlGroup($model,'type_id', CHtml::listData( LandTypes::all(), 'id', 'name')); ?>
 
 	<?php echo $form->dropDownListControlGroup($model,'state_id', array('' => 'Не выбрано') + CHtml::listData( LandStates::all(), 'id', 'name')); ?>
 
-	<?php echo $form->textFieldControlGroup($model,'square',array('class'=>'span8','maxlength'=>8)); ?>
+	<?php echo $form->textFieldControlGroup($model,'square_house',array('class'=>'span8','maxlength'=>8)); ?>
+
+	<?php echo $form->textFieldControlGroup($model,'square_place',array('class'=>'span8','maxlength'=>8)); ?>
 	
 	<?php echo $form->dropDownListControlGroup($model,'material_id', array('' => 'Не выбрано') + CHtml::listData( LandMaterials::all(), 'id', 'name')); ?>
 
 	<?php echo $form->dropDownListControlGroup($model,'target_id', array('' => 'Не выбрано') + CHtml::listData( LandTargets::all(), 'id', 'name')); ?>
 
 	<?php echo $form->textFieldControlGroup($model,'price', array('class'=>'span8','maxlength'=>10)); ?>
+
+	<?php echo $form->textFieldControlGroup($model,'distance', array('class'=>'span8','maxlength'=>50)); ?>
 
 	<div class='control-group'>
         <?php echo CHtml::activeLabelEx($model, 'gllr_images'); ?>
@@ -44,7 +49,7 @@
 	echo $form->hiddenField($model, 'user_id'); ?>
 
 <script>
-	$('.change-city').on('change', function(){
+	/*$('.change-city').on('change', function(){
 		var $this = $(this),
 			val = $this.val();
 
@@ -60,5 +65,5 @@
 				}
 			}
 		});
-	});
+	});*/
 </script>

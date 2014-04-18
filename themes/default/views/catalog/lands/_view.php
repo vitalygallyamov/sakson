@@ -1,11 +1,11 @@
 <?
     $inCookie = $data->inCookies('land');
     // $data->changeConfig();
-    $square = '';
-    if($data->square){
-        $square = explode('.', $data->square);
+    $square_house = '';
+    if($data->square_house){
+        $square_house = explode('.', $data->square_house);
 
-        $square = $square[1] == '00' ? $square[0] : $data->square;
+        $square_house = $square_house[1] == '00' ? $square_house[0] : $data->square_house;
     }
 ?>
 <div class="media media-item" data-id="<?=$data->id?>">
@@ -29,8 +29,8 @@
         <? if($data->locality): ?>
             <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
         <? endif; ?>
-        <? if($data->square): ?>  
-            <b>Площадь:</b> <?=CHtml::encode($square)?> <br>
+        <? if($data->square_house): ?>  
+            <b>Площадь:</b> <?=CHtml::encode($square_house)?> <br>
         <? endif; ?>
     </div>
 </div>
@@ -78,8 +78,8 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if($data->locality): ?>
                 <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
             <? endif; ?>
-            <? if($data->square): ?>  
-                <b>Площадь:</b> <?=CHtml::encode($square)?> <br>
+            <? if($data->square_house): ?>  
+                <b>Площадь:</b> <?=CHtml::encode($square_house)?> <br>
             <? endif; ?>
         </div>
 
@@ -101,4 +101,8 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
         </div>
         
     </div>
+    <div class="clear"></div>
+    <?if($data->desc):?>
+    <div class="object-desc"><strong>Описание: </strong><?=CHtml::encode($data->desc)?></div>
+    <?endif;?>
 </div>

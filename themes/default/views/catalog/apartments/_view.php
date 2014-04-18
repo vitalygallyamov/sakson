@@ -140,8 +140,12 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
                 <input id="cfirst<?=$data->id.$data->uniqueId()?>d" type="checkbox" name="izb<?=$data->id.$data->uniqueId()?>d" <?=$inCookie ? 'checked' : ''?> hidden />
                 <label for="cfirst<?=$data->id.$data->uniqueId()?>d">В избранное</label>
             </div>
-            <a href="#" class="but">Отправить на почту</a>
+            <!-- <a href="#" class="but">Отправить на почту</a> -->
         </div>
         
     </div>
+    <div class="clear"></div>
+    <?if($data->desc):?>
+    <div class="object-desc"><strong>Описание: </strong><?=CHtml::encode($data->desc)?></div>
+    <?endif;?>
 </div>

@@ -18,7 +18,7 @@ $this->widget('zii.widgets.CListView', array(
     'sorterHeader' => '',
     'sortableAttributes'=>array(
         'price',
-        'square',
+        'square_house',
         //'create_time'=>'Post Time',
     ),
 ));

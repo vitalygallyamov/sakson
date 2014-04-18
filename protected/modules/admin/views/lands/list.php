@@ -54,7 +54,8 @@ $this->menu=array(
 			'value'=>'$data->state ? $data->state->name : ""',
 			'filter'=>CHtml::listData( LandStates::all(), 'id', 'name')
 		),
-		'square',
+		'square_house',
+		'square_place',
 		array(
 			'name'=>'material_id',
 			'type'=>'raw',
