@@ -7,6 +7,12 @@
 
         $square_house = $square_house[1] == '00' ? $square_house[0] : $data->square_house;
     }
+    $square_place = '';
+    if($data->square_place){
+        $square_place = explode('.', $data->square_place);
+
+        $square_place = $square_place[1] == '00' ? $square_place[0] : $data->square_place;
+    }
 ?>
 <div class="media media-item" data-id="<?=$data->id?>">
     <a class="pull-left" href="#">
@@ -29,8 +35,11 @@
         <? if($data->locality): ?>
             <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
         <? endif; ?>
-        <? if($data->square_house): ?>  
-            <b>Площадь:</b> <?=CHtml::encode($square_house)?> <br>
+        <? if((int)$data->square_house): ?>  
+            <b><?=$data->getAttributeLabel('square_house')?>:</b> <?=CHtml::encode($square_house)?> <br>
+        <? endif; ?>
+        <? if((int)$data->square_place): ?>  
+            <b><?=$data->getAttributeLabel('square_place')?>:</b> <?=CHtml::encode($square_place)?> <br>
         <? endif; ?>
     </div>
 </div>
@@ -78,8 +87,8 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if($data->locality): ?>
                 <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
             <? endif; ?>
-            <? if($data->square_house): ?>  
-                <b>Площадь:</b> <?=CHtml::encode($square_house)?> <br>
+            <? if((int)$data->square_house): ?>  
+                <b><?=$data->getAttributeLabel('square_house')?>:</b> <?=CHtml::encode($square_house)?> <br>
             <? endif; ?>
         </div>
 
@@ -89,6 +98,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? endif; ?>
             <? if($data->target): ?>  
                 <b>Назначение земли:</b> <?=CHtml::encode($data->target->name)?> <br>
+            <? endif; ?>
+            <? if((int)$data->square_place): ?>  
+                <b><?=$data->getAttributeLabel('square_place')?>:</b> <?=CHtml::encode($square_place)?> <br>
             <? endif; ?>
         </div>
 

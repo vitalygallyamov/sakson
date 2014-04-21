@@ -44,6 +44,27 @@ class Lands extends EActiveRecord
         return $aliases;
     }
 
+    public static function addedOptions($i = -1)
+    {        
+        $options = array(
+            1 => 'Газ',
+            2 => 'Водопровод',
+            3 => 'Электричество',
+            4 => 'Дорога',
+            5 => 'Остановка',
+            6 => 'Баня',
+            7 => 'Теплица',
+            8 => 'Колодец',
+            9 => 'Септик',
+            10 => 'Насаждения'
+        );
+
+        if ($i > -1)
+            return $options[$i];
+
+        return $options;
+    }
+
     public function rules()
     {
         return array(
@@ -51,7 +72,7 @@ class Lands extends EActiveRecord
             array('square_house, square_place', 'length', 'max'=>8),
             array('price', 'length', 'max'=>10),
             array('distance', 'length', 'max'=>50),
-            array('phone_own', 'length', 'max'=>255),
+            array('phone_own, added', 'length', 'max'=>255),
             array('desc, comment, create_time, update_time', 'safe'),
             // The following rule is used by search().
             array('id, way_id, city_id, locality_id, type_id, state_id, square_house, material_id, target_id, price, gllr_images, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
@@ -101,6 +122,7 @@ class Lands extends EActiveRecord
             'desc' => 'Описание',
             'comment' => 'Коментарий',
             'phone_own' => 'Телефон собственника',
+            'added' => 'Дополнительные характеристики'
         );
     }
 
@@ -195,6 +217,16 @@ class Lands extends EActiveRecord
             
             return $interval <= 7;
         }
+    }
+
+    public function beforeValidate(){
+
+        if($this->added && is_array($this->added)){
+            $this->added = implode(',', $this->added);
+        }else
+            $this->added = '';
+
+        return parent::beforeValidate();
     }
 
     public static function model($className=__CLASS__)

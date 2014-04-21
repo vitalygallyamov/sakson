@@ -20,53 +20,45 @@
         <div class="clear"></div>
     </div>
 
-    <?php echo CHtml::label('Цена', 'price_from'); ?>
+    <?php echo $form->label($model, 'locality_id'); ?>
+    <?php echo $form->dropDownList($model, 'locality_id', $this->getDropDownList('LandLocalities', true)); ?>
+
+    <?php echo CHtml::label('Цена (руб.)', 'price_from'); ?>
     <?php echo CHtml::textField('price_from', isset($_GET['price_from']) ? $_GET['price_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('price_to', isset($_GET['price_to']) ? $_GET['price_to'] : '', array('placeholder' => 'До')); ?>
 
-    <?php echo CHtml::label('Площадь (м2)', 'square_from'); ?>
-    <?php echo CHtml::textField('square_from', isset($_GET['square_from']) ? $_GET['square_from'] : '', array('placeholder' => 'От')); ?>
+    <?php echo $form->label($model, 'square_house'); ?>
+    <?php echo CHtml::textField('square_h_from', isset($_GET['square_h_from']) ? $_GET['square_h_from'] : '', array('placeholder' => 'От')); ?>
     /
-    <?php echo CHtml::textField('square_to', isset($_GET['square_to']) ? $_GET['square_to'] : '', array('placeholder' => 'До')); ?>
+    <?php echo CHtml::textField('square_h_to', isset($_GET['square_h_to']) ? $_GET['square_h_to'] : '', array('placeholder' => 'До')); ?>
 
-    <?php echo $form->label($model, 'type_id'); ?>
-    <?php echo $form->dropDownList($model, 'type_id', $this->getDropDownList('LandTypes', true)); ?>
-
-    <?php echo $form->label($model, 'state_id'); ?>
-    <?php echo $form->dropDownList($model, 'state_id', $this->getDropDownList('LandStates', true)); ?>
-
-    <?php echo $form->label($model, 'material_id'); ?>
-    <?php echo $form->dropDownList($model, 'material_id', $this->getDropDownList('LandMaterials', true)); ?>
-
-    <?php echo $form->label($model, 'target_id'); ?>
-    <?php echo $form->dropDownList($model, 'target_id', $this->getDropDownList('LandTargets', true)); ?>
-    
-    <?php /*echo CHtml::label('Цена', 'price_from'); ?>
-    <?php echo CHtml::textField('price_from', isset($_GET['price_from']) ? $_GET['price_from'] : '', array('placeholder' => 'От')); ?>
+    <?php echo $form->label($model, 'square_place'); ?>
+    <?php echo CHtml::textField('square_p_from', isset($_GET['square_p_from']) ? $_GET['square_p_from'] : '', array('placeholder' => 'От')); ?>
     /
-    <?php echo CHtml::textField('price_to', isset($_GET['price_to']) ? $_GET['price_to'] : '', array('placeholder' => 'До')); ?>
-
-    <?php echo CHtml::label('Площадь (м2)', 'square_from'); ?>
-    <?php echo CHtml::textField('square_from', isset($_GET['square_from']) ? $_GET['square_from'] : '', array('placeholder' => 'От')); ?>
-    /
-    <?php echo CHtml::textField('square_to', isset($_GET['square_to']) ? $_GET['square_to'] : '', array('placeholder' => 'До')); ?>
+    <?php echo CHtml::textField('square_p_to', isset($_GET['square_p_to']) ? $_GET['square_p_to'] : '', array('placeholder' => 'До')); ?>
     
-    <?php echo CHtml::label('Количество комнат', 'rooms'); ?>
-    <?php echo $form->checkBoxList($model, 'apartment_type_id', array(1 => '1', 2 => '2', 3 => '3', 4 => '4+'), array('container' => '', 'separator' => '')); ?>
-    <?php //echo CHtml::checkBoxList('rooms', '', , array('container' => '', 'separator' => '')); ?>
-    <div class="clear"></div>
+    <div class="row">
+        <div class="cell">
+            <?php echo $form->label($model, 'type_id'); ?>
+            <?php echo $form->dropDownList($model, 'type_id', $this->getDropDownList('LandTypes', true)); ?>
+        </div>
+        <div class="cell">
+            <?php echo $form->label($model, 'state_id'); ?>
+            <?php echo $form->dropDownList($model, 'state_id', $this->getDropDownList('LandStates', true)); ?>
+        </div>
+    </div>
     
-    <?php echo CHtml::label('Этаж', 'floor_from'); ?>
-    <?php echo CHtml::textField('floor_from', isset($_GET['floor_from']) ? $_GET['floor_from'] : '', array('placeholder' => 'От')); ?>
-    /
-    <?php echo CHtml::textField('floor_to', isset($_GET['floor_to']) ? $_GET['floor_to'] : '', array('placeholder' => 'До')); ?>
-
-    <?php echo $form->label($model, 'series_id'); ?>
-    <?php echo $form->dropDownList($model, 'series_id', $this->getDropDownList('Series', true)); ?>
-    
-    <?php echo $form->label($model, 'added'); ?>
-    <?php echo $form->checkBoxList($model, 'added', Apartments::addedList(), array('container' => '', 'separator' => '')); */?>
+    <div class="row">
+        <div class="cell">
+            <?php echo $form->label($model, 'material_id'); ?>
+            <?php echo $form->dropDownList($model, 'material_id', $this->getDropDownList('LandMaterials', true)); ?>
+        </div>
+        <div class="cell">
+            <?php echo $form->label($model, 'target_id'); ?>
+            <?php echo $form->dropDownList($model, 'target_id', $this->getDropDownList('LandTargets', true)); ?>
+        </div>
+    </div>
     <div class="clear"></div>
     
     <div class="actions">

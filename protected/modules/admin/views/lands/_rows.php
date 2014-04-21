@@ -1,3 +1,8 @@
+<?php
+	if(is_string($model->added)){
+		$model->added = explode(',', $model->added);
+	}
+?>
 	<?php echo $form->dropDownListControlGroup($model,'way_id', CHtml::listData( LandWays::all(), 'id', 'name')); ?>
 	
 	<?php echo $form->dropDownListControlGroup($model,'city_id', CHtml::listData( LandCities::all(), 'id', 'name'), array('class' => 'change-city')); ?>
@@ -41,6 +46,8 @@
 
     <?php echo $form->textAreaControlGroup($model,'desc',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 	<?php echo $form->textAreaControlGroup($model,'comment',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
+
+	<?php echo $form->checkBoxListControlGroup($model, 'added', Lands::addedOptions()); ?>
 
 	<?php echo $form->dropDownListControlGroup($model, 'status', Lands::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
 

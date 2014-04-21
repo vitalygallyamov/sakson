@@ -163,9 +163,13 @@ class CatalogController extends FrontController
 			if($_GET['price_from'] > 0 && $_GET['price_to'] > 0)
 				$criteria->addBetweenCondition('price', $_GET['price_from'], $_GET['price_to']);
 			
-			//square
-			if($_GET['square_from'] > 0 && $_GET['square_to'] > 0)
-				$criteria->addBetweenCondition('square', $_GET['square_from'], $_GET['square_to']);
+			//square_house
+			if($_GET['square_h_from'] > 0 && $_GET['square_h_to'] > 0)
+				$criteria->addBetweenCondition('square_house', $_GET['square_h_from'], $_GET['square_h_to']);
+
+			//square_place
+			if($_GET['square_p_from'] > 0 && $_GET['square_p_to'] > 0)
+				$criteria->addBetweenCondition('square_place', $_GET['square_p_from'], $_GET['square_p_to']);
 
 		} 
 
