@@ -6,7 +6,6 @@
 * The followings are the available columns in table '{{lands}}':
     * @property integer $id
     * @property integer $way_id
-    * @property integer $city_id
     * @property integer $locality_id
     * @property integer $type_id
     * @property integer $state_id
@@ -68,14 +67,14 @@ class Lands extends EActiveRecord
     public function rules()
     {
         return array(
-            array('way_id, city_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id, delete_reason', 'numerical', 'integerOnly'=>true),
+            array('way_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id, delete_reason', 'numerical', 'integerOnly'=>true),
             array('square_house, square_place', 'length', 'max'=>8),
             array('price', 'length', 'max'=>10),
             array('distance', 'length', 'max'=>50),
             array('phone_own, added', 'length', 'max'=>255),
             array('desc, comment, create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, way_id, city_id, locality_id, type_id, state_id, square_house, material_id, target_id, price, gllr_images, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, way_id, locality_id, type_id, state_id, square_house, material_id, target_id, price, gllr_images, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -84,7 +83,6 @@ class Lands extends EActiveRecord
     {
         return array(
             'way' => array(self::BELONGS_TO, 'LandWays', 'way_id'),
-            'city' => array(self::BELONGS_TO, 'LandCities', 'city_id'),
             'locality' => array(self::BELONGS_TO, 'LandLocalities', 'type_id'),
             'type' => array(self::BELONGS_TO, 'LandTypes', 'way_id'),
             'state' => array(self::BELONGS_TO, 'LandStates', 'state_id'),
@@ -101,7 +99,6 @@ class Lands extends EActiveRecord
         return array(
             'id' => 'ID',
             'way_id' => 'Направление',
-            'city_id' => 'Город, район',
             'locality_id' => 'Населенный пункт',
             'type_id' => 'Тип',
             'state_id' => 'Состояние',
@@ -159,7 +156,6 @@ class Lands extends EActiveRecord
         $criteria=new CDbCriteria;
         $criteria->compare('id',$this->id);
         $criteria->compare('way_id',$this->way_id);
-        $criteria->compare('city_id',$this->city_id);
         $criteria->compare('locality_id',$this->locality_id);
         $criteria->compare('type_id',$this->type_id);
         $criteria->compare('state_id',$this->state_id);

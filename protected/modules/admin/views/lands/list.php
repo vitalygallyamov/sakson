@@ -31,12 +31,6 @@ $this->menu=array(
 			'filter'=>CHtml::listData( LandWays::all(), 'id', 'name')
 		),
 		array(
-			'name'=>'city_id',
-			'type'=>'raw',
-			'value'=>'$data->city ? $data->city->name : ""',
-			'filter'=>CHtml::listData( LandCities::all(), 'id', 'name')
-		),
-		array(
 			'name'=>'locality_id',
 			'type'=>'raw',
 			'value'=>'$data->locality ? $data->locality->name : ""',

@@ -13,6 +13,13 @@
 
         $square_place = $square_place[1] == '00' ? $square_place[0] : $data->square_place;
     }
+    $added = array();
+    if($data->added){
+        $added = explode(',', $data->added);
+        foreach ($added as $key => $value) {
+            $added[$key] = Lands::addedOptions($value);
+        }
+    }
 ?>
 <div class="media media-item" data-id="<?=$data->id?>">
     <a class="pull-left" href="#">
@@ -29,9 +36,9 @@
         <? if($data->way): ?>  
             <b>Направление:</b> <?=CHtml::encode($data->way->name)?> <br>
         <? endif; ?>
-        <? if($data->city): ?>  
+        <? /*if($data->city): ?>  
             <b>Город, район:</b> <?=CHtml::encode($data->city->name)?> <br>
-        <? endif; ?>
+        <? endif; */?>
         <? if($data->locality): ?>
             <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
         <? endif; ?>
@@ -81,9 +88,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if($data->way): ?>  
                 <b>Направление:</b> <?=CHtml::encode($data->way->name)?> <br>
             <? endif; ?>
-            <? if($data->city): ?>  
+            <? /*if($data->city): ?>  
                 <b>Город, район:</b> <?=CHtml::encode($data->city->name)?> <br>
-            <? endif; ?>
+            <? endif; */?>
             <? if($data->locality): ?>
                 <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
             <? endif; ?>
@@ -102,6 +109,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if((int)$data->square_place): ?>  
                 <b><?=$data->getAttributeLabel('square_place')?>:</b> <?=CHtml::encode($square_place)?> <br>
             <? endif; ?>
+            <? if(!empty($added)): ?>
+                <b>Характеристики:</b> <?=implode(', ', $added)?> <br>
+            <?endif;?>
         </div>
 
         <div class="block4">

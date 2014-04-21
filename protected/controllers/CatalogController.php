@@ -153,7 +153,7 @@ class CatalogController extends FrontController
 			$model->attributes = $_GET['Lands'];
 
 			$criteria->compare('way_id',$model->way_id);
-			$criteria->compare('city_id',$model->city_id);
+			$criteria->compare('locality_id',$model->locality_id);
 			$criteria->compare('type_id',$model->type_id);
 			$criteria->compare('state_id',$model->state_id);
 			$criteria->compare('material_id',$model->material_id);

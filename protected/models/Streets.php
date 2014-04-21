@@ -18,6 +18,7 @@ class Streets extends EActiveRecord
     public function rules()
     {
         return array(
+            array('city_id', 'numerical', 'integerOnly'=>true),
             array('name', 'length', 'max'=>255),
             array('name', 'unique'),
             // The following rule is used by search().
@@ -29,6 +30,7 @@ class Streets extends EActiveRecord
     public function relations()
     {
         return array(
+            'city' => array(self::BELONGS_TO, 'Cities', 'city_id')
         );
     }
 
@@ -38,6 +40,7 @@ class Streets extends EActiveRecord
         return array(
             'id' => 'ID',
             'name' => 'Улица',
+            'city_id' => 'Город',
         );
     }
 

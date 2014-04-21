@@ -14,26 +14,23 @@
             <?php echo $form->dropDownList($model, 'way_id', $this->getDropDownList('LandWays', true)); ?>
         </div>
         <div class="cell">
-            <?php echo $form->label($model, 'city_id'); ?>
-            <?php echo $form->dropDownList($model, 'city_id', $this->getDropDownList('LandCities', true)); ?>
+            <?php echo $form->label($model, 'locality_id'); ?>
+            <?php echo $form->dropDownList($model, 'locality_id', $this->getDropDownList('LandLocalities', true)); ?>
         </div>
         <div class="clear"></div>
     </div>
 
-    <?php echo $form->label($model, 'locality_id'); ?>
-    <?php echo $form->dropDownList($model, 'locality_id', $this->getDropDownList('LandLocalities', true)); ?>
-
-    <?php echo CHtml::label('Цена (руб.)', 'price_from'); ?>
+    <label for="price_from">Цена (<span>руб.</span>)</label>
     <?php echo CHtml::textField('price_from', isset($_GET['price_from']) ? $_GET['price_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('price_to', isset($_GET['price_to']) ? $_GET['price_to'] : '', array('placeholder' => 'До')); ?>
 
-    <?php echo $form->label($model, 'square_house'); ?>
+    <label for="Lands_square_house">Площадь дома (<span>м<sup>2</sup></span>)</label>
     <?php echo CHtml::textField('square_h_from', isset($_GET['square_h_from']) ? $_GET['square_h_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('square_h_to', isset($_GET['square_h_to']) ? $_GET['square_h_to'] : '', array('placeholder' => 'До')); ?>
 
-    <?php echo $form->label($model, 'square_place'); ?>
+    <label for="Lands_square_place">Площадь дома (<span>сот.</span>)</label>
     <?php echo CHtml::textField('square_p_from', isset($_GET['square_p_from']) ? $_GET['square_p_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('square_p_to', isset($_GET['square_p_to']) ? $_GET['square_p_to'] : '', array('placeholder' => 'До')); ?>
@@ -63,6 +60,6 @@
     
     <div class="actions">
         <?php echo CHtml::submitButton('Найти'); ?>
-        <?php echo CHtml::link('Сбросить', '/catalog'); ?>
+        <?php echo CHtml::link('Сбросить', '/catalog/lands'); ?>
     </div>
 <?php $this->endWidget(); ?>

@@ -1,17 +1,17 @@
 <?php
 
 /**
-* This is the model class for table "{{land_cities}}".
+* This is the model class for table "{{cities}}".
 *
-* The followings are the available columns in table '{{land_cities}}':
+* The followings are the available columns in table '{{cities}}':
     * @property integer $id
     * @property string $name
 */
-class LandCities extends EActiveRecord
+class Cities extends EActiveRecord
 {
     public function tableName()
     {
-        return '{{land_cities}}';
+        return '{{cities}}';
     }
 
 
@@ -28,7 +28,6 @@ class LandCities extends EActiveRecord
     public function relations()
     {
         return array(
-            'localities' => array(self::HAS_MANY, 'LandLocalities', 'city_id')
         );
     }
 
@@ -37,7 +36,7 @@ class LandCities extends EActiveRecord
     {
         return array(
             'id' => 'ID',
-            'name' => 'Значение',
+            'name' => 'Название города',
         );
     }
 
@@ -59,7 +58,7 @@ class LandCities extends EActiveRecord
 
     public function translition()
     {
-        return 'Города, районы';
+        return 'Города';
     }
 
 

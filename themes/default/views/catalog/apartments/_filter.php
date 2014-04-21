@@ -16,7 +16,7 @@
     /
     <?php echo CHtml::textField('price_to', isset($_GET['price_to']) ? $_GET['price_to'] : '', array('placeholder' => 'До')); ?>
 
-    <?php echo CHtml::label('Площадь (м2)', 'square_from'); ?>
+    <label for="square_from">Площадь (<span>м<sup>2</sup></span>)</label>
     <?php echo CHtml::textField('square_from', isset($_GET['square_from']) ? $_GET['square_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('square_to', isset($_GET['square_to']) ? $_GET['square_to'] : '', array('placeholder' => 'До')); ?>

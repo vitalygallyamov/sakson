@@ -5,14 +5,7 @@
 ?>
 	<?php echo $form->dropDownListControlGroup($model,'way_id', CHtml::listData( LandWays::all(), 'id', 'name')); ?>
 	
-	<?php echo $form->dropDownListControlGroup($model,'city_id', CHtml::listData( LandCities::all(), 'id', 'name'), array('class' => 'change-city')); ?>
-	
 	<?php echo $form->dropDownListControlGroup($model,'locality_id', CHtml::listData( LandLocalities::all(array('order' => 'name')), 'id', 'name')); ?>
-	<?/*div class="locality">
-		<? if($model->city && $model->city->localities):?>
-			<?php echo $form->dropDownListControlGroup($model,'locality_id', CHtml::listData($model->city->localities, 'id', 'name')); ?>
-		<? endif; ?>
-	</div>*/?>
 
 	<?php echo $form->dropDownListControlGroup($model,'type_id', CHtml::listData( LandTypes::all(), 'id', 'name')); ?>
 
@@ -54,23 +47,3 @@
 	<?php 
 	$model->user_id = Yii::app()->user->id;
 	echo $form->hiddenField($model, 'user_id'); ?>
-
-<script>
-	/*$('.change-city').on('change', function(){
-		var $this = $(this),
-			val = $this.val();
-
-		$.ajax({
-			url: '<?=$this->createUrl("setLocalities")?>',
-			data: {id: val},
-			success: function(data){
-				if(data){
-					$('.locality').html(data);
-					$('.locality').show();
-				}else{
-					$('.locality').hide();
-				}
-			}
-		});
-	});*/
-</script>

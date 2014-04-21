@@ -29,6 +29,7 @@
                     )
                 ),
                 array('label'=>'Управление справочниками', 'url'=>'#', 'visible' => Yii::app()->user->checkAccess('admin'), 'items'=>array(
+                        array('label'=>'Города', 'url'=>'/admin/cities/list'),
                         array('label'=>'Улицы', 'url'=>'/admin/streets/list'),
                     )
                 ),
