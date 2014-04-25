@@ -30,7 +30,7 @@
     /
     <?php echo CHtml::textField('square_h_to', isset($_GET['square_h_to']) ? $_GET['square_h_to'] : '', array('placeholder' => 'До')); ?>
 
-    <label for="Lands_square_place">Площадь дома (<span>сот.</span>)</label>
+    <label for="Lands_square_place">Площадь участка (<span>сот.</span>)</label>
     <?php echo CHtml::textField('square_p_from', isset($_GET['square_p_from']) ? $_GET['square_p_from'] : '', array('placeholder' => 'От')); ?>
     /
     <?php echo CHtml::textField('square_p_to', isset($_GET['square_p_to']) ? $_GET['square_p_to'] : '', array('placeholder' => 'До')); ?>
@@ -45,6 +45,12 @@
             <?php echo $form->dropDownList($model, 'state_id', $this->getDropDownList('LandStates', true)); ?>
         </div>
     </div>
+    <div class="clear"></div>
+    
+    <label for="Lands_square_house">Удаленность от города (<span>км.</span>)</label>
+    <?php echo CHtml::textField('distance_from', isset($_GET['distance_from']) ? $_GET['distance_from'] : '', array('placeholder' => 'От')); ?>
+    /
+    <?php echo CHtml::textField('distance_to', isset($_GET['distance_to']) ? $_GET['distance_to'] : '', array('placeholder' => 'До')); ?>
     
     <div class="row">
         <div class="cell">

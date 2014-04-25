@@ -1,3 +1,9 @@
+<?php
+$this->menu=array(
+	array('label'=>'Список','url'=>array('list')),
+);
+?>
+
 <h1>Квартира #<?=$model->id?></h1>
 
 <?if($model->gallery->galleryPhotos): ?>
@@ -56,11 +62,6 @@
 		),
 		'price',
 		'price_1m',
-		array(
-			'name' => 'series_id',
-			'type'=>'raw',
-			'value' => $model->series ? $model->series->name : false
-		),
 		array(
 			'name' => 'phone_own',
 			'visible' => $model->isOwn()

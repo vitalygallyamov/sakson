@@ -171,6 +171,10 @@ class CatalogController extends FrontController
 			if($_GET['square_p_from'] > 0 && $_GET['square_p_to'] > 0)
 				$criteria->addBetweenCondition('square_place', $_GET['square_p_from'], $_GET['square_p_to']);
 
+			//distance
+			if($_GET['distance_from'] > 0 && $_GET['distance_to'] > 0)
+				$criteria->addBetweenCondition('distance', $_GET['distance_from'], $_GET['distance_to']);
+
 		} 
 
 		$dataProvider=new CActiveDataProvider('Lands', array(

@@ -95,7 +95,7 @@ class Apartments extends EActiveRecord
     public function rules()
     {
         return array(
-            array('price', 'required'),
+            array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, agent_id, status, room_num, price, house, limit, phone_own, life_time_house, square, kitchen_area, price_1m, desc, comment', 'required'),
             array('apartment_type_id, area_id, street_id, category_id, floor, house_floors, walls_type_id, series_id, gllr_photos, agent_id, seo_id, status, sort, delete_reason, room_num', 'numerical', 'integerOnly'=>true),
             array('house', 'length', 'max'=>20),
             array('limit', 'length', 'max'=>30),
@@ -248,6 +248,7 @@ class Apartments extends EActiveRecord
         $criteria->order = 'create_time DESC, sort';
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'pagination' => false
         ));
     }
 
@@ -260,7 +261,8 @@ class Apartments extends EActiveRecord
         }
 
         return new CActiveDataProvider('Apartments', array(
-            'criteria' => $criteria
+            'criteria' => $criteria,
+            'pagination' => false
         ));
     }
 
@@ -302,6 +304,16 @@ class Apartments extends EActiveRecord
     }
 
     public function beforeValidate(){
+
+        $same = self::model()->find('street_id=:street_id AND house=:house AND room_num=:room_num', array(
+            ':street_id' => $this->street_id,
+            ':house' => $this->house,
+            ':room_num' => $this->room_num
+        ));
+
+        if($same){
+            $this->addError('', 'Такая квартира уже существует!');
+        }
 
         if($this->added && is_array($this->added)){
             $this->added = implode(',', $this->added);

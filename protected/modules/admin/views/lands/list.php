@@ -37,6 +37,12 @@ $this->menu=array(
 			'filter'=>CHtml::listData( LandLocalities::all(), 'id', 'name')
 		),
 		array(
+			'name' => 'street_id',
+			'type' => 'raw',
+			'value' => '$data->street ? $data->street->name : ""',
+			'filter' => CHtml::activeDropDownList($model,'street_id', array('' => 'Нет') + CHtml::listData(Streets::all(), 'id', 'name'))
+		),
+		array(
 			'name'=>'type_id',
 			'type'=>'raw',
 			'value'=>'$data->type ? $data->type->name : ""',
@@ -48,8 +54,14 @@ $this->menu=array(
 			'value'=>'$data->state ? $data->state->name : ""',
 			'filter'=>CHtml::listData( LandStates::all(), 'id', 'name')
 		),
+		array(
+			'name' => 'house_num',
+			'type' => 'raw',
+			'value' => '$data->isOwn() ? $data->house_num : ""'
+		),
 		'square_house',
 		'square_place',
+		'distance',
 		array(
 			'name'=>'material_id',
 			'type'=>'raw',

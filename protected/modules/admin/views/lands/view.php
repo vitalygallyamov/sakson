@@ -1,3 +1,9 @@
+<?php
+$this->menu=array(
+	array('label'=>'Список','url'=>array('list')),
+);
+?>
+
 <h1>Объект #<?=$model->id?></h1>
 
 <?if($model->gallery->galleryPhotos): ?>
@@ -18,14 +24,18 @@
 			'value' => $model->way ? $model->way->name : false
 		),
 		array(
-			'name' => 'city_id',
-			'type'=>'raw',
-			'value' => $model->city ? $model->city->name : false
-		),
-		array(
 			'name' => 'locality_id',
 			'type'=>'raw',
 			'value' => $model->locality ? $model->locality->name : false
+		),
+		array(
+			'name' => 'street_id',
+			'type'=>'raw',
+			'value' => $model->street ? $model->street->name : false
+		),
+		array(
+			'name' => 'house_num',
+			'visible' => $model->isOwn()
 		),
 		array(
 			'name' => 'type_id',
@@ -43,7 +53,9 @@
 			'value' => $model->material ? $model->material->name : false
 		),
 		'price',
-		'square',
+		'distance',
+		'square_house',
+		'square_place',
 		'phone_own',
 		'desc',
 		'comment',

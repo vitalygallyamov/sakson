@@ -6,8 +6,8 @@
 
 	<?php echo $form->dropDownListControlGroup($model,'apartment_type_id', CHtml::listData(ApartmentTypes::all(), 'id', 'name')); ?>
 
-	<div class="control-group">
-		<label class="control-label" for="Parts_category_id"><?=$model->getAttributeLabel('area_id')?></label>
+	<div class="control-group<?=$model->hasErrors('area_id') ? ' error' : ''?>">
+		<?=$form->labelEx($model, 'area_id')?>
 		<div class="controls">
 			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
@@ -17,11 +17,12 @@
 				    'width' => '40%',
 					)
 				));?>
+			<?=$form->error($model, 'area_id', array('type' => TbHtml::HELP_TYPE_BLOCK))?>
 		</div>
 	</div>
 
-	<div class="control-group">
-		<label class="control-label" for="Parts_category_id"><?=$model->getAttributeLabel('street_id')?></label>
+	<div class="control-group<?=$model->hasErrors('street_id') ? ' error' : ''?>">
+		<?=$form->labelEx($model, 'street_id')?>
 		<div class="controls">
 			<?php
 				$this->widget('yiiwheels.widgets.select2.WhSelect2', array(
@@ -41,14 +42,7 @@
 					)
 				));
 			?>
-			<?php /*$this->widget('yiiwheels.widgets.select2.WhSelect2', array(
-				'model' => $model,
-				'attribute' => 'street_id',
-				'data' => CHtml::listData(Streets::all(), 'id', 'name'),
-				'pluginOptions' => array(
-				    'width' => '40%'
-					)
-				));*/?>
+			<?=$form->error($model, 'street_id', array('type' => TbHtml::HELP_TYPE_BLOCK))?>
 		</div>
 	</div>
 
@@ -57,8 +51,8 @@
 	<?php echo $form->textFieldControlGroup($model,'room_num'); ?>
 	<?endif;?>
 
-	<div class="control-group">
-		<label class="control-label" for="Parts_category_id"><?=$model->getAttributeLabel('category_id')?></label>
+	<div class="control-group<?=$model->hasErrors('category_id') ? ' error' : ''?>">
+		<?=$form->labelEx($model, 'category_id')?>
 		<div class="controls">
 			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
@@ -68,6 +62,7 @@
 				    'width' => '40%',
 					)
 				));?>
+			<?=$form->error($model, 'category_id', array('type' => TbHtml::HELP_TYPE_BLOCK))?>
 		</div>
 	</div>
 
@@ -81,8 +76,8 @@
 	
 	<?php echo $form->dropDownListControlGroup($model,'walls_type_id', CHtml::listData(WallTypes::all(), 'id', 'name')); ?>
 
-	<div class="control-group">
-		<label class="control-label" for="Parts_category_id"><?=$model->getAttributeLabel('series_id')?></label>
+	<div class="control-group<?=$model->hasErrors('series_id') ? ' error' : ''?>">
+		<?=$form->labelEx($model, 'series_id')?>
 		<div class="controls">
 			<?php $this->widget('yiiwheels.widgets.select2.WhSelect2', array(
 				'model' => $model,
@@ -92,6 +87,7 @@
 				    'width' => '40%',
 					)
 				));?>
+			<?=$form->error($model, 'series_id', array('type' => TbHtml::HELP_TYPE_BLOCK))?>
 		</div>
 	</div>
 

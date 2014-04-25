@@ -67,10 +67,11 @@ class Lands extends EActiveRecord
     public function rules()
     {
         return array(
-            array('way_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id, delete_reason', 'numerical', 'integerOnly'=>true),
+            array('way_id, locality_id, type_id, state_id, material_id, target_id, status, street_id, square_house, square_place, price, house_num, distance, phone_own, desc, comment', 'required'),
+            array('way_id, locality_id, type_id, state_id, material_id, target_id, gllr_images, seo_id, status, sort, user_id, delete_reason, street_id, distance', 'numerical', 'integerOnly'=>true),
             array('square_house, square_place', 'length', 'max'=>8),
             array('price', 'length', 'max'=>10),
-            array('distance', 'length', 'max'=>50),
+            array('house_num', 'length', 'max'=>20),
             array('phone_own, added', 'length', 'max'=>255),
             array('desc, comment, create_time, update_time', 'safe'),
             // The following rule is used by search().
@@ -86,6 +87,7 @@ class Lands extends EActiveRecord
             'locality' => array(self::BELONGS_TO, 'LandLocalities', 'type_id'),
             'type' => array(self::BELONGS_TO, 'LandTypes', 'way_id'),
             'state' => array(self::BELONGS_TO, 'LandStates', 'state_id'),
+            'street' => array(self::BELONGS_TO, 'Streets', 'street_id'),
             'material' => array(self::BELONGS_TO, 'LandMaterials', 'material_id'),
             'target' => array(self::BELONGS_TO, 'LandTargets', 'target_id'),
             'gallery' => array(self::BELONGS_TO, 'Gallery', 'gllr_images'),
@@ -119,7 +121,9 @@ class Lands extends EActiveRecord
             'desc' => 'Описание',
             'comment' => 'Коментарий',
             'phone_own' => 'Телефон собственника',
-            'added' => 'Дополнительные характеристики'
+            'added' => 'Дополнительные характеристики',
+            'street_id' => 'Улица',
+            'house_num' => '№ дома'
         );
     }
 
@@ -157,9 +161,11 @@ class Lands extends EActiveRecord
         $criteria->compare('id',$this->id);
         $criteria->compare('way_id',$this->way_id);
         $criteria->compare('locality_id',$this->locality_id);
+        $criteria->compare('street_id',$this->street_id);
         $criteria->compare('type_id',$this->type_id);
         $criteria->compare('state_id',$this->state_id);
         $criteria->compare('square_house',$this->square_house,true);
+        $criteria->compare('house_num',$this->house_num,true);
         $criteria->compare('square_place',$this->square_place,true);
         $criteria->compare('distance',$this->distance,true);
         $criteria->compare('material_id',$this->material_id);
@@ -187,6 +193,7 @@ class Lands extends EActiveRecord
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'pagination' => false
         ));
     }
 
@@ -200,6 +207,7 @@ class Lands extends EActiveRecord
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'pagination' => false
         ));
     }
 
@@ -216,6 +224,18 @@ class Lands extends EActiveRecord
     }
 
     public function beforeValidate(){
+
+        $same = self::model()->find('way_id=:way_id AND street_id=:street_id AND house_num=:house_num AND locality_id=:locality_id', 
+        array(
+            ':way_id' => $this->way_id,
+            ':street_id' => $this->street_id,
+            ':house_num' => $this->house_num,
+            ':locality_id' => $this->locality_id
+        ));
+
+        if($same){
+            $this->addError('', 'Такая квартира уже существует!');
+        }
 
         if($this->added && is_array($this->added)){
             $this->added = implode(',', $this->added);
@@ -243,7 +263,7 @@ class Lands extends EActiveRecord
 
     public function isOwn(){
         if(Yii::app()->user->checkAccess('admin')) return true;
-        if(Yii::app()->user->id == $this->agent_id) return true;
+        if(Yii::app()->user->id == $this->user_id) return true;
 
         return false;
     }

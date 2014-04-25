@@ -36,9 +36,9 @@
         <? if($data->way): ?>  
             <b>Направление:</b> <?=CHtml::encode($data->way->name)?> <br>
         <? endif; ?>
-        <? /*if($data->city): ?>  
-            <b>Город, район:</b> <?=CHtml::encode($data->city->name)?> <br>
-        <? endif; */?>
+        <? if($data->street): ?>  
+            <b>Улица:</b> <?=CHtml::encode($data->street->name)?> <br>
+        <? endif; ?>
         <? if($data->locality): ?>
             <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
         <? endif; ?>
@@ -88,9 +88,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? if($data->way): ?>  
                 <b>Направление:</b> <?=CHtml::encode($data->way->name)?> <br>
             <? endif; ?>
-            <? /*if($data->city): ?>  
-                <b>Город, район:</b> <?=CHtml::encode($data->city->name)?> <br>
-            <? endif; */?>
+            <? if($data->street): ?>  
+                <b>Улица:</b> <?=CHtml::encode($data->street->name)?> <br>
+            <? endif; ?>
             <? if($data->locality): ?>
                 <b>Населенный пункт:</b> <?=CHtml::encode($data->locality->name)?> <br>
             <? endif; ?>
@@ -108,6 +108,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
             <? endif; ?>
             <? if((int)$data->square_place): ?>  
                 <b><?=$data->getAttributeLabel('square_place')?>:</b> <?=CHtml::encode($square_place)?> <br>
+            <? endif; ?>
+            <? if($data->distance): ?>  
+                <b><?=$data->getAttributeLabel('distance')?>:</b> <?=CHtml::encode($data->distance)?> <br>
             <? endif; ?>
             <? if(!empty($added)): ?>
                 <b>Характеристики:</b> <?=implode(', ', $added)?> <br>
