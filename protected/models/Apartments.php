@@ -305,14 +305,16 @@ class Apartments extends EActiveRecord
 
     public function beforeValidate(){
 
-        $same = self::model()->find('street_id=:street_id AND house=:house AND room_num=:room_num', array(
-            ':street_id' => $this->street_id,
-            ':house' => $this->house,
-            ':room_num' => $this->room_num
-        ));
+        if($this->isNewRecord){
+            $same = self::model()->find('street_id=:street_id AND house=:house AND room_num=:room_num', array(
+                ':street_id' => $this->street_id,
+                ':house' => $this->house,
+                ':room_num' => $this->room_num
+            ));
 
-        if($same){
-            $this->addError('', 'Такая квартира уже существует!');
+            if($same){
+                $this->addError('', 'Такая квартира уже существует!');
+            }
         }
 
         if($this->added && is_array($this->added)){

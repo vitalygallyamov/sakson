@@ -225,16 +225,18 @@ class Lands extends EActiveRecord
 
     public function beforeValidate(){
 
-        $same = self::model()->find('way_id=:way_id AND street_id=:street_id AND house_num=:house_num AND locality_id=:locality_id', 
-        array(
-            ':way_id' => $this->way_id,
-            ':street_id' => $this->street_id,
-            ':house_num' => $this->house_num,
-            ':locality_id' => $this->locality_id
-        ));
+        if($this->isNewRecord){
+            $same = self::model()->find('way_id=:way_id AND street_id=:street_id AND house_num=:house_num AND locality_id=:locality_id', 
+            array(
+                ':way_id' => $this->way_id,
+                ':street_id' => $this->street_id,
+                ':house_num' => $this->house_num,
+                ':locality_id' => $this->locality_id
+            ));
 
-        if($same){
-            $this->addError('', 'Такая квартира уже существует!');
+            if($same){
+                $this->addError('', 'Такая квартира уже существует!');
+            }
         }
 
         if($this->added && is_array($this->added)){
