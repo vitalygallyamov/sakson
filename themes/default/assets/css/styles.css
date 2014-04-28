@@ -187,7 +187,7 @@ a {
 	margin-bottom: 15px;
 }
 .dost {
-	width:25%;
+	width:20%;
 	float:left;
 	text-align: center;
 	font-size: 14px;
@@ -634,6 +634,19 @@ input[type="checkbox"]:checked:disabled + label::before {
 }
 
 /* Добавлено 30.04.14 */
+
+.catalog .center_col a.link-photo{
+	font-size: 13px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.catalog a.link-photo:hover{
+	text-decoration: none;
+}
+
+.catalog .link-photo span{
+	color: rgb(198, 157, 32);
+}
 
 .catalog .izb_block {
 	width:100% !important;

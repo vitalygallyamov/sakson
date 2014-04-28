@@ -136,6 +136,9 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
         </div>
 
         <div class="block4">
+            <?if($data->gallery->galleryPhotos):?>
+            <a class="link-photo" rel="ap<?=$data->id?>" href="#">Фото<span>(</span><?=count($data->gallery->galleryPhotos)?><span>)</span></a>
+            <?endif;?>
             <div class="izb-detail" data-id="<?=$data->id?>" data-type="apartment">
                 <input id="cfirst<?=$data->id.$data->uniqueId()?>d" type="checkbox" name="izb<?=$data->id.$data->uniqueId()?>d" <?=$inCookie ? 'checked' : ''?> hidden />
                 <label for="cfirst<?=$data->id.$data->uniqueId()?>d">В избранное</label>

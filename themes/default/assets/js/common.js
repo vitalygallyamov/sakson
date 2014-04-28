@@ -8,7 +8,14 @@ $(document).ready(function() {
 	// 	(evt && evt.stopPropagation) ? evt.stopPropagation() : window.event.cancelBubble = true;
 	// };
 	$('.catalog').on('click', '.center_col .izb, .izb-detail', function(e){
+		// e.preventDefault();
 		e.stopPropagation();
+	});
+
+	$('.link-photo').click(function(e){
+		e.stopPropagation();
+
+		$(this).closest('.media').find('.pull-left').click();
 	});
 
 	$('.catalog').on('change', '.center_col .izb, .izb-detail', function(e){
