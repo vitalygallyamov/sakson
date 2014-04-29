@@ -34,6 +34,7 @@
                     )
                 ),
 				array('label'=>'Пользователи', 'url'=>'/admin/adminUser/', 'visible' => Yii::app()->user->checkAccess('admin')),
+				array('label'=>'Статистика', 'visible' => Yii::app()->user->checkAccess('admin'), 'url'=>'/admin/statistics/'),
 				array('label'=>'Настройки', 'visible' => Yii::app()->user->checkAccess('admin'), 'url'=>'/admin/settings/'),
 			);
 		?>
