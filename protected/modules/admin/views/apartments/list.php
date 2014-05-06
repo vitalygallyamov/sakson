@@ -31,48 +31,65 @@ $this->menu=array(
 			'value' => '$data->gallery->main ? TbHtml::imageRounded($data->gallery->main->getUrl("small")) : ""'
 		),
 		array(
+			'header' => $model->getAttributeLabel('apartment_type_id'),
 			'name' => 'apartment_type_id',
 			'type' => 'raw',
 			'value' => '$data->apartment_types->name',
 			'filter' => CHtml::activeDropDownList($model,'apartment_type_id', array('' => 'Нет') + CHtml::listData(ApartmentTypes::all(), 'id', 'name'))
 		),
 		array(
+			'header' => $model->getAttributeLabel('area_id'),
 			'name' => 'area_id',
 			'type' => 'raw',
 			'value' => '$data->area->name',
 			'filter' => CHtml::activeDropDownList($model,'area_id', array('' => 'Нет') + CHtml::listData(Areas::all(), 'id', 'name'))
 		),
 		array(
+			'header' => $model->getAttributeLabel('street_id'),
 			'name' => 'street_id',
 			'type' => 'raw',
 			'value' => '$data->street->name',
 			'filter' => CHtml::activeDropDownList($model,'street_id', array('' => 'Нет') + CHtml::listData(Streets::all(), 'id', 'name'))
 		),
 		array(
+			'header' => $model->getAttributeLabel('house'),
 			'name' => 'house',
 			'type' => 'raw',
 			'value' => '$data->checkAccess() ? $data->house : ""'
 		),
 		array(
+			'header' => $model->getAttributeLabel('room_num'),
 			'name' => 'room_num',
 			'type' => 'raw',
 			'value' => '$data->checkAccess() ? $data->room_num : ""'
 		),
 		array(
+			'header' => $model->getAttributeLabel('category_id'),
 			'name' => 'category_id',
 			'type' => 'raw',
 			'value' => '$data->category->name',
 			'filter' => CHtml::activeDropDownList($model,'category_id', array('' => 'Нет') + CHtml::listData(Categories::all(), 'id', 'name'))
 		),
-		'floor',
-		'house_floors',
-		'square',
 		array(
+			'header' => $model->getAttributeLabel('floor'),
+			'name' => 'floor',
+		),
+		array(
+			'header' => $model->getAttributeLabel('house_floors'),
+			'name' => 'house_floors',
+		),
+		array(
+			'header' => $model->getAttributeLabel('square'),
+			'name' => 'square',
+		),
+		array(
+			'header' => $model->getAttributeLabel('price'),
 			'name'=>'price',
 			'type'=>'raw',
 			'value'=>'number_format($data->price, 0, "", " ")." руб."'
 		),
 		array(
+			'header' => $model->getAttributeLabel('agent_id'),
 			'name'=>'agent_id',
 			'type'=>'raw',
 			'value'=>'$data->user->fio',
@@ -80,6 +97,7 @@ $this->menu=array(
 			'visible' => Yii::app()->user->checkAccess('admin')
 		),
 		array(
+			'header' => $model->getAttributeLabel('status'),
 			'name'=>'status',
 			'type'=>'raw',
 			'value'=>'Apartments::getStatusAliases($data->status)',

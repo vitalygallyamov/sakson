@@ -89,9 +89,7 @@ class ApartmentsController extends AdminController
             $own = $model->search();
             $notOwn = $model->searchNotOwn();
 
-            $dataProvider = new CActiveDataProvider('Apartments',array(
-                'data'=>array_merge($own->data, $notOwn->data)
-            ));
+            $dataProvider = new CArrayDataProvider(array_merge($own->data, $notOwn->data));
         }else
             $dataProvider = $model->search();
 
