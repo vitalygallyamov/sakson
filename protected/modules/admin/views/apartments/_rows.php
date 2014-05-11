@@ -117,9 +117,13 @@
 			));
 		} ?>
 	</div>
-
-	<?php echo $form->hiddenField($model,'agent_id',array('class'=>'span8', 'value' => Yii::app()->user->id)); ?>
-
+	
+	<?php if(Yii::app()->user->checkAccess('admin')){?>
+		<?php echo $form->dropDownListControlGroup($model, 'agent_id', AdminUser::getAgents()); ?>
+	<?php }else{?>
+		<?php echo $form->hiddenField($model,'agent_id',array('class'=>'span8', 'value' => Yii::app()->user->id)); ?>
+	<?php }?>
+	
 	<?php echo $form->dropDownListControlGroup($model, 'status', Apartments::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
 
 	<?php echo $form->checkBoxListControlGroup($model, 'added', Apartments::addedList()); ?>

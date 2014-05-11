@@ -67,7 +67,11 @@ class LandsController extends AdminController
 
         if(isset($_POST['Lands'])){
             $model->attributes = $_POST['Lands'];
-            $model->user_id = $old_agent_id;
+
+            //check on exist agent
+            $agent = AdminUser::model()->findByPk($old_agent_id);
+            if($agent)
+                $model->user_id = $old_agent_id;            
 
             if($model->save())
                 $this->redirect($this->createUrl('list'));

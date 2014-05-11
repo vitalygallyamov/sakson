@@ -15,6 +15,7 @@
 */
 class AdminUser extends EActiveRecord
 {
+    public $fastDelete = true;
 
     public $role = false;
 

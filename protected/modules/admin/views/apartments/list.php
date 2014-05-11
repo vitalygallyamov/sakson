@@ -92,7 +92,7 @@ $this->menu=array(
 			'header' => $model->getAttributeLabel('agent_id'),
 			'name'=>'agent_id',
 			'type'=>'raw',
-			'value'=>'$data->user->fio',
+			'value'=>'$data->user ? $data->user->fio : "Не назначен"',
 			'filter'=>AdminUser::getAgents(),
 			'visible' => Yii::app()->user->checkAccess('admin')
 		),

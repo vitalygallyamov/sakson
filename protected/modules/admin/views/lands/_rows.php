@@ -70,7 +70,9 @@
 	<?php echo $form->checkBoxListControlGroup($model, 'added', Lands::addedOptions()); ?>
 
 	<?php echo $form->dropDownListControlGroup($model, 'status', Lands::getStatusAliases(), array('class'=>'span8', 'displaySize'=>1)); ?>
-
-	<?php 
-	$model->user_id = Yii::app()->user->id;
-	echo $form->hiddenField($model, 'user_id'); ?>
+	
+	<?php if(Yii::app()->user->checkAccess('admin')){?>
+		<?php echo $form->dropDownListControlGroup($model, 'user_id', AdminUser::getAgents()); ?>
+	<?php }else{?>
+		<?php echo $form->hiddenField($model,'user_id',array('class'=>'span8', 'value' => Yii::app()->user->id)); ?>
+	<?php }?>

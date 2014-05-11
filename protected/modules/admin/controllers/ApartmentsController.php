@@ -63,7 +63,11 @@ class ApartmentsController extends AdminController
 
         if(isset($_POST['Apartments'])){
             $model->attributes = $_POST['Apartments'];
-            $model->agent_id = $old_agent_id;
+
+            //check on exist agent
+            $agent = AdminUser::model()->findByPk($old_agent_id);
+            if($agent)
+                $model->agent_id = $old_agent_id;
 
             if($model->save())
                 $this->redirect($this->createUrl('list'));
