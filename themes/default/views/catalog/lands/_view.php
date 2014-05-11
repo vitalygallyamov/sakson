@@ -79,8 +79,10 @@ $preview_id = $data->gallery->main ? $data->gallery->main->id : 0;
                 <div class="id"><?=$data->id?></div>                                       
             </div>
 
+            <? if($data->user): ?>
             <i>Специалист</i><BR>
             <?=$data->user->fio?><BR><?=$data->user->phone?>
+            <? endif; ?>
 
         </div>
 

@@ -31,6 +31,8 @@ Yii::app()->clientScript->registerScriptFile($this->getAssetsUrl().'/js/lib/jque
 Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/css/fancybox/jquery.fancybox.css', "screen");
 
 Yii::app()->clientScript->registerScript('apartments', '
-    $(".fancybox").fancybox();
+    $(".fancybox").fancybox({
+        padding: 0
+    });
 ', CClientScript::POS_READY);
 ?>
