@@ -13,6 +13,7 @@ $(document).ready(function() {
 	});
 
 	$('.catalog').on('click', '.link-photo', function(e){
+		e.preventDefault();
 		e.stopPropagation();
 
 		$(this).closest('.media').find('.pull-left').click();

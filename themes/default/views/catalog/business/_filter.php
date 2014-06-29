@@ -44,16 +44,19 @@
     <div class="row">
         <div class="cell bus-cell bus-type">
             <?php echo $form->label($model, 'type_id'); ?>
-            <?php echo $form->dropDownList($model, 'type_id', CHtml::listData(BusinessTypes::getRootTypes(), 'id', 'type')); ?>
+            <?php echo $form->dropDownList($model, 'type_id', array('' => 'Не выбрано') + CHtml::listData(BusinessTypes::getRootTypes(), 'id', 'type')); ?>
         </div>
-        <div class="cell bus-cell sub-type"></div>
-        
+        <div class="cell bus-cell sub-type">
+            <?if($model->type && $model->type->children)
+                $this->renderPartial('business/_sub_type', array('model' => $model, 'data' => $model->type->children));
+            ?>
+        </div>
     </div>
     <div class="clear"></div>
     
     <div class="actions">
         <?php echo CHtml::submitButton('Найти'); ?>
-        <?php echo CHtml::link('Сбросить', '/catalog/lands'); ?>
+        <?php echo CHtml::link('Сбросить', '/catalog/business'); ?>
     </div>
 <?php $this->endWidget(); ?>
 

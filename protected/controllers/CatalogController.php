@@ -208,7 +208,7 @@ class CatalogController extends FrontController
 			$criteria->compare('street_id',$model->street_id);
 
 			$criteria->compare('type_id',$model->type_id);
-			$criteria->compare('sub_type_id',$model->type_id);
+			$criteria->compare('sub_type_id',$model->sub_type_id);
 
 			//price 
 			if($_GET['price_from'] > 0 && $_GET['price_to'] > 0)
@@ -231,11 +231,12 @@ class CatalogController extends FrontController
 	}
 
 	public function actionGetBusinessTypes($id){
+		$model = new Business;
 		$type = BusinessTypes::model()->findByPk($id);
 
 		if($type->children){
 			$this->renderPartial('business/_sub_type', 
-				array('data' => $type->children)
+				array('data' => $type->children, 'model' => $model)
 			);
 
 			Yii::app()->end();
