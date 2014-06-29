@@ -20,6 +20,10 @@
 						array('label'=>'Создать', 'url'=>"/admin/lands/create"),
 						array('label'=>'Список', 'url'=>"/admin/lands/list"),
 					)),
+					array('label'=>'Для бизнеса', 'url'=>'#', 'items' => array(
+						array('label'=>'Создать', 'url'=>"/admin/business/create"),
+						array('label'=>'Список', 'url'=>"/admin/business/list"),
+					)),
 				)),
 				array('label'=>'Контент', 'url'=>'#', 'visible' => Yii::app()->user->checkAccess('admin'), 'items'=>array(
                         array('label'=>'Слайдер', 'url'=>'/admin/slider/list'),

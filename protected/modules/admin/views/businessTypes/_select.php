@@ -1,0 +1,2 @@
+<?php //echo TbHtml::dropDownListControlGroup('Business[sub_type_id]', false, CHtml::listData($data, 'id', 'type')); ?>
+<?php echo  TbHtml::activeDropDownListControlGroup(new Business,'sub_type_id', CHtml::listData($data, 'id', 'type')); ?>

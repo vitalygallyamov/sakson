@@ -38,4 +38,20 @@ class FrontController extends Controller
         //$this->renderPartial('//layouts/clips/_main_menu');
         return parent::beforeRender($view);
     }
+
+    public function registerFancybox(){
+        Yii::app()->clientScript->registerScriptFile($this->getAssetsUrl().'/js/fancybox/jquery.fancybox.pack.js', CClientScript::POS_END);
+        Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/js/fancybox/jquery.fancybox.css', "screen");
+
+        Yii::app()->clientScript->registerScript($this->getAction()->id, '
+            $(".fancybox").fancybox({
+                padding: 0,
+                helpers: {
+                    overlay: {
+                        locked: false
+                    }
+                }
+            });
+        ', CClientScript::POS_READY);
+    }
 }

@@ -17,7 +17,7 @@ class CatalogController extends FrontController
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'apartments', 'lands', 'getDetailView'),
+				'actions'=>array('index','view', 'apartments', 'lands', 'business','getBusinessTypes'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -30,6 +30,7 @@ class CatalogController extends FrontController
 		$this->subMenu = array(
 			array('name' => 'Квартиры', 'url' => $this->createUrl('catalog/apartments'), 'active' => $action->id == 'apartments'),
 			array('name' => 'Загородная', 'url' => $this->createUrl('catalog/lands'), 'active' => $action->id == 'lands'),
+			array('name' => 'Для бизнеса', 'url' => $this->createUrl('catalog/business'), 'active' => $action->id == 'business'),
 			array('name' => 'Избранное', 'url' => $this->createUrl('favorites/index'), 'active' => $action->id == 'favorites'),
 		);
 
@@ -187,9 +188,67 @@ class CatalogController extends FrontController
 		$this->render('lands/main', array('dataProvider'=>$dataProvider, 'model' => $model));
 	}
 
-	public function getDropDownList($className, $empty = false){
+	public function actionBusiness(){
+		$this->seo = Seo::model()->find();
+
+		$model = new Business;
+
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('status=1');
+
+		$criteria->distinct = true;
+		$criteria->join = 'INNER JOIN gallery ON gllr_images = gallery.id INNER JOIN gallery_photo ON gallery.id = gallery_photo.gallery_id';
+
+		if(isset($_GET['Business'])){
+			$model->attributes = $_GET['Business'];
+
+			$criteria->compare('way_id',$model->way_id);
+			$criteria->compare('locality_id',$model->locality_id);
+			$criteria->compare('state_id',$model->state_id);
+			$criteria->compare('street_id',$model->street_id);
+
+			$criteria->compare('type_id',$model->type_id);
+			$criteria->compare('sub_type_id',$model->type_id);
+
+			//price 
+			if($_GET['price_from'] > 0 && $_GET['price_to'] > 0)
+				$criteria->addBetweenCondition('price', $_GET['price_from'], $_GET['price_to']);
+			
+			//square_house
+			if($_GET['square_from'] > 0 && $_GET['square_to'] > 0)
+				$criteria->addBetweenCondition('square', $_GET['square_from'], $_GET['square_to']);
+
+		} 
+
+		$dataProvider=new CActiveDataProvider('Business', array(
+			'pagination'=>array(
+				'pageSize'=>12
+			),
+			'criteria'=>$criteria,
+		));
+
+		$this->render('business/main', array('dataProvider'=>$dataProvider, 'model' => $model));
+	}
+
+	public function actionGetBusinessTypes($id){
+		$type = BusinessTypes::model()->findByPk($id);
+
+		if($type->children){
+			$this->renderPartial('business/_sub_type', 
+				array('data' => $type->children)
+			);
+
+			Yii::app()->end();
+		}
+
+		echo '';
+
+		Yii::app()->end();
+	}
+
+	public function getDropDownList($className, $empty = false, $nameField = 'name'){
 		if($empty)
 			return array('' => 'Не выбрано') + CHtml::listData(call_user_func(array($className, 'all')), 'id', 'name');
-		return CHtml::listData(call_user_func(array($className, 'all')), 'id', 'name');
+		return CHtml::listData(call_user_func(array($className, 'all')), 'id', $nameField);
 	}
 }

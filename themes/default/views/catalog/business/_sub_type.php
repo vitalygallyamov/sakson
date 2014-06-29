@@ -1,0 +1,1 @@
+<?php echo CHtml::activeDropDownList(new Business, 'sub_type_id', array('' => 'Не выбрано') + CHtml::listData($data, 'id', 'type')); ?>

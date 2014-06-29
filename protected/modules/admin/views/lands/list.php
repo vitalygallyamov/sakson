@@ -20,13 +20,12 @@ $this->menu=array(
     )',
 	'columns'=>array(
 		array(
-			'header' => $model->getAttributeLabel('apartment_type_id'),
 			'header' => 'Превью',
 			'type' => 'raw',
 			'value' => '$data->gallery->main ? TbHtml::imageRounded($data->gallery->main->getUrl("small")) : ""'
 		),
 		array(
-			'header' => $model->getAttributeLabel('apartment_type_id'),
+			'header' => $model->getAttributeLabel('way_id'),
 			'name'=>'way_id',
 			'type'=>'raw',
 			'value'=>'$data->way ? $data->way->name : ""',

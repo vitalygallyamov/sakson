@@ -427,6 +427,13 @@ a {
 	margin-right: 10px;
 }
 
+.catalog_filter .bus-cell{
+	width: 100%;
+}
+.catalog_filter .bus-cell select{
+	width: 100%;
+}
+
 .catalog_filter select{
 	width:143px;
 	padding: 5px 5px 5px 15px;

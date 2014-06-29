@@ -12,7 +12,7 @@ $(document).ready(function() {
 		e.stopPropagation();
 	});
 
-	$('.link-photo').click(function(e){
+	$('.catalog').on('click', '.link-photo', function(e){
 		e.stopPropagation();
 
 		$(this).closest('.media').find('.pull-left').click();

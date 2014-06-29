@@ -8,6 +8,7 @@ class FavoritesController extends FrontController
 		$this->subMenu = array(
 			array('name' => 'Квартиры', 'url' => $this->createUrl('catalog/apartments'), 'active' => $action->id == 'apartments'),
 			array('name' => 'Загородная', 'url' => $this->createUrl('catalog/lands'), 'active' => $action->id == 'lands'),
+			array('name' => 'Для бизнеса', 'url' => $this->createUrl('catalog/business'), 'active' => $action->id == 'business'),
 			array('name' => 'Избранное', 'url' => $this->createUrl('favorites/index'), 'active' => $action->id == 'favorites'),
 		);
 
@@ -28,8 +29,17 @@ class FavoritesController extends FrontController
 		foreach ($values as $key => $value) {
 			$item = null;
 
-			if($value['type'] == 'apartment') $item = Apartments::model()->findByPk($value['id']);
-			if($value['type'] == 'land') $item = Lands::model()->findByPk($value['id']);
+			switch ($value['type']) {
+				case 'apartment':
+					$item = Apartments::model()->findByPk($value['id']);
+					break;
+				case 'land':
+					$item = Lands::model()->findByPk($value['id']);
+					break;
+				case 'business':
+					$item = Business::model()->findByPk($value['id']);
+					break;
+			}
 
 			if($item->status == 1) $all[] = $item;
 		}
@@ -53,6 +63,9 @@ class FavoritesController extends FrontController
 				break;
 			case 'land':
 				$model = Lands::model()->findByPk($id);
+				break;
+			case 'business':
+				$model = Business::model()->findByPk($id);
 				break;
 		}
 
@@ -90,6 +103,9 @@ class FavoritesController extends FrontController
 				break;
 			case 'land':
 				$model = Lands::model()->findByPk($id);
+				break;
+			case 'business':
+				$model = Business::model()->findByPk($id);
 				break;
 		}
 
