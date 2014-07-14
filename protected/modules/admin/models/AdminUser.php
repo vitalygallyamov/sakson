@@ -50,6 +50,9 @@ class AdminUser extends EActiveRecord
     public function relations()
     {
         return array(
+            'apartments' => array(self::HAS_MANY, 'Apartments', 'agent_id'),
+            'lands' => array(self::HAS_MANY, 'Lands', 'user_id'),
+            'business' => array(self::HAS_MANY, 'Business', 'user_id'),
         );
     }
 
@@ -177,13 +180,18 @@ class AdminUser extends EActiveRecord
         }
     }
 
-    public static function getAgents(){
-        $agents = Yii::app()->db->createCommand()
+    public static function getAgents($exclude_id = 0){
+        $command = Yii::app()->db->createCommand()
             ->select('au.id, au.fio')
             ->from('{{admin_users}} as au')
-            ->join('{{AuthAssignment}} as aa', 'au.id=aa.userid')
-            ->where('aa.itemname="agent"')
-            ->queryAll();
+            ->join('{{AuthAssignment}} as aa', 'au.id=aa.userid');
+
+        if($exclude_id > 0){
+            $command->where('aa.itemname="agent" AND au.id != :id', array(':id' => $exclude_id));
+        }else
+            $command->where('aa.itemname="agent"');
+
+        $agents = $command->queryAll();
 
         $result = array();
         foreach ($agents as $agent) {
@@ -191,5 +199,16 @@ class AdminUser extends EActiveRecord
         }
 
         return $result;
+    }
+
+    public function isAdmin(){
+        $agent = Yii::app()->db->createCommand()
+            ->select('au.id')
+            ->from('{{admin_users}} as au')
+            ->join('{{AuthAssignment}} as aa', 'au.id=aa.userid')
+            ->where('au.id = :id AND aa.itemname = "admin"', array(':id' => $this->id))
+            ->queryRow();
+
+        return (boolean)($agent);
     }
 }

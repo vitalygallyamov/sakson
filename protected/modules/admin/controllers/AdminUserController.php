@@ -8,7 +8,7 @@ class AdminUserController extends AdminController
     {
         return array(
             array('allow',
-                'actions'=>array('create', 'update', 'list', 'delete'),
+                'actions'=>array('create', 'update', 'list', 'delete', 'getAgentForm', 'changeAgent'),
                 'roles'=>array('admin'),
             ),
             array('deny',
@@ -69,6 +69,47 @@ class AdminUserController extends AdminController
         $this->render('update', array(
             'model' => $model
         ));
+    }
+
+    public function actionGetAgentForm($id){
+        $data = array();
+
+        $agent = AdminUser::model()->findByPk($id);
+
+        if($agent){
+            $data['apartments'] = count($agent->apartments);
+            $data['lands'] = count($agent->lands);
+            $data['business'] = count($agent->business);
+            $data['id'] = $id;
+
+            $this->renderPartial('_change_agent_form', 
+                array('data' => $data)
+            );
+        }
+
+        Yii::app()->end();
+    }
+
+    public function actionChangeAgent(){
+        if(isset($_POST['new_agent_id']) && isset($_POST['old_agent_id'])){
+
+            $old_agent = AdminUser::model()->findByPk($_POST['old_agent_id']);
+            $new_agent = AdminUser::model()->findByPk($_POST['new_agent_id']);
+
+            if($old_agent && $new_agent && !$old_agent->isAdmin() && !$new_agent->isAdmin()){
+                $command = Yii::app()->db->createCommand();
+
+                $command->update('{{apartments}}', array('agent_id' => $new_agent->id), 'agent_id=:id', array(':id' => $old_agent->id));
+                $command->update('{{lands}}', array('user_id' => $new_agent->id), 'user_id=:id', array(':id' => $old_agent->id));
+                $command->update('{{business}}', array('user_id' => $new_agent->id), 'user_id=:id', array(':id' => $old_agent->id));
+
+                $old_agent->delete();
+
+                echo "ok";
+            }
+
+        }
+        Yii::app()->end();
     }
 
 	/*public function actionList(){

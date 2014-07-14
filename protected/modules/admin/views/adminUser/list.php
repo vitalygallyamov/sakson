@@ -15,6 +15,7 @@ $this->menu=array(
     'rowHtmlOptionsExpression'=>'array(
         "id"=>"items[]_".$data->id,
         "class"=>"status_".(isset($data->status) ? $data->status : ""),
+        "data-id" => $data->id
     )',
 	'columns'=>array(
 		'fio',
@@ -45,9 +46,69 @@ $this->menu=array(
 		),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-			'template' => '{update} {delete}'
+			'template' => '{update} {delete}',
+			'buttons' => array(
+				'delete' => array(
+					'click' => 'function(){
+						var $this = jQuery(this);
+						jQuery.ajax({
+							url: "/admin/adminUser/getAgentForm",
+							data: { id: $this.closest("tr").data("id")},
+							success: function(data){
+								if(data.length)
+									jQuery("#agentModal").find(".modal-body").html(data);
+							}
+						});
+						jQuery("#agentModal").modal();
+						return false;
+					}'
+				)
+			)
 		),
 	),
 )); ?>
+
+<?php $this->widget('bootstrap.widgets.TbModal', array(
+    'id' => 'agentModal',
+    'header' => 'Внимание.',
+    'content' => '',
+    'footer' => array(
+        TbHtml::button('Сохранить', array('class' => 'change-agent', 'color' => TbHtml::BUTTON_COLOR_PRIMARY)),
+        TbHtml::button('Закрыть', array('data-dismiss' => 'modal')),
+     ),
+)); ?>
+
+<?php $this->widget('bootstrap.widgets.TbModal', array(
+    'id' => 'thanksModal',
+    'header' => 'Готово',
+    'content' => 'Действие выполнено успешно!',
+    'footer' => array(
+        TbHtml::button('Закрыть', array('data-dismiss' => 'modal')),
+     ),
+)); ?>
+
+<script>
+(function($){
+	$('.change-agent').on('click', function(e){
+		e.preventDefault();
+
+		var data = $('#agentModal').find('form').serialize();
+		$.ajax({
+			url: '/admin/adminUser/changeAgent',
+			data: data,
+			type: 'post',
+			success: function(data){
+				if(data == 'ok'){
+					jQuery("#agentModal").modal('hide');
+					jQuery("#thanksModal").modal('show');
+
+					jQuery('#admin-user-grid').yiiGridView('update');
+				}
+
+			}
+		});
+	});
+})(jQuery);
+</script>
 
 <?php if($model->hasAttribute('sort')) Yii::app()->clientScript->registerScript('sortGrid', 'sortGrid("adminuser");', CClientScript::POS_END) ;?>
