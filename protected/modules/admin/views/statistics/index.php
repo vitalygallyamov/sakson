@@ -49,12 +49,14 @@
 			<th>Агент</th>
 			<th>Количество квартир</th>
 			<th>Количество земельных участков</th>
+			<th>Количество объектов для бизнеса</th>
 		</tr>
 		<?php foreach ($data['result'] as $key => $value):?>
 			<tr>
 				<td><?=$value['agent']?></td>
 				<td><?=$value['apartments_count']?></td>
 				<td><?=$value['lands_count']?></td>
+				<td><?=$value['business_count']?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

@@ -55,11 +55,13 @@ $this->menu=array(
 							url: "/admin/adminUser/getAgentForm",
 							data: { id: $this.closest("tr").data("id")},
 							success: function(data){
-								if(data.length)
+								if(data.length){
 									jQuery("#agentModal").find(".modal-body").html(data);
+									jQuery("#agentModal").modal();
+								}
 							}
 						});
-						jQuery("#agentModal").modal();
+						
 						return false;
 					}'
 				)

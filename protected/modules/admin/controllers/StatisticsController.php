@@ -70,6 +70,17 @@ class StatisticsController extends AdminController
 					$criteria->params[':to'] = $date_to;
 
 					$data['result'][$key]['lands_count'] = Lands::model()->count($criteria);
+
+					//business
+					$criteria = new CDbCriteria;
+					$criteria->compare('user_id', $agent['id']);
+					$criteria->addCondition('create_time >= :from');
+					$criteria->addCondition('create_time <= :to');
+
+					$criteria->params[':from'] = $date_from;
+					$criteria->params[':to'] = $date_to;
+
+					$data['result'][$key]['business_count'] = Business::model()->count($criteria);
 				}
 			}
 		}
