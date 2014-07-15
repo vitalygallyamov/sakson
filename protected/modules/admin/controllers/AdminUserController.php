@@ -31,20 +31,22 @@ class AdminUserController extends AdminController
                 /*Yii::app()->swiftmail->sendEmail("no-replay@sakson72.com", $model->email, 'Доступы в систему управления объектами недвижимости', $this->renderPartial('_email', array('model' => $model), true));*/
                 //smtp
                 Yii::app()->mailer->IsSMTP();
+                Yii::app()->mailer->CharSet = 'UTF-8';
                 Yii::app()->mailer->Username = Yii::app()->params['mail']['user'];
                 Yii::app()->mailer->Password = Yii::app()->params['mail']['pass'];
                 Yii::app()->mailer->Host = Yii::app()->params['mail']['host'];
                 Yii::app()->mailer->SMTPAuth=true;
                 Yii::app()->mailer->Port = Yii::app()->params['mail']['port'];
+                Yii::app()->mailer->SMTPSecure = Yii::app()->params['mail']['protocol'];
 
-                Yii::app()->mailer->From = 'no-replay@salson72.ru';
+                Yii::app()->mailer->From = 'postmaster@sakson72.ru';
                 Yii::app()->mailer->FromName = 'Sakson';
                 Yii::app()->mailer->AddReplyTo('vitgvr@gmail.com');
                 Yii::app()->mailer->AddAddress($model->email);
                 Yii::app()->mailer->Subject = 'Доступы в систему';
                 Yii::app()->mailer->getView('create_agent_email', array('model' => $model));
+                Yii::app()->mailer->IsHTML(true);
                 Yii::app()->mailer->Send();
-                $model->save(false);
                 $this->redirect($this->createUrl('list'));
             }
         }
