@@ -42,9 +42,14 @@ return array(
                 ),
             ),
         ),
-        'swiftmail'=> array_merge(array(
+        'mailer' => array(
+            'class' => 'application.extensions.mailer.EMailer',
+            'pathViews' => 'admin.views.email',
+            'pathLayouts' => 'admin.views.email.layouts'
+        ),
+        /*'swiftmail'=> array_merge(array(
             'class' => 'SwiftmailerComponent',
-        ), $mail_config),
+        ), $mail_config),*/
         /*'authManager' => array(
             'class' => 'CDbAuthManager',// 'auth.components.CachedDbAuthManager',
             //'cachingDuration' => 0,
@@ -124,5 +129,7 @@ return array(
 
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
-    'params'=>array(),
+    'params'=>array(
+        'mail' => $mail_config
+    ),
 );
