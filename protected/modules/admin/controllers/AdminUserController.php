@@ -47,6 +47,7 @@ class AdminUserController extends AdminController
                 Yii::app()->mailer->getView('create_agent_email', array('model' => $model));
                 Yii::app()->mailer->IsHTML(true);
                 Yii::app()->mailer->Send();
+                $model->save(false);
                 $this->redirect($this->createUrl('list'));
             }
         }
