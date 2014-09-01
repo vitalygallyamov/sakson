@@ -61,6 +61,10 @@ $this->menu=array(
 		'phone_own',
 		'desc',
 		'comment',
+		array(
+			'name' => 'user_id',
+			'value' => $model->user ? $model->user->fio." (тел. ".$model->user->phone.")" : ""
+		),
 	),
 )); ?>
 

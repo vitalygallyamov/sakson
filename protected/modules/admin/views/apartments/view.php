@@ -69,6 +69,10 @@ $this->menu=array(
 		'life_time_house',
 		'limit',
 		'comment',
+		array(
+			'name' => 'agent_id',
+			'value' => $model->user ? $model->user->fio." (тел. ".$model->user->phone.")" : ""
+		),
 	),
 )); ?>
 
