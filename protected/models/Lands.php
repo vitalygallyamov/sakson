@@ -112,7 +112,7 @@ class Lands extends EActiveRecord
             'price' => 'Цена',
             'gllr_images' => 'Галерея',
             'seo_id' => 'SEO',
-            'user_id' => 'Пользователь',
+            'user_id' => 'Агент',
             'status' => 'Статус',
             'sort' => 'Вес для сортировки',
             'create_time' => 'Дата создания',
